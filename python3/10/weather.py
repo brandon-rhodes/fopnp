@@ -5,13 +5,14 @@
 import sys, urllib, urllib.request, urllib.error, urllib.parse
 import lxml.etree
 from lxml.cssselect import CSSSelector
-from BeautifulSoup import BeautifulSoup
+# from BeautifulSoup import BeautifulSoup
 
 if len(sys.argv) < 2:
     print('usage: weather.py CITY, STATE', file=sys.stderr)
     exit(2)
 
 data = urllib.parse.urlencode({'inputstring': ' '.join(sys.argv[1:])})
+data = data.encode('ascii')
 info = urllib.request.urlopen('http://forecast.weather.gov/zipcity.php', data)
 content = info.read()
 
@@ -28,13 +29,13 @@ print('Humidity:', tr.findall('td')[1].text)
 print()
 
 # Solution #2
-soup = BeautifulSoup(content)  # doctest: +SKIP
-big = soup.find('td', 'big')
-if big.font is not None:
-    big = big.font
-print('Condition:', big.contents[0].string.strip())
-temp = big.contents[3].string or big.contents[4].string  # can be either
-print('Temperature:', temp.replace('&deg;', ' '))
-tr = soup.find('b', text='Humidity').parent.parent.parent
-print('Humidity:', tr('td')[1].string)
-print()
+# soup = BeautifulSoup(content)  # doctest: +SKIP
+# big = soup.find('td', 'big')
+# if big.font is not None:
+#     big = big.font
+# print('Condition:', big.contents[0].string.strip())
+# temp = big.contents[3].string or big.contents[4].string  # can be either
+# print('Temperature:', temp.replace('&deg;', ' '))
+# tr = soup.find('b', text='Humidity').parent.parent.parent
+# print('Humidity:', tr('td')[1].string)
+# print()

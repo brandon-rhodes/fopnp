@@ -3,7 +3,7 @@
 # Submitting a form and retrieving a page with urllib2
 
 import urllib, urllib.request, urllib.error, urllib.parse
-data = urllib.parse.urlencode({'inputstring': 'Phoenix, AZ'})
+data = urllib.parse.urlencode({'inputstring': 'Phoenix, AZ'}).encode('ascii')
 info = urllib.request.urlopen('http://forecast.weather.gov/zipcity.php', data)
 content = info.read()
-open('phoenix.html', 'w').write(content)
+open('phoenix.html', 'wb').write(content)

@@ -60,12 +60,9 @@ updated examples will be posted here.
 09/get_rfc2616.py - OK
 09/verbose_handler.py - OK
 
-10/excerpt.html
-10/fetch_mechanize.py
-10/fetch_urllib2.py
-10/phoenix-tidied.html
-10/phoenix.html
-10/weather.py
+10/fetch_mechanize.py - waiting on port of "mechanize" to Python 3
+10/fetch_urllib2.py - OK
+10/weather.py - "lxml" part works great; "BeautifulSoup" is commented out
 
 11/bottle_app.py
 11/bottle_template.html
