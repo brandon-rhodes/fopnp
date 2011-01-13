@@ -9,7 +9,7 @@ HOST = sys.argv.pop() if len(sys.argv) == 3 else '127.0.0.1'
 PORT = 1060
 
 def recvall(sock, length):
-    data = ''
+    data = b''
     while len(data) < length:
         more = sock.recv(length - len(data))
         if not more:
@@ -29,14 +29,14 @@ if sys.argv[1:] == ['server']:
         print('Socket connects', sc.getsockname(), 'and', sc.getpeername())
         message = recvall(sc, 16)
         print('The incoming sixteen-octet message says', repr(message))
-        sc.sendall('Farewell, client')
+        sc.sendall(b'Farewell, client')
         sc.close()
         print('Reply sent, socket closed')
 
 elif sys.argv[1:] == ['client']:
     s.connect((HOST, PORT))
     print('Client has been assigned socket name', s.getsockname())
-    s.sendall('Hi there, server')
+    s.sendall(b'Hi there, server')
     reply = recvall(s, 16)
     print('The server said', repr(reply))
     s.close()

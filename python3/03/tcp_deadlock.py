@@ -18,11 +18,12 @@ if sys.argv[1:] == ['server']:
         print('Processing up to 1024 bytes at a time from', sockname)
         n = 0
         while True:
-            message = sc.recv(1024)
-            if not message:
+            data = sc.recv(1024)
+            if not data:
                 break
-            sc.sendall(message.upper())  # send it back uppercase
-            n += len(message)
+            output = data.decode('ascii').upper().encode('ascii')
+            sc.sendall(output)  # send it back uppercase
+            n += len(data)
             print('\r%d bytes processed so far' % (n,), end=' ')
             sys.stdout.flush()
         print()
@@ -31,14 +32,14 @@ if sys.argv[1:] == ['server']:
 
 elif len(sys.argv) == 3 and sys.argv[1] == 'client' and sys.argv[2].isdigit():
 
-    bytes = (int(sys.argv[2]) + 15) // 16 * 16  # round up to // 16
-    message = 'capitalize this!'  # 16-byte message to repeat over and over
+    bytecount = (int(sys.argv[2]) + 15) // 16 * 16  # round up to // 16
+    message = b'capitalize this!'  # 16-byte message to repeat over and over
 
-    print('Sending', bytes, 'bytes of data, in chunks of 16 bytes')
+    print('Sending', bytecount, 'bytes of data, in chunks of 16 bytes')
     s.connect((HOST, PORT))
 
     sent = 0
-    while sent < bytes:
+    while sent < bytecount:
         s.sendall(message)
         sent += len(message)
         print('\r%d bytes sent' % (sent,), end=' ')
@@ -59,6 +60,7 @@ elif len(sys.argv) == 3 and sys.argv[1] == 'client' and sys.argv[2].isdigit():
             break
         print('\r%d bytes received' % (received,), end=' ')
 
+    print()
     s.close()
 
 else:

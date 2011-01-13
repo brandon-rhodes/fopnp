@@ -29,8 +29,8 @@ updated examples will be posted here.
 02/udp_local.py - OK
 02/udp_remote.py - OK
 
-03/tcp_deadlock.py
-03/tcp_sixteen.py
+03/tcp_deadlock.py - OK
+03/tcp_sixteen.py - OK
 
 04/dns_basic.py
 04/dns_mx.py
