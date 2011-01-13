@@ -64,9 +64,8 @@ updated examples will be posted here.
 10/fetch_urllib2.py - OK
 10/weather.py - "lxml" part works great; "BeautifulSoup" is commented out
 
-11/bottle_app.py
-11/bottle_template.html
-11/wsgi_app.py
+11/bottle_app.py - OK
+11/wsgi_app.py - OK
 
 16/message.txt
 16/mime_decode.py

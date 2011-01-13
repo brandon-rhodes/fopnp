@@ -9,7 +9,7 @@ app = bottle.Bottle()
 @app.route('/encode')
 @bottle.view('bottle_template.html')
 def encode():
-    mystring = bottle.request.GET.get('mystring')
+    mystring = bottle.request.GET.get('mystring').encode('utf-8')
     if mystring is None:
         bottle.abort(400, 'This form requires a "mystring" parameter')
     return dict(mystring=mystring, myb=base64.b64encode(mystring))
