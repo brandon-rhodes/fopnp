@@ -67,19 +67,16 @@ updated examples will be posted here.
 11/bottle_app.py - OK
 11/wsgi_app.py - OK
 
-12/message.txt
-12/mime_decode.py
-12/mime_gen_alt.py
-12/mime_gen_basic.py
-12/mime_gen_both.py
-12/mime_headers.py
-12/mime_parse_headers.py
-12/mime_structure.py
-12/test.txt
-12/test.txt.gz
-12/trad_gen_newhdrs.py
-12/trad_gen_simple.py
-12/trad_parse.py
+12/mime_decode.py - OK
+12/mime_gen_alt.py - OK
+12/mime_gen_basic.py - OK
+12/mime_gen_both.py - OK
+12/mime_headers.py - OK
+12/mime_parse_headers.py - OK (but why does the space character disappear?)
+12/mime_structure.py - OK
+12/trad_gen_newhdrs.py - OK
+12/trad_gen_simple.py - OK
+12/trad_parse.py - OK
 
 13/debug.py
 13/ehlo.py

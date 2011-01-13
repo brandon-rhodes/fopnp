@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # Foundations of Python Network Programming - Chapter 12 - mime_gen_alt.py
-# This program requires Python 2.2.2 or above
 
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
