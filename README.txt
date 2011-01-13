@@ -84,9 +84,9 @@ updated examples will be posted here.
 13/simple.py
 13/tls.py
 
-14/download-and-delete.py - (not yet tested)
-14/mailbox.py
-14/popconn.py
+14/download-and-delete.py - OK
+14/mailbox.py - OK
+14/popconn.py - OK
 
 15/folder_info.py - waiting on port of "imapclient" to Python 3
 15/mailbox_summary.py - waiting on port of "imapclient" to Python 3

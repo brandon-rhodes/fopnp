@@ -19,7 +19,7 @@ except poplib.error_proto as e:
 else:
     response, listings, octet_count = p.list()
     for listing in listings:
-        number, size = listing.split()
+        number, size = listing.decode('ascii').split()
         print("Message %s has %s bytes" % (number, size))
 finally:
     p.quit()

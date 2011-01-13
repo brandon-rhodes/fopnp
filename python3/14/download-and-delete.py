@@ -20,11 +20,12 @@ except poplib.error_proto as e:
 else:
     response, listings, octets = p.list()
     for listing in listings:
-        number, size = listing.split()
+        number, size = listing.decode('ascii').split()
         print('Message', number, '(size is', size, 'bytes):')
         print()
         response, lines, octets = p.top(number, 0)
-        message = email.message_from_string('\n'.join(lines))
+        document = '\n'.join( line.decode('ascii') for line in lines )
+        message = email.message_from_string(document)
         for header in 'From', 'To', 'Subject', 'Date':
             if header in message:
                 print(header + ':', message[header])
@@ -33,7 +34,8 @@ else:
         answer = input()
         if answer.lower().startswith('y'):
             response, lines, octets = p.retr(number)
-            message = email.message_from_string('\n'.join(lines))
+            document = '\n'.join( line.decode('ascii') for line in lines )
+            message = email.message_from_string(document)
             print('-' * 72)
             for part in message.walk():
                 if part.get_content_type() == 'text/plain':
