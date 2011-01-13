@@ -115,12 +115,11 @@ updated examples will be posted here.
 17/nlst.py - OK
 17/recursedl.py - OK
 
-18/jsonrpc_client.py
-18/jsonrpc_server.py
-18/rpyc_client.py
-18/rpyc_server.py
-18/testfile.txt
-18/xmlrpc_client.py
-18/xmlrpc_introspect.py
-18/xmlrpc_multicall.py
-18/xmlrpc_server.py
+18/jsonrpc_client.py - waiting on port of "lovely.jsonrpc" to Python 3
+18/jsonrpc_server.py - waiting on port of "lovely.jsonrpc" to Python 3
+18/rpyc_client.py - waiting on port of "rpyc" to Python 3
+18/rpyc_server.py - waiting on port of "rpyc" to Python 3
+18/xmlrpc_client.py - OK
+18/xmlrpc_introspect.py - OK
+18/xmlrpc_multicall.py - OK
+18/xmlrpc_server.py - OK
