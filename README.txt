@@ -88,13 +88,11 @@ updated examples will be posted here.
 14/mailbox.py
 14/popconn.py
 
-15/folder_info.py - (not yet tested)
-15/mailbox_summary.py
-15/open_imap.py
-15/open_imap.txt
-15/open_imaplib.py
-15/open_imaplib.txt
-15/simple_client.py
+15/folder_info.py - waiting on port of "imapclient" to Python 3
+15/mailbox_summary.py - waiting on port of "imapclient" to Python 3
+15/open_imap.py - waiting on port of "imapclient" to Python 3
+15/open_imaplib.py - OK
+15/simple_client.py - waiting on port of "imapclient" to Python 3
 
 16/fabfile.py - waiting on port of "fabric" to Python 3
 16/sftp.py - waiting on port of "paramiko" to Python 3
