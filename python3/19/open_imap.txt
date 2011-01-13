@@ -1,0 +1,14 @@
+Capabilities: ('IMAP4REV1', 'UNSELECT', 'IDLE', 'NAMESPACE', 'QUOTA', 'XLIST', 'CHILDREN', 'XYZZY', 'SASL-IR', 'AUTH=XOAUTH')
+Listing mailboxes:
+  \HasNoChildren                / INBOX
+  \HasNoChildren                / Personal
+  \HasNoChildren                / Receipts
+  \HasNoChildren                / Travel
+  \HasNoChildren                / Work
+  \Noselect \HasChildren        / [Gmail]
+  \HasChildren \HasNoChildren   / [Gmail]/All Mail
+  \HasNoChildren                / [Gmail]/Drafts
+  \HasChildren \HasNoChildren   / [Gmail]/Sent Mail
+  \HasNoChildren                / [Gmail]/Spam
+  \HasNoChildren                / [Gmail]/Starred
+  \HasChildren \HasNoChildren   / [Gmail]/Trash

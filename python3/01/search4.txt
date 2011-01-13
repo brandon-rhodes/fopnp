@@ -1,0 +1,23 @@
+HTTP/1.1 200 OK
+Content-Type: text/javascript; charset=UTF-8
+Vary: Accept-Language
+Date: Wed, 21 Jul 2010 16:10:38 GMT
+Server: mafe
+Cache-Control: private, x-gzip-ok=""
+X-XSS-Protection: 1; mode=block
+Connection: close
+
+{
+  "name": "207 N. Defiance St, Archbold, OH",
+  "Status": {
+    "code": 200,
+    "request": "geocode"
+  },
+  "Placemark": [ {
+    ...
+    "Point": {
+      "coordinates": [ -84.3063479, 41.5228242, 0 ]
+    }
+  } ]
+}
+

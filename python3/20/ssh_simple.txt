@@ -1,0 +1,14 @@
+Linux guinness 2.6.32-24-generic #42-Ubuntu SMP Fri Aug 20 14:24:04 UTC
+ 2010 i686 GNU/Linux
+Ubuntu 10.04.1 LTS
+
+Welcome to Ubuntu!
+ * Documentation:  https://help.ubuntu.com/
+
+Last login: Mon Sep  6 01:02:46 2010 from localhost
+echo Hello, world
+exit
+test@guinness:~$ echo Hello, world
+Hello, world
+test@guinness:~$ exit
+logout
