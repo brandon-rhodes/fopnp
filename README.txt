@@ -105,15 +105,15 @@ updated examples will be posted here.
 16/telnet_codes.py - OK
 16/telnet_login.py - OK
 
-17/advbinarydl.py
-17/advbinaryul.py
-17/asciidl.py
-17/binarydl.py
-17/binaryul.py
-17/connect.py
-17/dir.py
-17/nlst.py
-17/recursedl.py
+17/advbinarydl.py - OK
+17/advbinaryul.py - OK
+17/asciidl.py - OK
+17/binarydl.py - OK
+17/binaryul.py - OK
+17/connect.py - OK
+17/dir.py - OK
+17/nlst.py - OK
+17/recursedl.py - OK
 
 18/jsonrpc_client.py
 18/jsonrpc_server.py
