@@ -18,7 +18,7 @@ if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
 
 elif len(sys.argv) == 3 and sys.argv[1] == 'client':
     network = sys.argv[2]
-    s.sendto('Broadcast message!', (network, PORT))
+    s.sendto(b'Broadcast message!', (network, PORT))
 
 else:
     print('usage: udp_broadcast.py server', file=sys.stderr)

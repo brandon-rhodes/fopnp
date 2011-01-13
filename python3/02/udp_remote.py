@@ -16,7 +16,8 @@ if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
         data, address = s.recvfrom(MAX)
         if random.randint(0, 1):
             print('The client at', address, 'says:', repr(data))
-            s.sendto('Your data was %d bytes' % len(data), address)
+            message = 'Your data was %d bytes' % len(data)
+            s.sendto(message.encode('ascii'), address)
         else:
             print('Pretending to drop packet from', address)
 
@@ -26,7 +27,7 @@ elif len(sys.argv) == 3 and sys.argv[1] == 'client':
     print('Client socket name is', s.getsockname())
     delay = 0.1
     while True:
-        s.send('This is another message')
+        s.send(b'This is another message')
         print('Waiting up to', delay, 'seconds for a reply')
         s.settimeout(delay)
         try:

@@ -16,7 +16,7 @@ hostname = sys.argv[1]
 s.connect((hostname, PORT))
 s.setsockopt(socket.IPPROTO_IP, IN.IP_MTU_DISCOVER, IN.IP_PMTUDISC_DO)
 try:
-    s.send('#' * 65000)
+    s.send(b'#' * 65000)
 except socket.error:
     print('The message did not make it')
     option = getattr(IN, 'IP_MTU', 14)  # constant taken from <linux/in.h>

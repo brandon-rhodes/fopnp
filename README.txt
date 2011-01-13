@@ -23,12 +23,11 @@ updated examples will be posted here.
 01/search2.py - OK
 01/search3.py - OK
 01/search4.py - OK
-01/search4.txt
 
-02/big_sender.py
-02/udp_broadcast.py
-02/udp_local.py
-02/udp_remote.py
+02/big_sender.py - OK
+02/udp_broadcast.py - OK
+02/udp_local.py - OK
+02/udp_remote.py - OK
 
 03/tcp_deadlock.py
 03/tcp_sixteen.py
