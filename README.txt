@@ -40,8 +40,7 @@ updated examples will be posted here.
 05/blocks.py - OK
 05/streamer.py - OK
 
-06/certfiles.crt
-06/sslclient.py
+06/sslclient.py - OK
 
 07/Bench.sh
 07/Test.sh

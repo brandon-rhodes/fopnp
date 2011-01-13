@@ -3,7 +3,6 @@
 # Using SSL to protect a socket in Python 2.6 or later
 
 import os, socket, ssl, sys
-from backports.ssl_match_hostname import match_hostname, CertificateError
 
 try:
     script_name, hostname = sys.argv
@@ -26,15 +25,15 @@ sslsock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_SSLv3,
 # hostname to which we are trying to connect?  We need to check.
 
 try:
-    match_hostname(sslsock.getpeercert(), hostname)
-except CertificateError as ce:
+    ssl.match_hostname(sslsock.getpeercert(), hostname)
+except ssl.CertificateError as ce:
     print('Certificate error:', str(ce))
     sys.exit(1)
 
 # From here on, our `sslsock` works like a normal socket.  We can, for
 # example, make an impromptu HTTP call.
 
-sslsock.sendall('GET / HTTP/1.0\r\n\r\n')
+sslsock.sendall(b'GET / HTTP/1.0\r\n\r\n')
 result = sslsock.makefile().read()  # quick way to read until EOF
 sslsock.close()
 print('The document https://%s/ is %d bytes long' % (hostname, len(result)))
