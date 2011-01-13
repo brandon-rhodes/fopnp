@@ -21,8 +21,8 @@ def hash_shard(word):
 
 def md5_shard(word):
     """Do a great job of assigning data to servers using a hash value."""
-    # digest() is a byte string, so we ord() its last character
-    return 'server%d' % (ord(hashlib.md5(word).digest()[-1]) % 4)
+    data = word.encode('utf-8')
+    return 'server%d' % (hashlib.md5(data).digest()[-1] % 4)
 
 words = open('/usr/share/dict/words').read().split()
 

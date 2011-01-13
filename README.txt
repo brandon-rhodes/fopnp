@@ -53,11 +53,12 @@ updated examples will be posted here.
 07/server_simple.py - OK
 07/server_twisted.py - waiting on port of "Twisted" to Python 3
 
-08/hashing.py
-08/queuecrazy.py
-08/squares.py
+08/hashing.py - OK
+08/queuecrazy.py - waiting on port of "pyzmq" to Python 3
+08/squares.py - waiting on port of "python-memcached" to Python 3
 
-09/verbose_handler.py
+09/get_rfc2616.py - OK
+09/verbose_handler.py - OK
 
 10/excerpt.html
 10/fetch_mechanize.py
