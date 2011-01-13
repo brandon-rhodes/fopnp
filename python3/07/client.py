@@ -8,11 +8,11 @@ def client(hostname, port):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.connect((hostname, port))
     s.sendall(lancelot.qa[0][0])
-    answer1 = lancelot.recv_until(s, '.')  # answers end with '.'
+    answer1 = lancelot.recv_until(s, b'.')  # answers end with '.'
     s.sendall(lancelot.qa[1][0])
-    answer2 = lancelot.recv_until(s, '.')
+    answer2 = lancelot.recv_until(s, b'.')
     s.sendall(lancelot.qa[2][0])
-    answer3 = lancelot.recv_until(s, '.')
+    answer3 = lancelot.recv_until(s, b'.')
     s.close()
     print(answer1)
     print(answer2)

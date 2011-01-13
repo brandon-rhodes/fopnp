@@ -5,13 +5,13 @@
 import socket, sys
 
 PORT = 1060
-qa = (('What is your name?', 'My name is Sir Lancelot of Camelot.'),
-      ('What is your quest?', 'To seek the Holy Grail.'),
-      ('What is your favorite color?', 'Blue.'))
+qa = ((b'What is your name?', b'My name is Sir Lancelot of Camelot.'),
+      (b'What is your quest?', b'To seek the Holy Grail.'),
+      (b'What is your favorite color?', b'Blue.'))
 qadict = dict(qa)
 
 def recv_until(sock, suffix):
-    message = ''
+    message = b''
     while not message.endswith(suffix):
         data = sock.recv(4096)
         if not data:

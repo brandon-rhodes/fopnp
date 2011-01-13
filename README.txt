@@ -42,19 +42,16 @@ updated examples will be posted here.
 
 06/sslclient.py - OK
 
-07/Bench.sh
-07/Test.sh
-07/TestLancelot.conf
-07/client.py
-07/lancelot.py
-07/lancelot_tests.py
-07/my_trace.py
-07/server_SocketServer.py
-07/server_async.py
-07/server_multi.py
-07/server_poll.py
-07/server_simple.py
-07/server_twisted.py
+07/client.py - OK
+07/lancelot.py - OK
+07/lancelot_tests.py - waiting on port of "funkload" to Python 3
+07/my_trace.py - OK
+07/server_SocketServer.py - OK
+07/server_async.py - OK
+07/server_multi.py - OK
+07/server_poll.py - OK
+07/server_simple.py - OK
+07/server_twisted.py - waiting on port of "Twisted" to Python 3
 
 08/hashing.py
 08/queuecrazy.py

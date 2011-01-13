@@ -31,7 +31,7 @@ while True:
             fd = newsock.fileno()
             sockets[fd] = newsock
             poll.register(fd, select.POLLIN)
-            requests[newsock] = ''
+            requests[newsock] = b''
 
         # Collect incoming data until it forms a question.
         elif event & select.POLLIN:
@@ -40,7 +40,7 @@ while True:
                 sock.close()  # makes POLLNVAL happen next time
                 continue
             requests[sock] += data
-            if '?' in requests[sock]:
+            if b'?' in requests[sock]:
                 question = requests.pop(sock)
                 answer = dict(lancelot.qa)[question]
                 poll.modify(sock, select.POLLOUT)
@@ -54,4 +54,4 @@ while True:
                 responses[sock] = response[n:]
             else:
                 poll.modify(sock, select.POLLIN)
-                requests[sock] = ''
+                requests[sock] = b''

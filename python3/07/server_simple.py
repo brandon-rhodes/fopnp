@@ -7,7 +7,7 @@ import lancelot
 def handle_client(client_sock):
     try:
         while True:
-            question = lancelot.recv_until(client_sock, '?')
+            question = lancelot.recv_until(client_sock, b'?')
             answer = lancelot.qadict[question]
             client_sock.sendall(answer)
     except EOFError:
