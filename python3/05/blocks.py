@@ -10,7 +10,7 @@ PORT = 1060
 format = struct.Struct('!I')  # for messages up to 2**32 - 1 in length
 
 def recvall(sock, length):
-    data = ''
+    data = b''
     while len(data) < length:
         more = sock.recv(length - len(data))
         if not more:
@@ -46,10 +46,10 @@ if sys.argv[1:] == ['server']:
 elif sys.argv[1:] == ['client']:
     s.connect((HOST, PORT))
     s.shutdown(socket.SHUT_RD)
-    put(s, 'Beautiful is better than ugly.')
-    put(s, 'Explicit is better than implicit.')
-    put(s, 'Simple is better than complex.')
-    put(s, '')
+    put(s, b'Beautiful is better than ugly.')
+    put(s, b'Explicit is better than implicit.')
+    put(s, b'Simple is better than complex.')
+    put(s, b'')
     s.close()
 
 else:

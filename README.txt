@@ -37,8 +37,8 @@ updated examples will be posted here.
 04/forward_reverse.py - OK
 04/www_ping.py - OK
 
-05/blocks.py
-05/streamer.py
+05/blocks.py - OK
+05/streamer.py - OK
 
 06/certfiles.crt
 06/sslclient.py

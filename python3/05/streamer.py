@@ -16,23 +16,23 @@ if sys.argv[1:] == ['server']:
     sc, sockname = s.accept()
     print('Accepted connection from', sockname)
     sc.shutdown(socket.SHUT_WR)
-    message = ''
+    message = b''
     while True:
         more = sc.recv(8192)  # arbitrary value of 8k
         if not more:  # socket has closed when recv() returns ''
             break
         message += more
     print('Done receiving the message; it says:')
-    print(message)
+    print(message.decode('ascii'))
     sc.close()
     s.close()
 
 elif sys.argv[1:] == ['client']:
     s.connect((HOST, PORT))
     s.shutdown(socket.SHUT_RD)
-    s.sendall('Beautiful is better than ugly.\n')
-    s.sendall('Explicit is better than implicit.\n')
-    s.sendall('Simple is better than complex.\n')
+    s.sendall(b'Beautiful is better than ugly.\n')
+    s.sendall(b'Explicit is better than implicit.\n')
+    s.sendall(b'Simple is better than complex.\n')
     s.close()
 
 else:
