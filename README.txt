@@ -19,7 +19,7 @@ updated examples will be posted here.
                            As of January 2011
 
 01/getname.py - OK
-01/search1.py - waiting on "googlemaps" package
+01/search1.py - waiting on port of "googlemaps" to Python 3
 01/search2.py - OK
 01/search3.py - OK
 01/search4.py - OK
@@ -32,10 +32,10 @@ updated examples will be posted here.
 03/tcp_deadlock.py - OK
 03/tcp_sixteen.py - OK
 
-04/dns_basic.py
-04/dns_mx.py
-04/forward_reverse.py
-04/www_ping.py
+04/dns_basic.py - waiting on port of "pydns" to Python 3
+04/dns_mx.py - waiting on port of "pydns" to Python 3
+04/forward_reverse.py - OK
+04/www_ping.py - OK
 
 05/blocks.py
 05/streamer.py
