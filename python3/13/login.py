@@ -20,7 +20,7 @@ This is a test message sent to you from the login.py program
 in Foundations of Python Network Programming.
 """ % (', '.join(toaddrs), fromaddr)
 
-sys.stdout.write("Enter username: ")
+print("Enter username: ")
 username = sys.stdin.readline().strip()
 password = getpass("Enter password: ")
 

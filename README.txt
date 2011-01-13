@@ -78,11 +78,11 @@ updated examples will be posted here.
 12/trad_gen_simple.py - OK
 12/trad_parse.py - OK
 
-13/debug.py - (not yet tested)
-13/ehlo.py
-13/login.py
-13/simple.py
-13/tls.py
+13/debug.py - OK
+13/ehlo.py - OK
+13/login.py - OK
+13/simple.py - OK
+13/tls.py - OK
 
 14/download-and-delete.py - OK
 14/mailbox.py - OK
