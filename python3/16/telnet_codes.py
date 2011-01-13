@@ -8,7 +8,7 @@ def process_option(tsocket, command, option):
     if command == DO and option == TTYPE:
         tsocket.sendall(IAC + WILL + TTYPE)
         print('Sending terminal type "mypython"')
-        tsocket.sendall(IAC + SB + TTYPE + '\0' + 'mypython' + IAC + SE)
+        tsocket.sendall(IAC + SB + TTYPE + b'\0' + b'mypython' + IAC + SE)
     elif command in (DO, DONT):
         print('Will not', ord(option))
         tsocket.sendall(IAC + WONT + option)
@@ -20,13 +20,13 @@ t = Telnet('localhost')
 # t.set_debuglevel(1)        # uncomment this for debugging messages
 
 t.set_option_negotiation_callback(process_option)
-t.read_until('login:', 5)
-t.write('brandon\n')
-t.read_until('assword:', 5)  # so P can be capitalized or not
-t.write('mypass\n')
-n, match, previous_text = t.expect([r'Login incorrect', r'\$'], 10)
+t.read_until(b'login:', 5)
+t.write(b'brandon\n')
+t.read_until(b'assword:', 5)  # so P can be capitalized or not
+t.write(b'mypass\n')
+n, match, previous_text = t.expect([br'Login incorrect', br'\$'], 10)
 if n == 0:
     print("Username and password failed - giving up")
 else:
-    t.write('exec echo $TERM\n')
-    print(t.read_all())
+    t.write(b'exec echo My terminal type is $TERM\n')
+    print(t.read_all().decode('ascii'))

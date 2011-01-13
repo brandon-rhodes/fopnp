@@ -78,17 +78,17 @@ updated examples will be posted here.
 12/trad_gen_simple.py - OK
 12/trad_parse.py - OK
 
-13/debug.py
+13/debug.py - (not yet tested)
 13/ehlo.py
 13/login.py
 13/simple.py
 13/tls.py
 
-14/download-and-delete.py
+14/download-and-delete.py - (not yet tested)
 14/mailbox.py
 14/popconn.py
 
-15/folder_info.py
+15/folder_info.py - (not yet tested)
 15/mailbox_summary.py
 15/open_imap.py
 15/open_imap.txt
@@ -96,15 +96,14 @@ updated examples will be posted here.
 15/open_imaplib.txt
 15/simple_client.py
 
-16/fabfile.py
-16/sftp.py
-16/shell.py
-16/ssh_commands.py
-16/ssh_simple.py
-16/ssh_simple.txt
-16/ssh_threads.py
-16/telnet_codes.py
-16/telnet_login.py
+16/fabfile.py - waiting on port of "fabric" to Python 3
+16/sftp.py - waiting on port of "paramiko" to Python 3
+16/shell.py - OK
+16/ssh_commands.py - waiting on port of "paramiko" to Python 3
+16/ssh_simple.py - waiting on port of "paramiko" to Python 3
+16/ssh_threads.py - waiting on port of "paramiko" to Python 3
+16/telnet_codes.py - OK
+16/telnet_login.py - OK
 
 17/advbinarydl.py
 17/advbinaryul.py

@@ -7,13 +7,13 @@ import telnetlib
 t = telnetlib.Telnet('localhost')
 # t.set_debuglevel(1)        # uncomment this for debugging messages
 
-t.read_until('login:')
-t.write('brandon\n')
-t.read_until('assword:')     # let "P" be capitalized or not
-t.write('mypass\n')
-n, match, previous_text = t.expect([r'Login incorrect', r'\$'], 10)
+t.read_until(b'login:')
+t.write(b'brandon\n')
+t.read_until(b'assword:')     # let "P" be capitalized or not
+t.write(b'mypass\n')
+n, match, previous_text = t.expect([br'Login incorrect', br'\$'], 10)
 if n == 0:
-    print("Username and password failed - giving up")
+    print(b'Username and password failed - giving up')
 else:
-    t.write('exec uptime\n')
-    print(t.read_all())       # keep reading until the connection closes
+    t.write(b'exec uptime\n')
+    print(t.read_all().decode('ascii'))  # read until connection closes
