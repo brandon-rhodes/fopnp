@@ -19,4 +19,4 @@ def versions():
             for version in '2.4', '2.5', '2.6', '2.7', '3.0', '3.1':
                 result = run('python%s -c "None"' % version)
                 if not result.failed:
-                    print "Host", env.host, "has Python", version
+                    print("Host", env.host, "has Python", version)

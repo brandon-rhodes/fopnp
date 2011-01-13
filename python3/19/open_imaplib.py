@@ -7,16 +7,16 @@ import getpass, imaplib, sys
 try:
     hostname, username = sys.argv[1:]
 except ValueError:
-    print 'usage: %s hostname username' % sys.argv[0]
+    print('usage: %s hostname username' % sys.argv[0])
     sys.exit(2)
 
 m = imaplib.IMAP4_SSL(hostname)
 m.login(username, getpass.getpass())
-print 'Capabilities:', m.capabilities
-print 'Listing mailboxes '
+print('Capabilities:', m.capabilities)
+print('Listing mailboxes ')
 status, data = m.list()
-print 'Status:', repr(status)
-print 'Data:'
+print('Status:', repr(status))
+print('Data:')
 for datum in data:
-    print repr(datum)
+    print(repr(datum))
 m.logout()

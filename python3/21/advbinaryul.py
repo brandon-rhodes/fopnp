@@ -7,8 +7,8 @@ import sys, getpass, os.path
 BLOCKSIZE = 8192  # chunk size to read and transmit: 8 kB
 
 if len(sys.argv) != 5:
-    print "usage: %s <host> <username> <localfile> <remotedir>" % (
-        sys.argv[0])
+    print("usage: %s <host> <username> <localfile> <remotedir>" % (
+        sys.argv[0]))
     exit(2)
 
 host, username, localfile, remotedir = sys.argv[1:]
@@ -31,11 +31,11 @@ while 1:
         break
     datasock.sendall(buf)
     bytes_so_far += len(buf)
-    print "\rSent", bytes_so_far, "of", size, "bytes", \
-        "(%.1f%%)\r" % (100 * bytes_so_far / float(size))
+    print("\rSent", bytes_so_far, "of", size, "bytes", \
+        "(%.1f%%)\r" % (100 * bytes_so_far / float(size)))
     sys.stdout.flush()
 
-print
+print()
 datasock.close()
 fd.close()
 f.voidresp()

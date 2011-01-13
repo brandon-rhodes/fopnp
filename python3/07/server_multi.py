@@ -18,7 +18,7 @@ def start_worker(Worker, listen_sock):
 
 if __name__ == '__main__':
     if len(sys.argv) != 3 or sys.argv[2] not in WORKER_CLASSES:
-        print >>sys.stderr, 'usage: server_multi.py interface thread|process'
+        print('usage: server_multi.py interface thread|process', file=sys.stderr)
         sys.exit(2)
     Worker = WORKER_CLASSES[sys.argv.pop()]  # setup() wants len(argv)==2
 
@@ -35,6 +35,6 @@ if __name__ == '__main__':
         time.sleep(2)
         for worker in workers:
             if not worker.is_alive():
-                print worker.name, "died; starting replacement worker"
+                print(worker.name, "died; starting replacement worker")
                 workers.remove(worker)
                 workers.append(start_worker(Worker, listen_sock))

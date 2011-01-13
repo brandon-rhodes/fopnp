@@ -14,8 +14,8 @@ client.set_missing_host_key_policy(AllowAnythingPolicy())
 client.connect('127.0.0.1', username='test')  # password='')
 
 def my_callback(filename, bytes_so_far, bytes_total):
-    print 'Transfer of %r is at %d/%d bytes (%.1f%%)' % (
-        filename, bytes_so_far, bytes_total, 100. * bytes_so_far / bytes_total)
+    print('Transfer of %r is at %d/%d bytes (%.1f%%)' % (
+        filename, bytes_so_far, bytes_total, 100. * bytes_so_far / bytes_total))
 
 sftp = client.open_sftp()
 sftp.chdir('/var/log')

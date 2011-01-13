@@ -19,6 +19,6 @@ dispatcher = lovely.jsonrpc.dispatcher.JSONRPCDispatcher()
 dispatcher.register_method(lengths)
 app = lovely.jsonrpc.wsgi.WSGIJSONRPCApplication({'': dispatcher})
 server = make_server('localhost', 7002, app)
-print "Starting server"
+print("Starting server")
 while True:
     server.handle_request()

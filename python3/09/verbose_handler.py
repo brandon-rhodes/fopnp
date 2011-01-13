@@ -2,23 +2,23 @@
 # Foundations of Python Network Programming - Chapter 9 - verbose_handler.py
 # HTTP request handler for urllib2 that prints requests and responses.
 
-import StringIO, httplib, urllib2
+import io, http.client, urllib.request, urllib.error, urllib.parse
 
-class VerboseHTTPResponse(httplib.HTTPResponse):
+class VerboseHTTPResponse(http.client.HTTPResponse):
     def _read_status(self):
         s = self.fp.read()
-        print '-' * 20, 'Response', '-' * 20
-        print s.split('\r\n\r\n')[0]
-        self.fp = StringIO.StringIO(s)
-        return httplib.HTTPResponse._read_status(self)
+        print('-' * 20, 'Response', '-' * 20)
+        print(s.split('\r\n\r\n')[0])
+        self.fp = io.StringIO(s)
+        return http.client.HTTPResponse._read_status(self)
 
-class VerboseHTTPConnection(httplib.HTTPConnection):
+class VerboseHTTPConnection(http.client.HTTPConnection):
     response_class = VerboseHTTPResponse
     def send(self, s):
-        print '-' * 50
-        print s.strip()
-        httplib.HTTPConnection.send(self, s)
+        print('-' * 50)
+        print(s.strip())
+        http.client.HTTPConnection.send(self, s)
 
-class VerboseHTTPHandler(urllib2.HTTPHandler):
+class VerboseHTTPHandler(urllib.request.HTTPHandler):
     def http_open(self, req):
         return self.do_open(VerboseHTTPConnection, req)

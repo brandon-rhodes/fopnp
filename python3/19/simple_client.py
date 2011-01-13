@@ -8,7 +8,7 @@ from imapclient import IMAPClient
 try:
     hostname, username = sys.argv[1:]
 except ValueError:
-    print 'usage: %s hostname username' % sys.argv[0]
+    print('usage: %s hostname username' % sys.argv[0])
     sys.exit(2)
 
 banner = '-' * 72
@@ -16,8 +16,8 @@ banner = '-' * 72
 c = IMAPClient(hostname, ssl=True)
 try:
     c.login(username, getpass.getpass())
-except c.Error, e:
-    print 'Could not log in:', e
+except c.Error as e:
+    print('Could not log in:', e)
     sys.exit(1)
 
 def display_structure(structure, parentparts=[]):
@@ -28,7 +28,7 @@ def display_structure(structure, parentparts=[]):
     if parentparts:
         name = '.'.join(parentparts)
     else:
-        print 'HEADER'
+        print('HEADER')
         name = 'TEXT'
 
     # Print this part's designation and its MIME type.
@@ -38,25 +38,25 @@ def display_structure(structure, parentparts=[]):
         parttype = 'multipart/%s' % structure[1].lower()
     else:
         parttype = ('%s/%s' % structure[:2]).lower()
-    print '%-9s' % name, parttype,
+    print('%-9s' % name, parttype, end=' ')
 
     # For a multipart part, print all of its subordinate parts; for
     # other parts, print their disposition (if available).
 
     if is_multipart:
-        print
+        print()
         subparts = structure[0]
         for i in range(len(subparts)):
             display_structure(subparts[i], parentparts + [ str(i + 1) ])
     else:
         if structure[6]:
-            print 'size=%s' % structure[6],
+            print('size=%s' % structure[6], end=' ')
         if structure[8]:
             disposition, namevalues = structure[8]
-            print disposition,
+            print(disposition, end=' ')
             for i in range(0, len(namevalues), 2):
-                print '%s=%r' % namevalues[i:i+2]
-        print
+                print('%s=%r' % namevalues[i:i+2])
+        print()
 
 def explore_message(c, uid):
     """Let the user view various parts of a given message."""
@@ -64,33 +64,33 @@ def explore_message(c, uid):
     msgdict = c.fetch(uid, ['BODYSTRUCTURE', 'FLAGS'])
 
     while True:
-        print
-        print 'Flags:',
+        print()
+        print('Flags:', end=' ')
         flaglist = msgdict[uid]['FLAGS']
         if flaglist:
-            print ' '.join(flaglist)
+            print(' '.join(flaglist))
         else:
-            print 'none'
+            print('none')
         display_structure(msgdict[uid]['BODYSTRUCTURE'])
-        print
-        reply = raw_input('Message %s - type a part name, or "q" to quit: '
+        print()
+        reply = input('Message %s - type a part name, or "q" to quit: '
                           % uid).strip()
-        print
+        print()
         if reply.lower().startswith('q'):
             break
         key = 'BODY[%s]' % reply
         try:
             msgdict2 = c.fetch(uid, [key])
         except c._imap.error:
-            print 'Error - cannot fetch section %r' % reply
+            print('Error - cannot fetch section %r' % reply)
         else:
             content = msgdict2[uid][key]
             if content:
-                print banner
-                print content.strip()
-                print banner
+                print(banner)
+                print(content.strip())
+                print(banner)
             else:
-                print '(No such section)'
+                print('(No such section)')
 
 def explore_folder(c, name):
     """List the messages in folder `name` and let the user choose one."""
@@ -99,23 +99,23 @@ def explore_folder(c, name):
         c.select_folder(name, readonly=True)
         msgdict = c.fetch('1:*', ['BODY.PEEK[HEADER.FIELDS (FROM SUBJECT)]',
                                   'FLAGS', 'INTERNALDATE', 'RFC822.SIZE'])
-        print
+        print()
         for uid in sorted(msgdict):
             items = msgdict[uid]
-            print '%6d  %20s  %6d bytes  %s' % (
+            print('%6d  %20s  %6d bytes  %s' % (
                 uid, items['INTERNALDATE'], items['RFC822.SIZE'],
-                ' '.join(items['FLAGS']))
+                ' '.join(items['FLAGS'])))
             for i in items['BODY[HEADER.FIELDS (FROM SUBJECT)]'].splitlines():
-                print ' ' * 6, i.strip()
+                print(' ' * 6, i.strip())
 
-        reply = raw_input('Folder %s - type a message UID, or "q" to quit: '
+        reply = input('Folder %s - type a message UID, or "q" to quit: '
                           % name).strip()
         if reply.lower().startswith('q'):
             break
         try:
             reply = int(reply)
         except ValueError:
-            print 'Please type an integer or "q" to quit'
+            print('Please type an integer or "q" to quit')
         else:
             if reply in msgdict:
                 explore_message(c, reply)
@@ -127,22 +127,22 @@ def explore_account(c):
 
     while True:
 
-        print
+        print()
         folderflags = {}
         data = c.list_folders()
         for flags, delimiter, name in data:
             folderflags[name] = flags
         for name in sorted(folderflags.keys()):
-            print '%-30s %s' % (name, ' '.join(folderflags[name]))
-        print
+            print('%-30s %s' % (name, ' '.join(folderflags[name])))
+        print()
 
-        reply = raw_input('Type a folder name, or "q" to quit: ').strip()
+        reply = input('Type a folder name, or "q" to quit: ').strip()
         if reply.lower().startswith('q'):
             break
         if reply in folderflags:
             explore_folder(c, reply)
         else:
-            print 'Error: no folder named', repr(reply)
+            print('Error: no folder named', repr(reply))
 
 if __name__ == '__main__':
     explore_account(c)

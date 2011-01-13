@@ -16,12 +16,12 @@ def make_tracer(funcname):
 if __name__ == '__main__':
     _events = []
     if len(sys.argv) < 3:
-        print >>sys.stderr, 'usage: my_trace.py funcname other_script.py ...'
+        print('usage: my_trace.py funcname other_script.py ...', file=sys.stderr)
         sys.exit(2)
     sys.settrace(make_tracer(sys.argv[1]))
     del sys.argv[0:2]  # show the script only its own name and arguments
     try:
-        execfile(sys.argv[0])
+        exec(compile(open(sys.argv[0]).read(), sys.argv[0], 'exec'))
     finally:
         for t, filename, lineno in _events:
             s = linecache.getline(filename, lineno)

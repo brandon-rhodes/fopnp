@@ -21,12 +21,12 @@ def recv_until(sock, suffix):
 
 def setup():
     if len(sys.argv) != 2:
-        print >>sys.stderr, 'usage: %s interface' % sys.argv[0]
+        print('usage: %s interface' % sys.argv[0], file=sys.stderr)
         exit(2)
     interface = sys.argv[1]
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((interface, PORT))
     sock.listen(128)
-    print 'Ready and listening at %r port %d' % (interface, PORT)
+    print('Ready and listening at %r port %d' % (interface, PORT))
     return sock

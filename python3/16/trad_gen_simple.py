@@ -16,4 +16,4 @@ msg['From'] = 'Test Sender <sender@example.com>'
 msg['Subject'] = 'Test Message, Chapter 16'
 msg.set_payload(text)
 
-print msg.as_string()
+print(msg.as_string())

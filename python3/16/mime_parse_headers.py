@@ -5,7 +5,7 @@ import sys, email, codecs
 from email import Header
 
 msg = email.message_from_file(sys.stdin)
-for header, value in msg.items():
+for header, value in list(msg.items()):
     headerparts = Header.decode_header(value)
     headerval = []
     for part in headerparts:
@@ -16,5 +16,5 @@ for header, value in msg.items():
 	enc = codecs.getencoder('iso-8859-1')
 	data = enc(dec(data)[0])[0]
 	headerval.append(data)
-    print "%s: %s" % (header, " ".join(headerval))
+    print("%s: %s" % (header, " ".join(headerval)))
 

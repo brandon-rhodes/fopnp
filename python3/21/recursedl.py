@@ -10,7 +10,7 @@ def walk_dir(f, dirpath):
         f.cwd(dirpath)
     except error_perm:
         return  # ignore non-directores and ones we cannot enter
-    print dirpath
+    print(dirpath)
     names = f.nlst()
     for name in names:
         walk_dir(f, dirpath + '/' + name)

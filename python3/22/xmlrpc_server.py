@@ -3,7 +3,8 @@
 # XML-RPC server
 
 import operator, math
-from SimpleXMLRPCServer import SimpleXMLRPCServer
+from xmlrpc.server import SimpleXMLRPCServer
+from functools import reduce
 
 def addtogether(*things):
     """Add together everything in the list `things`."""
@@ -25,5 +26,5 @@ server.register_multicall_functions()
 server.register_function(addtogether)
 server.register_function(quadratic)
 server.register_function(remote_repr)
-print "Server ready"
+print("Server ready")
 server.serve_forever()

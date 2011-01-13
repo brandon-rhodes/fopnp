@@ -10,7 +10,7 @@ def printmsg(msg, level = 0):
     global counter
     l = "|  " * level
     if msg.is_multipart():
-        print l + "Found multipart:"
+        print(l + "Found multipart:")
         for item in msg.get_payload():
             printmsg(item, level + 1)
     else:
@@ -19,7 +19,7 @@ def printmsg(msg, level = 0):
             disp.append(msg['content-type'])
         if 'content-disposition' in msg:
             disp.append(msg['content-disposition'])
-        print l + ", ".join(disp)
+        print(l + ", ".join(disp))
         counter += 1
         parts.append(msg)
 
@@ -28,7 +28,7 @@ msg = email.message_from_file(inputfd)
 printmsg(msg)
 
 while 1:
-    print "Select part number to decode or q to quit: "
+    print("Select part number to decode or q to quit: ")
     part = sys.stdin.readline().strip()
     if part == 'q':
         sys.exit(0)
@@ -36,15 +36,15 @@ while 1:
         part = int(part)
         msg = parts[part - 1]
     except:
-        print "Invalid selection."
+        print("Invalid selection.")
         continue
 
-    print "Select file to write to:"
+    print("Select file to write to:")
     filename = sys.stdin.readline().strip()
     try:
         fd = open(filename, 'wb')
     except:
-        print "Invalid filename."
+        print("Invalid filename.")
         continue
 
     fd.write(msg.get_payload(decode = 1))

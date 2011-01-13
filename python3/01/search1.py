@@ -3,4 +3,4 @@
 
 from googlemaps import GoogleMaps
 address = '207 N. Defiance St, Archbold, OH'
-print GoogleMaps().address_to_latlng(address)
+print(GoogleMaps().address_to_latlng(address))

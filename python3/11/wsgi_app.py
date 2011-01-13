@@ -43,5 +43,5 @@ def simple_app(environ, start_response):
         start_response('404 Not Found', [('Content-Type', 'text/plain')])
         return ['That URL is not valid']
 
-print 'Listening on localhost:8000'
+print('Listening on localhost:8000')
 make_server('localhost', 8000, simple_app).serve_forever()

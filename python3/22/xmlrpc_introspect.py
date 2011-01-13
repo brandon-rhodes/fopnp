@@ -2,10 +2,10 @@
 # Foundations of Python Network Programming - Chapter 22 - xmlrpc_introspect.py
 # XML-RPC client
 
-import xmlrpclib
-proxy = xmlrpclib.ServerProxy('http://127.0.0.1:7001')
+import xmlrpc.client
+proxy = xmlrpc.client.ServerProxy('http://127.0.0.1:7001')
 
-print 'Here are the functions supported by this server:'
+print('Here are the functions supported by this server:')
 for method_name in proxy.system.listMethods():
 
     if method_name.startswith('system.'):
@@ -14,10 +14,10 @@ for method_name in proxy.system.listMethods():
     signatures = proxy.system.methodSignature(method_name)
     if isinstance(signatures, list) and signatures:
         for signature in signatures:
-            print '%s(%s)' % (method_name, signature)
+            print('%s(%s)' % (method_name, signature))
     else:
-        print '%s(...)' % (method_name,)
+        print('%s(...)' % (method_name,))
 
     method_help = proxy.system.methodHelp(method_name)
     if method_help:
-        print '  ', method_help
+        print('  ', method_help)

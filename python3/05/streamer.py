@@ -12,9 +12,9 @@ if sys.argv[1:] == ['server']:
     s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((HOST, PORT))
     s.listen(1)
-    print 'Listening at', s.getsockname()
+    print('Listening at', s.getsockname())
     sc, sockname = s.accept()
-    print 'Accepted connection from', sockname
+    print('Accepted connection from', sockname)
     sc.shutdown(socket.SHUT_WR)
     message = ''
     while True:
@@ -22,8 +22,8 @@ if sys.argv[1:] == ['server']:
         if not more:  # socket has closed when recv() returns ''
             break
         message += more
-    print 'Done receiving the message; it says:'
-    print message
+    print('Done receiving the message; it says:')
+    print(message)
     sc.close()
     s.close()
 
@@ -36,4 +36,4 @@ elif sys.argv[1:] == ['client']:
     s.close()
 
 else:
-    print >>sys.stderr, 'usage: streamer.py server|client [host]'
+    print('usage: streamer.py server|client [host]', file=sys.stderr)

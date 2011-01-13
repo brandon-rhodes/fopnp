@@ -5,8 +5,8 @@ from ftplib import FTP
 import sys, getpass, os.path
 
 if len(sys.argv) != 5:
-    print "usage: %s <host> <username> <localfile> <remotedir>" % (
-        sys.argv[0])
+    print("usage: %s <host> <username> <localfile> <remotedir>" % (
+        sys.argv[0]))
     exit(2)
 
 host, username, localfile, remotedir = sys.argv[1:]

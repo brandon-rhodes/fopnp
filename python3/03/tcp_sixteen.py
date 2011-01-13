@@ -23,23 +23,23 @@ if sys.argv[1:] == ['server']:
     s.bind((HOST, PORT))
     s.listen(1)
     while True:
-        print 'Listening at', s.getsockname()
+        print('Listening at', s.getsockname())
         sc, sockname = s.accept()
-        print 'We have accepted a connection from', sockname
-        print 'Socket connects', sc.getsockname(), 'and', sc.getpeername()
+        print('We have accepted a connection from', sockname)
+        print('Socket connects', sc.getsockname(), 'and', sc.getpeername())
         message = recvall(sc, 16)
-        print 'The incoming sixteen-octet message says', repr(message)
+        print('The incoming sixteen-octet message says', repr(message))
         sc.sendall('Farewell, client')
         sc.close()
-        print 'Reply sent, socket closed'
+        print('Reply sent, socket closed')
 
 elif sys.argv[1:] == ['client']:
     s.connect((HOST, PORT))
-    print 'Client has been assigned socket name', s.getsockname()
+    print('Client has been assigned socket name', s.getsockname())
     s.sendall('Hi there, server')
     reply = recvall(s, 16)
-    print 'The server said', repr(reply)
+    print('The server said', repr(reply))
     s.close()
 
 else:
-    print >>sys.stderr, 'usage: tcp_local.py server|client [host]'
+    print('usage: tcp_local.py server|client [host]', file=sys.stderr)

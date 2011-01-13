@@ -15,7 +15,7 @@ client.connect('127.0.0.1', username='test')  # password='')
 for command in 'echo "Hello, world!"', 'uname', 'uptime':
     stdin, stdout, stderr = client.exec_command(command)
     stdin.close()
-    print repr(stdout.read())
+    print(repr(stdout.read()))
     stdout.close()
     stderr.close()
 

@@ -14,13 +14,13 @@ def client(hostname, port):
     s.sendall(lancelot.qa[2][0])
     answer3 = lancelot.recv_until(s, '.')
     s.close()
-    print answer1
-    print answer2
-    print answer3
+    print(answer1)
+    print(answer2)
+    print(answer3)
 
 if __name__ == '__main__':
     if not 2 <= len(sys.argv) <= 3:
-        print >>sys.stderr, 'usage: client.py hostname [port]'
+        print('usage: client.py hostname [port]', file=sys.stderr)
         sys.exit(2)
     port = int(sys.argv[2]) if len(sys.argv) > 2 else lancelot.PORT
     client(sys.argv[1], port)

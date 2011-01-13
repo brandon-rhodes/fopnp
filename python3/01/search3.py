@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # Foundations of Python Network Programming - Chapter 1 - search3.py
 
-import httplib
+import http.client
 try:
     import json
 except ImportError:  # for Python 2.5
@@ -10,9 +10,9 @@ except ImportError:  # for Python 2.5
 path = ('/maps/geo?q=207+N.+Defiance+St%2C+Archbold%2C+OH'
         '&output=json&oe=utf8')
 
-connection = httplib.HTTPConnection('maps.google.com')
+connection = http.client.HTTPConnection('maps.google.com')
 connection.request('GET', path)
 rawreply = connection.getresponse().read()
 
 reply = json.loads(rawreply)
-print reply['Placemark'][0]['Point']['coordinates'][:-1]
+print(reply['Placemark'][0]['Point']['coordinates'][:-1])

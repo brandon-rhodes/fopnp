@@ -13,7 +13,7 @@ t.read_until('assword:')     # let "P" be capitalized or not
 t.write('mypass\n')
 n, match, previous_text = t.expect([r'Login incorrect', r'\$'], 10)
 if n == 0:
-    print "Username and password failed - giving up"
+    print("Username and password failed - giving up")
 else:
     t.write('exec uptime\n')
-    print t.read_all()       # keep reading until the connection closes
+    print(t.read_all())       # keep reading until the connection closes

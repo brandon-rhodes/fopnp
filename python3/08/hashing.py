@@ -30,4 +30,4 @@ for function in alpha_shard, hash_shard, md5_shard:
     d = {'server0': 0, 'server1': 0, 'server2': 0, 'server3': 0}
     for word in words:
         d[function(word.lower())] += 1
-    print function.__name__[:-6], d
+    print(function.__name__[:-6], d)

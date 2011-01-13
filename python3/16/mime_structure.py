@@ -7,9 +7,9 @@ import sys, email
 def printmsg(msg, level = 0):
     prefix = "|  " * level
     prefix2 = prefix + "|"
-    print prefix + "+ Message Headers:"
-    for header, value in msg.items():
-        print prefix2, header + ":", value
+    print(prefix + "+ Message Headers:")
+    for header, value in list(msg.items()):
+        print(prefix2, header + ":", value)
     if msg.is_multipart():
         for item in msg.get_payload():
             printmsg(item, level + 1)

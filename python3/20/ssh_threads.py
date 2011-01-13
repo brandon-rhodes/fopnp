@@ -16,7 +16,7 @@ client.connect('127.0.0.1', username='test')  # password='')
 def read_until_EOF(fileobj):
     s = fileobj.readline()
     while s:
-        print s.strip()
+        print(s.strip())
         s = fileobj.readline()
 
 out1 = client.exec_command('echo One;sleep 2;echo Two;sleep 1;echo Three')[1]

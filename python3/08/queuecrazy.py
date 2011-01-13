@@ -34,7 +34,7 @@ def processor(n, fountain_url, responder_urls):
     while True:
         word = zpullsock.recv()
         zreqsock.send(word)
-        print n, zreqsock.recv()
+        print(n, zreqsock.recv())
 
 def start_thread(function, *args):
     thread = threading.Thread(target=function, args=args)

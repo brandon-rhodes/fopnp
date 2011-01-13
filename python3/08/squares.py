@@ -16,7 +16,7 @@ def compute_square(n):
 def make_request():
     compute_square(random.randint(0, 5000))
 
-print 'Ten successive runs:',
+print('Ten successive runs:', end=' ')
 for i in range(1, 11):
-    print '%.2fs' % timeit.timeit(make_request, number=2000),
-print
+    print('%.2fs' % timeit.timeit(make_request, number=2000), end=' ')
+print()

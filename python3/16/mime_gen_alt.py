@@ -37,4 +37,4 @@ msg['Message-ID'] = utils.make_msgid()
 
 msg.attach(alternative(messagetext, 'text/plain'))
 msg.attach(alternative(messagehtml, 'text/html'))
-print msg.as_string()
+print(msg.as_string())

@@ -17,6 +17,6 @@ stdin = channel.makefile('wb')
 stdout = channel.makefile('rb')
 
 stdin.write('echo Hello, world\rexit\r')
-print stdout.read()
+print(stdout.read())
 
 client.close()

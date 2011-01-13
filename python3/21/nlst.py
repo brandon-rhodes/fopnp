@@ -8,7 +8,7 @@ f.login()
 f.cwd('/pub/academic/astronomy/')
 entries = f.nlst()
 entries.sort()
-print len(entries), "entries:"
+print(len(entries), "entries:")
 for entry in entries:
-    print entry
+    print(entry)
 f.quit()

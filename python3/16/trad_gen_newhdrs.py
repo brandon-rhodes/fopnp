@@ -20,4 +20,4 @@ msg['Date'] = email.utils.formatdate(localtime = 1)
 msg['Message-ID'] = email.utils.make_msgid()
 msg.set_payload(message)
 
-print msg.as_string()
+print(msg.as_string())

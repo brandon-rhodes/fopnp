@@ -53,4 +53,4 @@ msg.attach(body)
 
 for filename in sys.argv[1:]:
     msg.attach(attachment(filename))
-print msg.as_string()
+print(msg.as_string())

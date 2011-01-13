@@ -5,7 +5,7 @@ import sys, smtplib, socket
 from getpass import getpass
 
 if len(sys.argv) < 4:
-    print "Syntax: %s server fromaddr toaddr [toaddr...]" % sys.argv[0]
+    print("Syntax: %s server fromaddr toaddr [toaddr...]" % sys.argv[0])
     sys.exit(2)
 
 server, fromaddr, toaddrs = sys.argv[1], sys.argv[2], sys.argv[3:]
@@ -28,14 +28,14 @@ try:
     s = smtplib.SMTP(server)
     try:
         s.login(username, password)
-    except smtplib.SMTPException, e:
-        print "Authentication failed:", e
+    except smtplib.SMTPException as e:
+        print("Authentication failed:", e)
         sys.exit(1)
     s.sendmail(fromaddr, toaddrs, message)
 except (socket.gaierror, socket.error, socket.herror,
-        smtplib.SMTPException), e:
-    print " *** Your message may not have been sent!"
-    print e
+        smtplib.SMTPException) as e:
+    print(" *** Your message may not have been sent!")
+    print(e)
     sys.exit(1)
 else:
-    print "Message successfully sent to %d recipient(s)" % len(toaddrs)
+    print("Message successfully sent to %d recipient(s)" % len(toaddrs))

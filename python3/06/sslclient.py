@@ -8,7 +8,7 @@ from backports.ssl_match_hostname import match_hostname, CertificateError
 try:
     script_name, hostname = sys.argv
 except ValueError:
-    print >>sys.stderr, 'usage: sslclient.py <hostname>'
+    print('usage: sslclient.py <hostname>', file=sys.stderr)
     sys.exit(2)
 
 # First we connect, as usual, with a socket.
@@ -27,8 +27,8 @@ sslsock = ssl.wrap_socket(sock, ssl_version=ssl.PROTOCOL_SSLv3,
 
 try:
     match_hostname(sslsock.getpeercert(), hostname)
-except CertificateError, ce:
-    print 'Certificate error:', str(ce)
+except CertificateError as ce:
+    print('Certificate error:', str(ce))
     sys.exit(1)
 
 # From here on, our `sslsock` works like a normal socket.  We can, for
@@ -37,4 +37,4 @@ except CertificateError, ce:
 sslsock.sendall('GET / HTTP/1.0\r\n\r\n')
 result = sslsock.makefile().read()  # quick way to read until EOF
 sslsock.close()
-print 'The document https://%s/ is %d bytes long' % (hostname, len(result))
+print('The document https://%s/ is %d bytes long' % (hostname, len(result)))

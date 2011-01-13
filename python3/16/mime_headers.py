@@ -14,9 +14,9 @@ This is a test message from Chapter 16.  I hope you enjoy it!
 msg = MIMEText(message)
 msg['To'] = 'recipient@example.com'
 fromhdr = Header()
-fromhdr.append(u"Michael M\xfcller")
+fromhdr.append("Michael M\xfcller")
 fromhdr.append('<mmueller@example.com>')
 msg['From'] = fromhdr
 msg['Subject'] = 'Test Message, Chapter 16'
 
-print msg.as_string()
+print(msg.as_string())

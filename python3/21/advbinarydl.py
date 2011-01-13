@@ -23,15 +23,15 @@ while 1:
         break
     fd.write(buf)
     bytes_so_far += len(buf)
-    print "\rReceived", bytes_so_far,
+    print("\rReceived", bytes_so_far, end=' ')
     if size:
-        print "of %d total bytes (%.1f%%)" % (
-            size, 100 * bytes_so_far / float(size)),
+        print("of %d total bytes (%.1f%%)" % (
+            size, 100 * bytes_so_far / float(size)), end=' ')
     else:
-        print "bytes",
+        print("bytes", end=' ')
     sys.stdout.flush()
 
-print
+print()
 fd.close()
 datasock.close()
 f.voidresp()

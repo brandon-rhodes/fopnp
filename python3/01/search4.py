@@ -12,4 +12,4 @@ sock.sendall(
     'Connection: close\r\n'
     '\r\n')
 rawreply = sock.recv(4096)
-print rawreply
+print(rawreply)

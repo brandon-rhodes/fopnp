@@ -6,12 +6,12 @@
 import subprocess
 
 while True:
-    args = raw_input('] ').split()
+    args = input('] ').split()
     if not args:
         pass
     elif args == ['exit']:
         break
     elif args[0] == 'show':
-        print "Arguments:", args[1:]
+        print("Arguments:", args[1:])
     else:
         subprocess.call(args)
