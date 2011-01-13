@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 22 - rpyc_server.py
+# Foundations of Python Network Programming - Chapter 18 - rpyc_server.py
 # RPyC server
 
 import rpyc

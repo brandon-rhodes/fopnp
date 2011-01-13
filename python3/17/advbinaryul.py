@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Advanced binary upload - Chapter 21 - advbinaryul.py
+# Advanced binary upload - Chapter 17 - advbinaryul.py
 
 from ftplib import FTP
 import sys, getpass, os.path

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 22 - xmlrpc_server.py
+# Foundations of Python Network Programming - Chapter 18 - xmlrpc_server.py
 # XML-RPC server
 
 import operator, math

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# NLST example - Chapter 21 - nlst.py
+# NLST example - Chapter 17 - nlst.py
 
 from ftplib import FTP
 

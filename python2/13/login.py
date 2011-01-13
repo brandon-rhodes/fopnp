@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# SMTP transmission with authentication - Chapter 17 - login.py
+# SMTP transmission with authentication - Chapter 13 - login.py
 
 import sys, smtplib, socket
 from getpass import getpass

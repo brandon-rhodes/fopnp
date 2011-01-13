@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# Foundations of Python Network Programming - Chapter 22 - xmlrpc_client.py
+# Foundations of Python Network Programming - Chapter 18 - xmlrpc_client.py
 # XML-RPC client
 
 import xmlrpclib

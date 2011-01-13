@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# dir() example - Chapter 21 - dir.py
+# dir() example - Chapter 17 - dir.py
 
 from ftplib import FTP
 

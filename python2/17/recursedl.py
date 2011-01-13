@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Recursive downloader - Chapter 21 - recursedl.py
+# Recursive downloader - Chapter 17 - recursedl.py
 
 import os, sys
 from ftplib import FTP, error_perm

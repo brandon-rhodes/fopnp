@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 20 - ssh_threads.py
+# Foundations of Python Network Programming - Chapter 16 - ssh_threads.py
 # Running two remote commands simultaneously in different channels
 
 import threading

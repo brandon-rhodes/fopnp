@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 20 - ssh_simple.py
+# Foundations of Python Network Programming - Chapter 16 - ssh_simple.py
 # Using SSH like Telnet: connecting and running two commands
 
 import paramiko

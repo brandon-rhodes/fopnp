@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# POP mailbox downloader with deletion - Chapter 18
+# POP mailbox downloader with deletion - Chapter 14
 # download-and-delete.py
 
 import email, getpass, poplib, sys

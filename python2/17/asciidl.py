@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# ASCII download - Chapter 21 - asciidl.py
+# ASCII download - Chapter 17 - asciidl.py
 # Downloads README from remote and writes it to disk.
 
 import os

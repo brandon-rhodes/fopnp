@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# SMTP transmission with manual EHLO - Chapter 17 - ehlo.py
+# SMTP transmission with manual EHLO - Chapter 13 - ehlo.py
 
 import sys, smtplib, socket
 

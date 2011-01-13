@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# POP connection and authentication - Chapter 18 - popconn.py
+# POP connection and authentication - Chapter 14 - popconn.py
 
 import getpass, poplib, sys
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 22 - jsonrpc_server.py
+# Foundations of Python Network Programming - Chapter 18 - jsonrpc_server.py
 # JSON-RPC server
 
 from wsgiref.simple_server import make_server

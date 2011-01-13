@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 20 - telnet_login.py
+# Foundations of Python Network Programming - Chapter 16 - telnet_login.py
 # Connect to localhost, watch for a login prompt, and try logging in
 
 import telnetlib

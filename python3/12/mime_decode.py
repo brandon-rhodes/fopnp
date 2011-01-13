@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 16 - mime_decode.py
+# Foundations of Python Network Programming - Chapter 12 - mime_decode.py
 # This program requires Python 2.2.2 or above
 
 import sys, email

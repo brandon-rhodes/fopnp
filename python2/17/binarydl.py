@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Binary upload - Chapter 21 - binarydl.py
+# Binary upload - Chapter 17 - binarydl.py
 
 import os
 from ftplib import FTP

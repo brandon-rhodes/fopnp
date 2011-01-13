@@ -1,11 +1,11 @@
 To: recipient@example.com
 From: Test Sender <sender@example.com>
-Subject: Test Message, Chapter 16
+Subject: Test Message, Chapter 12
 Date: Mon, 02 Aug 2010 10:05:55 -0400
 Message-ID: <20100802140555.11734.89229@guinness.ten22>
 
 Hello,
 
-This is a test message from Chapter 16.  I hope you enjoy it!
+This is a test message from Chapter 12.  I hope you enjoy it!
 
 -- Anonymous

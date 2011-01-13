@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 19 - open_imap.py
+# Foundations of Python Network Programming - Chapter 15 - open_imap.py
 # Opening an IMAP connection with the powerful IMAPClient
 
 import getpass, sys

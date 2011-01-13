@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Advanced binary download - Chapter 21 - advbinarydl.py
+# Advanced binary download - Chapter 17 - advbinarydl.py
 
 import os, sys
 from ftplib import FTP

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 19 - mailbox_summary.py
+# Foundations of Python Network Programming - Chapter 15 - mailbox_summary.py
 # Opening an IMAP connection with IMAPClient and retrieving mailbox messages.
 
 import email, getpass, sys

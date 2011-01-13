@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 20 - telnet_codes.py
+# Foundations of Python Network Programming - Chapter 16 - telnet_codes.py
 # How your code might look if you intercept Telnet options yourself
 
 from telnetlib import Telnet, IAC, DO, DONT, WILL, WONT, SB, SE, TTYPE

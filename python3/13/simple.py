@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Basic SMTP transmission - Chapter 17 - simple.py
+# Basic SMTP transmission - Chapter 13 - simple.py
 
 import sys, smtplib
 

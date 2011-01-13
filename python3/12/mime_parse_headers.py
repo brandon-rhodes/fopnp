@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 16 - mime_parse_headers.py
+# Foundations of Python Network Programming - Chapter 12 - mime_parse_headers.py
 
 import sys, email, codecs
 from email import Header

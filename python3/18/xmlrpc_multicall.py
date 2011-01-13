@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 22 - xmlrpc_multicall.py
+# Foundations of Python Network Programming - Chapter 18 - xmlrpc_multicall.py
 # XML-RPC client performing a multicall
 
 import xmlrpc.client

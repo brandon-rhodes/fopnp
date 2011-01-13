@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 20 - sftp.py
+# Foundations of Python Network Programming - Chapter 16 - sftp.py
 # Fetching files with SFTP
 
 import functools

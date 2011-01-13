@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Binary download - Chapter 21 - binaryul.py
+# Binary download - Chapter 17 - binaryul.py
 
 from ftplib import FTP
 import sys, getpass, os.path

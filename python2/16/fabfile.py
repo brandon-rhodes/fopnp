@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 20 - fabfile.py
+# Foundations of Python Network Programming - Chapter 16 - fabfile.py
 # A sample Fabric script
 
 # Even though this chapter will not cover Fabric, you might want to try

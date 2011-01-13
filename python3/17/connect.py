@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Basic connection - Chapter 21 - connect.py
+# Basic connection - Chapter 17 - connect.py
 
 from ftplib import FTP
 

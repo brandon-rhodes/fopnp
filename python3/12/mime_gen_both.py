@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 16 - mime_gen_both.py
+# Foundations of Python Network Programming - Chapter 12 - mime_gen_both.py
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
@@ -31,18 +31,18 @@ def attachment(filename):
 
 messagetext = """Hello,
 
-This is a *great* test message from Chapter 16.  I hope you enjoy it!
+This is a *great* test message from Chapter 12.  I hope you enjoy it!
 
 -- Anonymous"""
 messagehtml = """Hello,<P>
-This is a <B>great</B> test message from Chapter 16.  I hope you enjoy
+This is a <B>great</B> test message from Chapter 12.  I hope you enjoy
 it!<P>
 -- <I>Anonymous</I>"""
 
 msg = MIMEMultipart()
 msg['To'] = 'recipient@example.com'
 msg['From'] = 'Test Sender <sender@example.com>'
-msg['Subject'] = 'Test Message, Chapter 16'
+msg['Subject'] = 'Test Message, Chapter 12'
 msg['Date'] = utils.formatdate(localtime = 1)
 msg['Message-ID'] = utils.make_msgid()
 

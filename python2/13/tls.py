@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# SMTP transmission with TLS - Chapter 17 - tls.py
+# SMTP transmission with TLS - Chapter 13 - tls.py
 
 import sys, smtplib, socket
 

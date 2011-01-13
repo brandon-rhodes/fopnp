@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# Foundations of Python Network Programming - Chapter 22 - jsonrpc_client.py
+# Foundations of Python Network Programming - Chapter 18 - jsonrpc_client.py
 # JSON-RPC client
 
 from lovely.jsonrpc import proxy
