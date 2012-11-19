@@ -54,7 +54,7 @@ updated examples will be posted here.
 07/server_twisted.py - waiting on port of "Twisted" to Python 3
 
 08/hashing.py - OK
-08/queuecrazy.py - waiting on port of "pyzmq" to Python 3
+08/queuecrazy.py - OK
 08/squares.py - waiting on port of "python-memcached" to Python 3
 
 09/get_rfc2616.py - OK
@@ -115,8 +115,8 @@ updated examples will be posted here.
 
 18/jsonrpc_client.py - waiting on port of "lovely.jsonrpc" to Python 3
 18/jsonrpc_server.py - waiting on port of "lovely.jsonrpc" to Python 3
-18/rpyc_client.py - waiting on port of "rpyc" to Python 3
-18/rpyc_server.py - waiting on port of "rpyc" to Python 3
+18/rpyc_client.py - OK
+18/rpyc_server.py - OK
 18/xmlrpc_client.py - OK
 18/xmlrpc_introspect.py - OK
 18/xmlrpc_multicall.py - OK
