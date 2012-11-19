@@ -11,13 +11,15 @@ information on running these examples, and platform-specific notes.
 If errors are found in the examples after the book goes to print,
 updated examples will be posted here.
 
--- Brandon Rhodes
-   January, 2011
+-- Brandon Rhodes, January, 2011
 
 
-                      STATUS OF PYTHON 3 EXAMPLES
-                           As of January 2011
+STATUS OF PYTHON 3 EXAMPLES
+---------------------------
 
+(As of November 2012)
+
+{{{
 01/getname.py - OK
 01/search1.py - waiting on port of "googlemaps" to Python 3
 01/search2.py - OK
@@ -121,3 +123,4 @@ updated examples will be posted here.
 18/xmlrpc_introspect.py - OK
 18/xmlrpc_multicall.py - OK
 18/xmlrpc_server.py - OK
+}}}
