@@ -1,0 +1,37 @@
+seqdiag {
+  span_height = 4;
+  default_fontsize = 10;
+  Python <- "POP3 Server" [
+    leftnote="p = POP3_SSL(hostname)",
+    label = "OK POP3 server ready"
+  ];
+  Python -> "POP3 Server" [
+    leftnote="p.user('guido')",
+    label = "USER guido"
+  ];
+  Python <- "POP3 Server" [
+    label = "+OK User accepted"
+  ];
+  Python -> "POP3 Server" [
+    leftnote="p.pass_('bdfl')",
+    label = "PASS bdfl"
+  ];
+  Python <- "POP3 Server" [
+    label = "+OK Pass accepted"
+  ];
+  Python -> "POP3 Server" [
+    leftnote="p.stat()",
+    label = "STAT"
+  ];
+  Python <- "POP3 Server" [
+    leftnote="(3, 5675)",
+    label = "+OK 3 5675"
+  ];
+  Python -> "POP3 Server" [
+    leftnote="p.quit()",
+    label = "QUIT"
+  ];
+  Python <- "POP3 Server" [
+    label = "+OK"
+  ];
+}
