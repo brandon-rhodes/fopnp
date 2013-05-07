@@ -3,6 +3,7 @@ seqdiag {
   default_fontsize = 10;
   Python <- "POP3 Server" [
     leftnote="p = POP3_SSL(hostname)",
+    rightnote="TCP accept()",
     label = "OK POP3 server ready"
   ];
   Python -> "POP3 Server" [
@@ -32,6 +33,7 @@ seqdiag {
     label = "QUIT"
   ];
   Python <- "POP3 Server" [
+    rightnote="TCP close()",
     label = "+OK"
   ];
 }
