@@ -1,9 +1,11 @@
 seqdiag {
   span_height = 4;
   default_fontsize = 10;
-  Python <- "IMAP Server" [
+  Python -> "IMAP Server" [
     leftnote="c = IMAPClient(hostname)",
-    rightnote="TCP accept()",
+    rightnote="TCP accept()"
+  ];
+  Python <- "IMAP Server" [
     label = "* OK IMAP4rev1 Service Ready"
   ];
   Python -> "IMAP Server" [
@@ -14,11 +16,11 @@ seqdiag {
     label = "a001 OK LOGIN completed"
   ];
   Python -> "IMAP Server" [
-    leftnote="c.select_folder()",
+    leftnote="c.select_folder('inbox')",
     label = "a002 select inbox"
   ];
   Python <- "IMAP Server" [
-    leftnote="{…}",
+    leftnote="{'EXISTS': 3,\n…'RECENT': 0}",
     label = "… a002 OK … SELECT completed"
   ];
   Python -> "IMAP Server" [

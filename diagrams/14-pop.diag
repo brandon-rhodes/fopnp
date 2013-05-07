@@ -1,10 +1,12 @@
 seqdiag {
   span_height = 4;
   default_fontsize = 10;
-  Python <- "POP3 Server" [
+  Python -> "POP3 Server" [
     leftnote="p = POP3_SSL(hostname)",
-    rightnote="TCP accept()",
-    label = "OK POP3 server ready"
+    rightnote="TCP accept()"
+  ];
+  Python <- "POP3 Server" [
+    label = "+OK POP3 server ready"
   ];
   Python -> "POP3 Server" [
     leftnote="p.user('guido')",
