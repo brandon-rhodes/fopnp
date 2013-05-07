@@ -1,0 +1,32 @@
+seqdiag {
+  span_height = 4;
+  default_fontsize = 10;
+  Python <- "IMAP Server" [
+    leftnote="c = IMAPClient(hostname)",
+    rightnote="TCP accept()",
+    label = "* OK IMAP4rev1 Service Ready"
+  ];
+  Python -> "IMAP Server" [
+    leftnote="c.login('guido', 'bdfl')",
+    label = "a001 login guido bdfl"
+  ];
+  Python <- "IMAP Server" [
+    label = "a001 OK LOGIN completed"
+  ];
+  Python -> "IMAP Server" [
+    leftnote="c.select_folder()",
+    label = "a002 select inbox"
+  ];
+  Python <- "IMAP Server" [
+    leftnote="{…}",
+    label = "… a002 OK … SELECT completed"
+  ];
+  Python -> "IMAP Server" [
+    leftnote="c.logout()",
+    label = "a003 logout"
+  ];
+  Python <- "IMAP Server" [
+    rightnote="TCP close()",
+    label = "a003 OK LOGOUT completed"
+  ];
+}
