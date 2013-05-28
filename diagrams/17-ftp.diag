@@ -1,0 +1,61 @@
+seqdiag {
+  span_height = 0;
+  default_fontsize = 10;
+  Python -> "FTP Server" [
+    leftnote="f = FTP(hostname)",
+    rightnote="TCP accept()"
+  ];
+  Python <- "FTP Server" [
+    label = "220 Welcome to kernel.org"
+  ];
+  Python -> "FTP Server" [
+    leftnote="f.login()",
+    label = "USER anonymous"
+  ];
+  Python <- "FTP Server" [
+    label = "331 Please specify the password."
+  ];
+  Python -> "FTP Server" [
+    label = "PASS anonymous@"
+  ];
+  Python <- "FTP Server" [
+    leftnote="'230 …'",
+    label = "230 Login successful."
+  ];
+  Python -> "FTP Server" [
+    leftnote="f.cwd('/pub')",
+    label = "CWD /pub"
+  ];
+  Python <- "FTP Server" [
+    leftnote="'250 …'",
+    label = "250 Directory successfully changed."
+  ];
+  Python -> "FTP Server" [
+    leftnote="f.retrlines('LIST')",
+    label = "TYPE A"
+  ];
+  Python <- "FTP Server" [
+    label = "200 Switching to ASCII mode."
+  ];
+  Python -> "FTP Server" [
+    label = "PASV"
+  ];
+  Python <- "FTP Server" [
+    label = "227 Entering Passive Mode (…)."
+  ];
+  Python -> "FTP Server" [
+    label = "LIST"
+  ];
+  Python <- "FTP Server" [
+    leftnote="'-r--r--r-- …'",
+    label = "150 Here comes the directory …\n226 Directory send OK."
+  ];
+  Python -> "FTP Server" [
+    leftnote="f.quit()",
+    label = "QUIT"
+  ];
+  Python <- "FTP Server" [
+    rightnote="TCP close()",
+    label = "211 Goodbye."
+  ];
+}
