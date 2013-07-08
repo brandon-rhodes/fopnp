@@ -7,12 +7,14 @@ try:
 except ImportError:  # for Python 2.5
     import simplejson as json
 
-path = ('/maps/geo?q=207+N.+Defiance+St%2C+Archbold%2C+OH'
-        '&output=json&oe=utf8')
+path = ('/maps/api/geocode/json?sensor=false'
+        '&address=207+N.+Defiance+St%2C+Archbold%2C+OH')
 
 connection = httplib.HTTPConnection('maps.google.com')
 connection.request('GET', path)
 rawreply = connection.getresponse().read()
 
 reply = json.loads(rawreply)
-print reply['Placemark'][0]['Point']['coordinates'][:-1]
+print reply['results'][0]['geometry']['location']
+
+# => {u'lat': 41.521954, u'lng': -84.306691}
