@@ -5,7 +5,7 @@
 import random, socket, sys
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-MAX = 65535
+BUFSIZE = 65535
 PORT = 1060
 
 if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
@@ -13,7 +13,7 @@ if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
     s.bind((interface, PORT))
     print('Listening at', s.getsockname())
     while True:
-        data, address = s.recvfrom(MAX)
+        data, address = s.recvfrom(BUFSIZE)
         if random.randint(0, 1):
             print('The client at', address, 'says:', repr(data))
             message = 'Your data was %d bytes' % len(data)
@@ -31,14 +31,14 @@ elif len(sys.argv) == 3 and sys.argv[1] == 'client':
         print('Waiting up to', delay, 'seconds for a reply')
         s.settimeout(delay)
         try:
-            data = s.recv(MAX)
+            data = s.recv(BUFSIZE)
         except socket.timeout:
             delay *= 2  # wait even longer for the next request
             if delay > 2.0:
                 raise RuntimeError('I think the server is down')
         else:
             break   # we are done, and can stop looping
-            
+
     print('The server says', repr(data))
 
 else:

@@ -5,7 +5,6 @@
 import IN, socket, sys
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-MAX = 65535
 PORT = 1060
 
 if len(sys.argv) != 2:
