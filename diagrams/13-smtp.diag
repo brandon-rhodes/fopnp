@@ -1,0 +1,50 @@
+seqdiag {
+  span_height = 0;
+  default_fontsize = 8;
+  Python -> "SMTP Server" [
+    leftnote="s = smtplib.SMTP(server)",
+    rightnote="TCP accept()"
+  ];
+  Python <- "SMTP Server" [
+    label = "220 smtp.example.com ESMTP Postfix"
+  ];
+  Python -> "SMTP Server" [
+    label = "ehlo [10.5.0.1]"
+  ];
+  Python <- "SMTP Server" [
+    label = "250-smtp.example.com\n250-PIPELINING\n250-SIZE 51200000\n250 DSN"
+  ];
+  Python -> "SMTP Server" [
+    leftnote="s.sendmail(fromaddr,\ntoaddrs, message)",
+    label = "mail FROM:<sender@example> size=1215"
+  ];
+  Python <- "SMTP Server" [
+    label = "250 Ok"
+  ];
+  Python -> "SMTP Server" [
+    label = "rcpt TO:<recipient@example.com>"
+  ];
+  Python <- "SMTP Server" [
+    label = "250 Ok"
+  ];
+  Python -> "SMTP Server" [
+    label = "data"
+  ];
+  Python <- "SMTP Server" [
+    label = "354 End data with <CR><LF>.<CR><LF>"
+  ];
+  Python -> "SMTP Server" [
+    label = "From: \"Sender\" <sender@example.com>\n...other headers and body of email...\n.\n"
+  ];
+  Python <- "SMTP Server" [
+    label = "250 Ok: queued as 83190"
+  ];
+  Python -> "SMTP Server" [
+    leftnote="s.quit()",
+    label = "quit"
+  ];
+  Python <- "SMTP Server" [
+    rightnote="TCP close()",
+    label = "221 Bye"
+  ];
+}
