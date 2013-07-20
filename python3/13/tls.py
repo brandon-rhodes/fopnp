@@ -48,3 +48,4 @@ except (socket.gaierror, socket.error, socket.herror,
     sys.exit(1)
 else:
     print("Message successfully sent to %d recipient(s)" % len(toaddrs))
+    s.quit()

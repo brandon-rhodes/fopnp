@@ -21,5 +21,6 @@ in Foundations of Python Network Programming.
 
 s = smtplib.SMTP(server)
 s.sendmail(fromaddr, toaddrs, message)
+s.quit()
 
 print "Message successfully sent to %d recipient(s)" % len(toaddrs)
