@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # SMTP transmission with TLS - Chapter 13 - tls.py
 
-import sys, smtplib, socket
+import sys, smtplib, socket, ssl
 
 if len(sys.argv) < 4:
     print("Syntax: %s server fromaddr toaddr [toaddr...]" % sys.argv[0])
@@ -31,7 +31,10 @@ try:
 
     if uses_esmtp and s.has_extn('starttls'):
         print("Negotiating TLS....")
-        s.starttls()
+        context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
+        context.set_default_verify_paths()
+        context.verify_mode = ssl.CERT_REQUIRED
+        s.starttls(context=context)
         code = s.ehlo()[0]
         if not (200 <= code <= 299):
             print("Couldn't EHLO after STARTTLS")
