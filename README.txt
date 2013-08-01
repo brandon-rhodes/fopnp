@@ -75,7 +75,7 @@ STATUS OF PYTHON 3 EXAMPLES
  12/mime_gen_basic.py - OK
  12/mime_gen_both.py - OK
  12/mime_headers.py - OK
- 12/mime_parse_headers.py - OK (but why does the space character disappear?)
+ 12/mime_parse_headers.py - OK
  12/mime_structure.py - OK
  12/trad_gen_newhdrs.py - OK
  12/trad_gen_simple.py - OK
@@ -91,11 +91,11 @@ STATUS OF PYTHON 3 EXAMPLES
  14/mailbox.py - OK
  14/popconn.py - OK
 
- 15/folder_info.py - waiting on port of "imapclient" to Python 3
- 15/mailbox_summary.py - waiting on port of "imapclient" to Python 3
- 15/open_imap.py - waiting on port of "imapclient" to Python 3
+ 15/folder_info.py - OK
+ 15/mailbox_summary.py - OK
+ 15/open_imap.py - OK
  15/open_imaplib.py - OK
- 15/simple_client.py - waiting on port of "imapclient" to Python 3
+ 15/simple_client.py - OK
 
  16/fabfile.py - waiting on port of "fabric" to Python 3
  16/sftp.py - waiting on port of "paramiko" to Python 3
