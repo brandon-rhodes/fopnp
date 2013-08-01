@@ -5,8 +5,9 @@
 import email
 
 banner = '-' * 48
-popular_headers = ('From', 'To', 'Subject', 'Date')
-msg = email.message_from_file(open('message.txt'))
+popular_headers = {'From', 'To', 'Subject', 'Date'}
+with open('message.txt') as f:
+    msg = email.message_from_file(f)
 headers = sorted(msg.keys())
 
 print(banner)
