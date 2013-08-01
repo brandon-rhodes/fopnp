@@ -4,18 +4,18 @@
 from email.mime.text import MIMEText
 from email.header import Header
 
-message = """Hello,
+message_text = """Hello,
 
 This is a test message from Chapter 12.  I hope you enjoy it!
 
 -- Anonymous"""
 
-msg = MIMEText(message)
-msg['To'] = 'recipient@example.com'
-fromhdr = Header()
-fromhdr.append('Michael Müller', 'iso-8859-1')  # 'utf-8' is even more general
-fromhdr.append('<mmueller@example.com>')
-msg['From'] = fromhdr
-msg['Subject'] = 'Test Message, Chapter 12'
+message = MIMEText(message_text)
+message['To'] = 'recipient@example.com'
+header = Header()
+header.append('Michael Müller', 'iso-8859-1')  # 'utf-8' is even more general
+header.append('<mmueller@example.com>')
+message['From'] = header
+message['Subject'] = 'Test Message, Chapter 12'
 
-print(msg.as_string())
+print(message.as_string())

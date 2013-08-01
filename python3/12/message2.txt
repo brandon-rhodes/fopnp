@@ -1,0 +1,12 @@
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+To: recipient@example.com
+From: =?iso-8859-1?q?Michael_M=FCller?= <mmueller@example.com>
+Subject: Test Message, Chapter 12
+
+Hello,
+
+This is a test message from Chapter 12.  I hope you enjoy it!
+
+-- Anonymous

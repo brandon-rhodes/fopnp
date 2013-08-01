@@ -1,18 +1,17 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 12 - mime_structure.py
-# This program requires Python 2.2.2 or above
 
-import sys, email
+import email, fileinput
 
-def printmsg(msg, level = 0):
+def print_message(message, level = 0):
     prefix = "|  " * level
     prefix2 = prefix + "|"
     print(prefix + "+ Message Headers:")
-    for header, value in list(msg.items()):
+    for header, value in message.items():
         print(prefix2, header + ":", value)
-    if msg.is_multipart():
-        for item in msg.get_payload():
-            printmsg(item, level + 1)
+    if message.is_multipart():
+        for item in message.get_payload():
+            print_message(item, level + 1)
 
-msg = email.message_from_file(sys.stdin)
-printmsg(msg)
+message = email.message_from_string(''.join(fileinput.input()))
+print_message(message)

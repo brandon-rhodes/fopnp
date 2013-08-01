@@ -17,16 +17,15 @@ def genpart(data, contenttype):
         encoders.encode_base64(retval)
     return retval
 
-
 def attachment(filename):
-    fd = open(filename, 'rb')
     mimetype, mimeencoding = mimetypes.guess_type(filename)
     if mimeencoding or (mimetype is None):
         mimetype = 'application/octet-stream'
-    retval = genpart(fd.read(), mimetype)
+    mode = 'r' if mimetype.startswith('text/') else 'rb'
+    with open(filename, mode) as fd:
+        retval = genpart(fd.read(), mimetype)
     retval.add_header('Content-Disposition', 'attachment',
-            filename = filename)
-    fd.close()
+                      filename=filename)
     return retval
 
 messagetext = """Hello,

@@ -1,50 +1,25 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 12 - mime_decode.py
-# This program requires Python 2.2.2 or above
 
-import sys, email
-counter = 0
-parts = []
+import email, fileinput, sys
 
-def printmsg(msg, level = 0):
-    global counter
+def save_parts(message, level=0, counter=1):
     l = "|  " * level
-    if msg.is_multipart():
+    if message.is_multipart():
         print(l + "Found multipart:")
-        for item in msg.get_payload():
-            printmsg(item, level + 1)
+        for item in message.get_payload():
+            counter = save_parts(item, level + 1, counter)
     else:
-        disp = ['%d. Decodable part' % (counter + 1)]
-        if 'content-type' in msg:
-            disp.append(msg['content-type'])
-        if 'content-disposition' in msg:
-            disp.append(msg['content-disposition'])
-        print(l + ", ".join(disp))
+        filename = 'part{}.out'.format(counter)
+        print('Part {}:'.format(counter),
+              message.get('content-type', '-'),
+              message.get('content-disposition', '-'),
+              '=>', filename)
+        with open(filename, 'wb') as f:
+            f.write(message.get_payload(decode=1))
         counter += 1
-        parts.append(msg)
+    return counter
 
-inputfd = open(sys.argv[1])
-msg = email.message_from_file(inputfd)
-printmsg(msg)
-
-while 1:
-    print("Select part number to decode or q to quit: ")
-    part = sys.stdin.readline().strip()
-    if part == 'q':
-        sys.exit(0)
-    try:
-        part = int(part)
-        msg = parts[part - 1]
-    except:
-        print("Invalid selection.")
-        continue
-
-    print("Select file to write to:")
-    filename = sys.stdin.readline().strip()
-    try:
-        fd = open(filename, 'wb')
-    except:
-        print("Invalid filename.")
-        continue
-
-    fd.write(msg.get_payload(decode = 1))
+with open(sys.argv[1]) as f:
+    message = email.message_from_string(''.join(fileinput.input()))
+save_parts(message)

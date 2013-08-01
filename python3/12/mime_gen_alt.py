@@ -6,15 +6,15 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email import utils, encoders
 
-def alternative(data, contenttype):
+def build_alternative(data, contenttype):
     maintype, subtype = contenttype.split('/')
     if maintype == 'text':
-        retval = MIMEText(data, _subtype=subtype)
+        part = MIMEText(data, _subtype=subtype)
     else:
-        retval = MIMEBase(maintype, subtype)
-        retval.set_payload(data)
-        encoders.encode_base64(retval)
-    return retval
+        part = MIMEBase(maintype, subtype)
+        part.set_payload(data)
+        encoders.encode_base64(part)
+    return part
 
 messagetext = """Hello,
 
@@ -34,6 +34,6 @@ msg['Subject'] = 'Test Message, Chapter 12'
 msg['Date'] = utils.formatdate(localtime = 1)
 msg['Message-ID'] = utils.make_msgid()
 
-msg.attach(alternative(messagetext, 'text/plain'))
-msg.attach(alternative(messagehtml, 'text/html'))
+msg.attach(build_alternative(messagetext, 'text/plain'))
+msg.attach(build_alternative(messagehtml, 'text/html'))
 print(msg.as_string())

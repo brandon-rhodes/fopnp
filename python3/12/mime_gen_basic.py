@@ -7,23 +7,22 @@ from email.mime.text import MIMEText
 from email import utils, encoders
 import mimetypes, sys
 
-def attachment(filename):
+def build_attachment(filename):
     mimetype, mimeencoding = mimetypes.guess_type(filename)
     if mimeencoding or (mimetype is None):
         mimetype = 'application/octet-stream'
     maintype, subtype = mimetype.split('/')
     if maintype == 'text':
-        with open(filename, 'r') as fd:
-            retval = MIMEText(fd.read(), _subtype=subtype)
+        with open(filename, 'r') as f:
+            part = MIMEText(f.read(), _subtype=subtype)
     else:
-        retval = MIMEBase(maintype, subtype)
-        with open(filename, 'rb') as fd:
-            retval.set_payload(fd.read())
-        encoders.encode_base64(retval)
-    retval.add_header('Content-Disposition', 'attachment',
-            filename = filename)
-    fd.close()
-    return retval
+        part = MIMEBase(maintype, subtype)
+        with open(filename, 'rb') as f:
+            part.set_payload(f.read())
+        encoders.encode_base64(part)
+    part.add_header('Content-Disposition', 'attachment',
+                    filename = filename)
+    return part
 
 message = """Hello,
 
@@ -41,5 +40,5 @@ msg['Message-ID'] = utils.make_msgid()
 body = MIMEText(message, _subtype='plain')
 msg.attach(body)
 for filename in sys.argv[1:]:
-    msg.attach(attachment(filename))
+    msg.attach(build_attachment(filename))
 print(msg.as_string())
