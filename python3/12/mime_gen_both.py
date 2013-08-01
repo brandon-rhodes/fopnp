@@ -7,26 +7,25 @@ from email.mime.base import MIMEBase
 from email import utils, encoders
 import mimetypes, sys
 
-def genpart(data, contenttype):
+def build_part(data, contenttype):
     maintype, subtype = contenttype.split('/')
     if maintype == 'text':
-        retval = MIMEText(data, _subtype=subtype)
+        part = MIMEText(data, _subtype=subtype)
     else:
-        retval = MIMEBase(maintype, subtype)
-        retval.set_payload(data)
-        encoders.encode_base64(retval)
-    return retval
+        part = MIMEBase(maintype, subtype)
+        part.set_payload(data)
+        encoders.encode_base64(part)
+    return part
 
-def attachment(filename):
+def build_attachment(filename):
     mimetype, mimeencoding = mimetypes.guess_type(filename)
     if mimeencoding or (mimetype is None):
         mimetype = 'application/octet-stream'
     mode = 'r' if mimetype.startswith('text/') else 'rb'
     with open(filename, mode) as fd:
-        retval = genpart(fd.read(), mimetype)
-    retval.add_header('Content-Disposition', 'attachment',
-                      filename=filename)
-    return retval
+        part = build_part(fd.read(), mimetype)
+    part.add_header('Content-Disposition', 'attachment', filename=filename)
+    return part
 
 messagetext = """Hello,
 
@@ -46,10 +45,10 @@ msg['Date'] = utils.formatdate(localtime = 1)
 msg['Message-ID'] = utils.make_msgid()
 
 body = MIMEMultipart('alternative')
-body.attach(genpart(messagetext, 'text/plain'))
-body.attach(genpart(messagehtml, 'text/html'))
+body.attach(build_part(messagetext, 'text/plain'))
+body.attach(build_part(messagehtml, 'text/html'))
 msg.attach(body)
 
 for filename in sys.argv[1:]:
-    msg.attach(attachment(filename))
+    msg.attach(build_attachment(filename))
 print(msg.as_string())
