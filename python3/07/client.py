@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 7 - client.py
 # Simple Lancelot client that asks three questions then disconnects.
 

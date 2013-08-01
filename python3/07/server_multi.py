@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 7 - server_multi.py
 # Using multiple threads or processes to serve several clients in parallel.
 

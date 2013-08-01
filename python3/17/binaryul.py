@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Binary download - Chapter 17 - binaryul.py
 
 from ftplib import FTP

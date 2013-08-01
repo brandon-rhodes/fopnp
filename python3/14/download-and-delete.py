@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # POP mailbox downloader with deletion - Chapter 14
 # download-and-delete.py
 

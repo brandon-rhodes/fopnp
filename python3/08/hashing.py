@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 8 - hashing.py
 # Hashes are a great way to divide work.
 

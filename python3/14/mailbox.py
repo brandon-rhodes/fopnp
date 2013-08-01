@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # POP mailbox scanning - Chapter 14 - mailbox.py
 
 import getpass, poplib, sys

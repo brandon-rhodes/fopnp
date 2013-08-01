@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 16 - shell.py
 # A simple shell, so you can try running commands in the absence of
 # any special characters (except for whitespace, used for splitting).

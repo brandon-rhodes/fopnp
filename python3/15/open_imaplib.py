@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 15 - open_imaplib.py
 # Opening an IMAP connection with the pitiful Python Standard Library
 

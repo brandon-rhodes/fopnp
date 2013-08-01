@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # SMTP transmission with debugging - Chapter 13 - debug.py
 
 import sys, smtplib, socket

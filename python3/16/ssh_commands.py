@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 16 - ssh_commands.py
 # Running separate commands instead of using a shell
 

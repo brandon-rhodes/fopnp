@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 11 - wsgi_app.py
 # A simple web application built directly against the low-level WSGI spec.
 

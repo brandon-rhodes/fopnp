@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 7 - server_simple.py
 # Simple server that only serves one client at a time; others have to wait.
 

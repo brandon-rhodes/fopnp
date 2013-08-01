@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 12 - trad_parse.py
 # Traditional Message Parsing
 # This program requires Python 2.5 or above

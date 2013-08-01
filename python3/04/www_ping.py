@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 4 - www_ping.py
 # Find the WWW service of an arbitrary host using getaddrinfo().
 

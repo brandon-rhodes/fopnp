@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 12 - mime_gen_both.py
 
 from email.mime.text import MIMEText

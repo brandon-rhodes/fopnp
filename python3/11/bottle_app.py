@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 11 - bottle_app.py
 # A simple web application built using the Bottle micro-framework.
 

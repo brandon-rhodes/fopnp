@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Advanced binary upload - Chapter 17 - advbinaryul.py
 
 from ftplib import FTP

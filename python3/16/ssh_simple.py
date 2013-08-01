@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 16 - ssh_simple.py
 # Using SSH like Telnet: connecting and running two commands
 

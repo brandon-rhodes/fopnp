@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # dir() example - Chapter 17 - dir.py
 
 from ftplib import FTP

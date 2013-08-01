@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # SMTP transmission with authentication - Chapter 13 - login.py
 
 import sys, smtplib, socket

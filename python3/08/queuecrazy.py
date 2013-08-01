@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 8 - queuecrazy.py
 # Small application that uses several different message queues
 

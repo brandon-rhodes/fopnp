@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 16 - telnet_codes.py
 # How your code might look if you intercept Telnet options yourself
 

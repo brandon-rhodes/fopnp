@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 15 - folder_info.py
 # Opening an IMAP connection with IMAPClient and listing folder information.
 

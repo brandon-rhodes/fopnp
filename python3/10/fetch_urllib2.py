@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 10 - fetch_urllib2.py
 # Submitting a form and retrieving a page with urllib2
 

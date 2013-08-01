@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 3 - tcp_sixteen.py
 # Simple TCP client and server that send and receive 16 octets
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 7 - server_twisted.py
 # Using Twisted to serve Lancelot users.
 

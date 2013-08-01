@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 4 - dns_mx.py
 # Looking up a mail domain - the part of an email address after the `@`
 

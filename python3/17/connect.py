@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Basic connection - Chapter 17 - connect.py
 
 from ftplib import FTP

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Recursive downloader - Chapter 17 - recursedl.py
 
 import os, sys

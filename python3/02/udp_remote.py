@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 2 - udp_remote.py
 # UDP client and server for talking over the network
 

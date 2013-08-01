@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Binary upload - Chapter 17 - binarydl.py
 
 import os

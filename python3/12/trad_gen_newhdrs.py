@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 12 - trad_gen_newhdrs.py
 # Traditional Message Generation with Date and Message-ID
 # This program requires Python 2.5 or above

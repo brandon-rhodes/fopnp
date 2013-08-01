@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # NLST example - Chapter 17 - nlst.py
 
 from ftplib import FTP

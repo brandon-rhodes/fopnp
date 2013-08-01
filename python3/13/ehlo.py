@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # SMTP transmission with manual EHLO - Chapter 13 - ehlo.py
 
 import sys, smtplib, socket

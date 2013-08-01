@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 7 - my_trace.py
 # Command-line tool for tracing a single function in a program.
 

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 9 - verbose_handler.py
 # Example use of the verbose HTTP request handler.
 
