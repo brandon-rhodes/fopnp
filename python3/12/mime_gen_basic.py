@@ -8,16 +8,17 @@ from email import utils, encoders
 import mimetypes, sys
 
 def attachment(filename):
-    fd = open(filename, 'rb')
     mimetype, mimeencoding = mimetypes.guess_type(filename)
     if mimeencoding or (mimetype is None):
         mimetype = 'application/octet-stream'
     maintype, subtype = mimetype.split('/')
     if maintype == 'text':
-        retval = MIMEText(fd.read(), _subtype=subtype)
+        with open(filename, 'r') as fd:
+            retval = MIMEText(fd.read(), _subtype=subtype)
     else:
         retval = MIMEBase(maintype, subtype)
-        retval.set_payload(fd.read())
+        with open(filename, 'rb') as fd:
+            retval.set_payload(fd.read())
         encoders.encode_base64(retval)
     retval.add_header('Content-Disposition', 'attachment',
             filename = filename)
