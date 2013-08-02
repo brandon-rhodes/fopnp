@@ -7,32 +7,32 @@ from ftplib import FTP
 if os.path.exists('linux-1.0.tar.gz'):
     raise IOError('refusing to overwrite your linux-1.0.tar.gz file')
 
-f = FTP('ftp.kernel.org')
-f.login()
+ftp = FTP('ftp.kernel.org')
+ftp.login()
+ftp.cwd('/pub/linux/kernel/v1.0')
+ftp.voidcmd("TYPE I")
 
-f.cwd('/pub/linux/kernel/v1.0')
-f.voidcmd("TYPE I")
+socket, size = ftp.ntransfercmd("RETR linux-1.0.tar.gz")
+nbytes = 0
 
-datasock, size = f.ntransfercmd("RETR linux-1.0.tar.gz")
-bytes_so_far = 0
-fd = open('linux-1.0.tar.gz', 'wb')
+f = open('linux-1.0.tar.gz', 'wb')
 
-while 1:
-    buf = datasock.recv(2048)
-    if not buf:
+while True:
+    data = socket.recv(2048)
+    if not data:
         break
-    fd.write(buf)
-    bytes_so_far += len(buf)
-    print("\rReceived", bytes_so_far, end=' ')
+    f.write(data)
+    nbytes += len(data)
+    print("\rReceived", nbytes, end=' ')
     if size:
-        print("of %d total bytes (%.1f%%)" % (
-            size, 100 * bytes_so_far / float(size)), end=' ')
+        print("of %d total bytes (%.1f%%)"
+              % (size, 100 * nbytes / float(size)), end=' ')
     else:
         print("bytes", end=' ')
     sys.stdout.flush()
 
 print()
-fd.close()
-datasock.close()
-f.voidresp()
-f.quit()
+f.close()
+socket.close()
+ftp.voidresp()
+ftp.quit()

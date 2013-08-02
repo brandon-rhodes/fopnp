@@ -1,22 +1,21 @@
 #!/usr/bin/env python3
 # Recursive downloader - Chapter 17 - recursedl.py
 
-import os, sys
 from ftplib import FTP, error_perm
 
-def walk_dir(f, dirpath):
-    original_dir = f.pwd()
+def walk_dir(ftp, dirpath):
+    original_dir = ftp.pwd()
     try:
-        f.cwd(dirpath)
+        ftp.cwd(dirpath)
     except error_perm:
         return  # ignore non-directores and ones we cannot enter
     print(dirpath)
-    names = f.nlst()
+    names = sorted(ftp.nlst())
     for name in names:
-        walk_dir(f, dirpath + '/' + name)
-    f.cwd(original_dir)  # return to cwd of our caller
+        walk_dir(ftp, dirpath + '/' + name)
+    ftp.cwd(original_dir)  # return to cwd of our caller
 
-f = FTP('ftp.kernel.org')
-f.login()
-walk_dir(f, '/pub/linux/kernel/Historic/old-versions')
-f.quit()
+ftp = FTP('ftp.kernel.org')
+ftp.login()
+walk_dir(ftp, '/pub/linux/kernel/Historic/old-versions')
+ftp.quit()

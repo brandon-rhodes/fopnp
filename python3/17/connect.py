@@ -3,9 +3,8 @@
 
 from ftplib import FTP
 
-f = FTP('ftp.ibiblio.org')
-print("Welcome:", f.getwelcome())
-f.login()
-
-print("Current working directory:", f.pwd())
-f.quit()
+ftp = FTP('ftp.ibiblio.org')
+print("Welcome:", ftp.getwelcome())
+ftp.login()
+print("Current working directory:", ftp.pwd())
+ftp.quit()

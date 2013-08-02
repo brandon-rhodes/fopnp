@@ -8,16 +8,15 @@ from ftplib import FTP
 if os.path.exists('README'):
     raise IOError('refusing to overwrite your README file')
 
-def writeline(data):
-    fd.write(data)
-    fd.write(os.linesep)
+ftp = FTP('ftp.kernel.org')
+ftp.login()
+ftp.cwd('/pub/linux/kernel')
 
-f = FTP('ftp.kernel.org')
-f.login()
-f.cwd('/pub/linux/kernel')
+with open('README', 'w') as f:
+    def writeline(data):
+        f.write(data)
+        f.write(os.linesep)
 
-fd = open('README', 'w')
-f.retrlines('RETR README', writeline)
-fd.close()
+    ftp.retrlines('RETR README', writeline)
 
-f.quit()
+ftp.quit()

@@ -5,20 +5,16 @@ from ftplib import FTP
 import sys, getpass, os.path
 
 if len(sys.argv) != 5:
-    print("usage: %s <host> <username> <localfile> <remotedir>" % (
-        sys.argv[0]))
+    print("usage:", sys.argv[0], "<host> <username> <localfile> <remotedir>")
     exit(2)
 
 host, username, localfile, remotedir = sys.argv[1:]
-password = getpass.getpass(
-    "Enter password for %s on %s: " % (username, host))
+prompt = "Enter password for {} on {}: ".format(username, host)
+password = getpass.getpass(prompt)
 
-f = FTP(host)
-f.login(username, password)
-f.cwd(remotedir)
-
-fd = open(localfile, 'rb')
-f.storbinary('STOR %s' % os.path.basename(localfile), fd)
-fd.close()
-
-f.quit()
+ftp = FTP(host)
+ftp.login(username, password)
+ftp.cwd(remotedir)
+with open(localfile, 'rb') as f:
+    ftp.storbinary('STOR %s' % os.path.basename(localfile), f)
+ftp.quit()

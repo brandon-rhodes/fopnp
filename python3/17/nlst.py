@@ -3,12 +3,12 @@
 
 from ftplib import FTP
 
-f = FTP('ftp.ibiblio.org')
-f.login()
-f.cwd('/pub/academic/astronomy/')
-entries = f.nlst()
-entries.sort()
+ftp = FTP('ftp.ibiblio.org')
+ftp.login()
+ftp.cwd('/pub/academic/astronomy/')
+entries = ftp.nlst()
+ftp.quit()
+
 print(len(entries), "entries:")
-for entry in entries:
+for entry in sorted(entries):
     print(entry)
-f.quit()
