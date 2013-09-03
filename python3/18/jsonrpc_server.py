@@ -1,11 +1,17 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 18 - jsonrpc_server.py
-# JSON-RPC server
+# JSON-RPC server needing "pip install jsonrpclib-pelix"
 
-from wsgiref.simple_server import make_server
-import lovely.jsonrpc.dispatcher, lovely.jsonrpc.wsgi
+from jsonrpclib.SimpleJSONRPCServer import SimpleJSONRPCServer
 
 def lengths(*args):
+    """Measure the length of each input argument.
+
+    Given N arguments, this function returns a list of N smaller
+    lists of the form [len(arg), arg] that each state the length of
+    an input argument and also echo back the argument itself.
+
+    """
     results = []
     for arg in args:
         try:
@@ -15,10 +21,7 @@ def lengths(*args):
         results.append((arglen, arg))
     return results
 
-dispatcher = lovely.jsonrpc.dispatcher.JSONRPCDispatcher()
-dispatcher.register_method(lengths)
-app = lovely.jsonrpc.wsgi.WSGIJSONRPCApplication({'': dispatcher})
-server = make_server('localhost', 7002, app)
+server = SimpleJSONRPCServer(('localhost', 7002))
+server.register_function(lengths)
 print("Starting server")
-while True:
-    server.handle_request()
+server.serve_forever()
