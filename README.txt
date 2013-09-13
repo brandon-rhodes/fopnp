@@ -116,8 +116,8 @@ STATUS OF PYTHON 3 EXAMPLES
  17/nlst.py - OK
  17/recursedl.py - OK
 
- 18/jsonrpc_client.py - waiting on port of "lovely.jsonrpc" to Python 3
- 18/jsonrpc_server.py - waiting on port of "lovely.jsonrpc" to Python 3
+ 18/jsonrpc_client.py - OK
+ 18/jsonrpc_server.py - OK
  18/rpyc_client.py - OK
  18/rpyc_server.py - OK
  18/xmlrpc_client.py - OK
