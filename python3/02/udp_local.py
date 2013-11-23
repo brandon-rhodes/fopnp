@@ -3,25 +3,37 @@
 # UDP client and server on localhost
 
 import socket, sys
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+from datetime import datetime
 
-BUFSIZE = 65535
+MAX_BYTES = 65535
 PORT = 1060
 
-if sys.argv[1:] == ['server']:
+def server():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('127.0.0.1', PORT))
-    print('Listening at', s.getsockname())
+    print('Listening at {}'.format(s.getsockname()))
     while True:
-        data, address = s.recvfrom(BUFSIZE)
-        print('The client at', address, 'says', repr(data))
-        message = 'Your data was %d bytes' % len(data)
-        s.sendto(message.encode('ascii'), address)
+        data, address = s.recvfrom(MAX_BYTES)
+        text = data.decode('ascii')
+        print('The client at {} says {!r}'.format(address, text))
+        text = 'Your data was {} bytes long'.format(len(data))
+        data = text.encode('ascii')
+        s.sendto(data, address)
 
-elif sys.argv[1:] == ['client']:
-    s.sendto(b'This is my message', ('127.0.0.1', PORT))
-    print('Address after sending', s.getsockname())
-    data, address = s.recvfrom(BUFSIZE)  # overly promiscuous - see Chapter 2
-    print('The server', address, 'says', data)
+def client():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    text = 'This message was generated at {}'.format(datetime.now())
+    data = text.encode('ascii')
+    s.sendto(data, ('127.0.0.1', PORT))
+    print('The OS assigned me the address {}'.format(s.getsockname()))
+    data, address = s.recvfrom(MAX_BYTES)  # Danger! See Chapter 2
+    text = data.decode('ascii')
+    print('The server {} replied {!r}'.format(address, text))
 
-else:
-    print('usage: udp_local.py server|client', file=sys.stderr)
+if __name__ == '__main__':
+    if sys.argv[1:] == ['server']:
+        server()
+    elif sys.argv[1:] == ['client']:
+        client()
+    else:
+        print('usage: udp_local.py (server|client)', file=sys.stderr)

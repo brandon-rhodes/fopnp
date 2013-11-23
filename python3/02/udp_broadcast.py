@@ -3,24 +3,31 @@
 # UDP client and server for broadcast messages on a local LAN
 
 import socket, sys
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
 
 BUFSIZE = 65535
 PORT = 1060
 
-if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
+def server():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind(('', PORT))
-    print('Listening for broadcasts at', s.getsockname())
+    print('Listening for datagrams at {}'.format(s.getsockname()))
     while True:
         data, address = s.recvfrom(BUFSIZE)
-        print('The client at %r says: %r' % (address, data))
+        text = data.decode('ascii')
+        print('The client at {} says: {!r}'.format(address, text))
 
-elif len(sys.argv) == 3 and sys.argv[1] == 'client':
-    network = sys.argv[2]
-    s.sendto(b'Broadcast message!', (network, PORT))
+def client(network):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    text = 'Broadcast datagram!'
+    s.sendto(text.encode('ascii'), (network, PORT))
 
-else:
-    print('usage: udp_broadcast.py server', file=sys.stderr)
-    print('   or: udp_broadcast.py client <host>', file=sys.stderr)
-    sys.exit(2)
+if __name__ == '__main__':
+    if sys.argv[1:] == ['server']:
+        server()
+    elif len(sys.argv) == 3 and sys.argv[1] == 'client':
+        client(sys.argv[2])
+    else:
+        print('usage: udp_broadcast.py server', file=sys.stderr)
+        print('   or: udp_broadcast.py client <network>', file=sys.stderr)
+        sys.exit(2)

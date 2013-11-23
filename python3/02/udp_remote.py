@@ -3,35 +3,37 @@
 # UDP client and server for talking over the network
 
 import random, socket, sys
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-BUFSIZE = 65535
+MAX_BYTES = 65535
 PORT = 1060
 
-if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
-    interface = sys.argv[2] if len(sys.argv) > 2 else ''
+def server(interface):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind((interface, PORT))
     print('Listening at', s.getsockname())
     while True:
-        data, address = s.recvfrom(BUFSIZE)
-        if random.randint(0, 1):
-            print('The client at', address, 'says:', repr(data))
-            message = 'Your data was %d bytes' % len(data)
+        data, address = s.recvfrom(MAX_BYTES)
+        if random.random() < 0.5:
+            text = data.decode('ascii')
+            print('The client at {} says {!r}'.format(address, text))
+            message = 'Your data was {} bytes long'.format(data)
             s.sendto(message.encode('ascii'), address)
         else:
-            print('Pretending to drop packet from', address)
+            print('Pretending to drop packet from {}'.format(address))
 
-elif len(sys.argv) == 3 and sys.argv[1] == 'client':
+def client(hostname):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     hostname = sys.argv[2]
     s.connect((hostname, PORT))
-    print('Client socket name is', s.getsockname())
+    print('Client socket name is {}'.format(s.getsockname()))
+
     delay = 0.1
     while True:
         s.send(b'This is another message')
-        print('Waiting up to', delay, 'seconds for a reply')
+        print('Waiting up to {} seconds for a reply'.format(delay))
         s.settimeout(delay)
         try:
-            data = s.recv(BUFSIZE)
+            data = s.recv(MAX_BYTES)
         except socket.timeout:
             delay *= 2  # wait even longer for the next request
             if delay > 2.0:
@@ -39,9 +41,16 @@ elif len(sys.argv) == 3 and sys.argv[1] == 'client':
         else:
             break   # we are done, and can stop looping
 
-    print('The server says', repr(data))
+    print('The server says {!r}'.format(data))
 
-else:
-    print('usage: udp_remote.py server [ <interface> ]', file=sys.stderr)
-    print('   or: udp_remote.py client <host>', file=sys.stderr)
-    sys.exit(2)
+if __name__ == '__main__':
+    if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
+        interface = (sys.argv[2] if len(sys.argv) > 2 else '')
+        server(interface)
+    elif len(sys.argv) == 3 and sys.argv[1] == 'client':
+        hostname = sys.argv[2]
+        client(hostname)
+    else:
+        print('usage: udp_remote.py server [<interface>]', file=sys.stderr)
+        print('   or: udp_remote.py client <host>', file=sys.stderr)
+        sys.exit(2)

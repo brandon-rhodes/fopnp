@@ -1,24 +1,27 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming - Chapter 2 - big_sender.py
-# Send a big UDP packet to our server.
+# Send a big UDP datagram to our server.
 
 import IN, socket, sys
-s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-PORT = 1060
+def send_big_datagram(host, port):
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.setsockopt(socket.IPPROTO_IP, IN.IP_MTU_DISCOVER, IN.IP_PMTUDISC_DO)
+    s.connect((host, port))
+    try:
+        s.send(b'#' * 65000)
+    except socket.error:
+        option = getattr(IN, 'IP_MTU', 14)  # constant from <linux/in.h>
+        max_mtu = s.getsockopt(socket.IPPROTO_IP, option)
+        print('Alas, the datagram did not make it')
+        print('Actual MTU: {}'.format(max_mtu))
+    else:
+        print('The big datagram was sent!')
 
-if len(sys.argv) != 2:
-    print('usage: big_sender.py host', file=sys.stderr)
-    sys.exit(2)
-
-hostname = sys.argv[1]
-s.connect((hostname, PORT))
-s.setsockopt(socket.IPPROTO_IP, IN.IP_MTU_DISCOVER, IN.IP_PMTUDISC_DO)
-try:
-    s.send(b'#' * 65000)
-except socket.error:
-    print('The message did not make it')
-    option = getattr(IN, 'IP_MTU', 14)  # constant taken from <linux/in.h>
-    print('MTU:', s.getsockopt(socket.IPPROTO_IP, option))
-else:
-    print('The big message was sent! Your network supports really big packets!')
+if __name__ == '__main__':
+    if len(sys.argv) != 2:
+        print('usage: big_sender.py <host>', file=sys.stderr)
+        sys.exit(2)
+    host = sys.argv[1]
+    port = 1060
+    send_big_datagram(host, port)
