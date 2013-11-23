@@ -3,13 +3,17 @@
 
 import http.client
 import json
+from urllib.parse import quote_plus
 
-path = ('/maps/geo?q=207+N.+Defiance+St%2C+Archbold%2C+OH'
-        '&output=json&oe=utf8')
+base = '/maps/api/geocode/json'
 
-connection = http.client.HTTPConnection('maps.google.com')
-connection.request('GET', path)
-rawreply = connection.getresponse().read()
+def geocode(address):
+    path = '{}?address={}&sensor=false'.format(base, quote_plus(address))
+    connection = http.client.HTTPConnection('maps.google.com')
+    connection.request('GET', path)
+    rawreply = connection.getresponse().read()
+    reply = json.loads(rawreply.decode('utf-8'))
+    print(reply['results'][0]['geometry']['location'])
 
-reply = json.loads(rawreply.decode('utf-8'))
-print(reply['Placemark'][0]['Point']['coordinates'][:-1])
+if __name__ == '__main__':
+    geocode('207 N. Defiance St, Archbold, OH')

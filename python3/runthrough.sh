@@ -1,6 +1,28 @@
+#!/bin/bash
 # Run all scripts to make sure they still work
 
 set -e
+cd "$(dirname ${BASH_SOURCE[0]})"
+
+# New way:
+
+if [ -z "$1" -o ! -d "$1" ]
+then
+    echo usage: runthrough.sh CHAPTER
+    exit 2
+fi
+
+for script in $1/*.py
+do
+    echo
+    echo "==================== $script ===================="
+    echo
+    (cd $(dirname $script) && python3 $(basename $script))
+done
+
+exit
+
+# Old way:
 
 cd python3
 cd 12
