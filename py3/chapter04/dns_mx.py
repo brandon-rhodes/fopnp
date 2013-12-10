@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 4 - dns_mx.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter04/dns_mx.py
 # Looking up a mail domain - the part of an email address after the `@`
 
 import sys, DNS

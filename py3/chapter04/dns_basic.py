@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 4 - dns_basic.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter04/dns_basic.py
 # Basic DNS query
 
 import sys, DNS

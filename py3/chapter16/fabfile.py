@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 16 - fabfile.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter16/fabfile.py
 # A sample Fabric script
 
 # Even though this chapter will not cover Fabric, you might want to try

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 2 - udp_local.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter02/udp_local.py
 # UDP client and server on localhost
 
 import socket, sys

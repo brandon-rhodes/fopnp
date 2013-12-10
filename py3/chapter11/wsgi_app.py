@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 11 - wsgi_app.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/wsgi_app.py
 # A simple web application built directly against the low-level WSGI spec.
 
 import cgi, base64

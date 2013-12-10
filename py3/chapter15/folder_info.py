@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 15 - folder_info.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter15/folder_info.py
 # Opening an IMAP connection with IMAPClient and listing folder information.
 
 import getpass, sys

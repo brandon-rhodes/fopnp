@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Binary upload - Chapter 17 - binarydl.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter17/binarydl.py
 
 import os
 from ftplib import FTP

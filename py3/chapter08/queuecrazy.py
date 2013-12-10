@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 8 - queuecrazy.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter08/queuecrazy.py
 # Small application that uses several different message queues
 
 import random, threading, time, zmq

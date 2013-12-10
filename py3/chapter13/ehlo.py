@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# SMTP transmission with manual EHLO - Chapter 13 - ehlo.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter13/ehlo.py
 
 import sys, smtplib, socket
 

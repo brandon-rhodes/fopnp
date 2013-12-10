@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Basic SMTP transmission - Chapter 13 - simple.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter13/simple.py
 
 import sys, smtplib
 

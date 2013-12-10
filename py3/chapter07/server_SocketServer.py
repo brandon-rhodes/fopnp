@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 7 - server_SocketServer.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/server_SocketServer.py
 # Answering Lancelot requests with a SocketServer.
 
 from socketserver import ThreadingMixIn, TCPServer, BaseRequestHandler

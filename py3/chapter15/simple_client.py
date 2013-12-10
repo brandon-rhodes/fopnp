@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 15 - simple_client.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter15/simple_client.py
 # Letting a user browse folders, messages, and message parts.
 
 import getpass, sys

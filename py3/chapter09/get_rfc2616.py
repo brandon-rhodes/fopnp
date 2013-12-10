@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 9 - verbose_handler.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter09/get_rfc2616.py
 # Example use of the verbose HTTP request handler.
 
 import urllib, urllib.request, urllib.error, urllib.parse

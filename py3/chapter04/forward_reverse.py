@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 4 - forward_reverse.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter04/forward_reverse.py
 # Checking whether a host name works both forwards and backwards.
 
 import socket, sys

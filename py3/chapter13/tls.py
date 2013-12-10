@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# SMTP transmission with TLS - Chapter 13 - tls.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter13/tls.py
 
 import sys, smtplib, socket, ssl
 

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 7 - client.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/client.py
 # Simple Lancelot client that asks three questions then disconnects.
 
 import socket, sys, lancelot

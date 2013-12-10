@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Recursive downloader - Chapter 17 - recursedl.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter17/recursedl.py
 
 from ftplib import FTP, error_perm
 

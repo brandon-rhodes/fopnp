@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 18 - xmlrpc_multicall.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter18/xmlrpc_multicall.py
 # XML-RPC client performing a multicall
 
 import xmlrpc.client

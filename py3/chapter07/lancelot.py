@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 7 - lancelot.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/lancelot.py
 # Constants and routines for supporting a certain network conversation.
 
 import socket, sys

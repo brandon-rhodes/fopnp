@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 11 - bottle_app.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/bottle_app.py
 # A simple web application built using the Bottle micro-framework.
 
 import base64, bottle

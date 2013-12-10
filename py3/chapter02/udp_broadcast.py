@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 2 - udp_broadcast.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter02/udp_broadcast.py
 # UDP client and server for broadcast messages on a local LAN
 
 import socket, sys

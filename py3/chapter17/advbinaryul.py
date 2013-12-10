@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Advanced binary upload - Chapter 17 - advbinaryul.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter17/advbinaryul.py
 
 from ftplib import FTP
 import sys, getpass, os.path

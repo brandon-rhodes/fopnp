@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 7 - my_trace.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/my_trace.py
 # Command-line tool for tracing a single function in a program.
 
 import linecache, sys, time

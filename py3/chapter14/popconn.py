@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# POP connection and authentication - Chapter 14 - popconn.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter14/popconn.py
 
 import getpass, poplib, sys
 

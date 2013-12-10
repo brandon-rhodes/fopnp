@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Binary download - Chapter 17 - binaryul.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter17/binaryul.py
 
 from ftplib import FTP
 import sys, getpass, os.path

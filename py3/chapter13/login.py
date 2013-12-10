@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# SMTP transmission with authentication - Chapter 13 - login.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter13/login.py
 
 import sys, smtplib, socket
 from getpass import getpass

@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# dir() example - Chapter 17 - dir.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter17/dir.py
 
 from ftplib import FTP
 

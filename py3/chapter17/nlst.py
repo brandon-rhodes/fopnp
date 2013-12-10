@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# NLST example - Chapter 17 - nlst.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter17/nlst.py
 
 from ftplib import FTP
 

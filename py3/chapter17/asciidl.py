@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# ASCII download - Chapter 17 - asciidl.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter17/asciidl.py
 # Downloads README from remote and writes it to disk.
 
 import os

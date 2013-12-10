@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# POP mailbox downloader with deletion - Chapter 14
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter14/download-and-delete.py
 # download-and-delete.py
 
 import email, getpass, poplib, sys

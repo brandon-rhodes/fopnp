@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 7 - lancelot_tests.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/lancelot_tests.py
 # Test suite that can be run against the Lancelot servers.
 
 from funkload.FunkLoadTestCase import FunkLoadTestCase

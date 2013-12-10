@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Advanced binary download - Chapter 17 - advbinarydl.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter17/advbinarydl.py
 
 import os, sys
 from ftplib import FTP

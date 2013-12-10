@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 4 - www_ping.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter04/www_ping.py
 # Find the WWW service of an arbitrary host using getaddrinfo().
 
 import socket, sys

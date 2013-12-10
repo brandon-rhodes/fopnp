@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# Foundations of Python Network Programming - Chapter 18 - xmlrpc_client.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter18/xmlrpc_client.py
 # XML-RPC client
 
 import xmlrpc.client

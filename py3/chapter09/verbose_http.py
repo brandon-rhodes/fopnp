@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 9 - verbose_handler.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter09/verbose_http.py
 # HTTP request handler for urllib2 that prints requests and responses.
 
 import io, http.client, urllib.request, urllib.error, urllib.parse

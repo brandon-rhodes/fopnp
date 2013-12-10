@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-# Foundations of Python Network Programming - Chapter 6 - sslclient.py
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter06/sslclient.py
 # Using SSL to protect a socket in Python 2.6 or later
 
 import os, socket, ssl, sys
