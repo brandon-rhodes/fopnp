@@ -21,6 +21,6 @@ def save_parts(message, level=0, counter=1):
         counter += 1
     return counter
 
-with open(sys.argv[1]) as f:
+if __name__ == '__main__':
     message = email.message_from_string(''.join(fileinput.input()))
-save_parts(message)
+    save_parts(message)
