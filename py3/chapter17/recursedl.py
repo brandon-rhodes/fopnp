@@ -16,7 +16,11 @@ def walk_dir(ftp, dirpath):
         walk_dir(ftp, dirpath + '/' + name)
     ftp.cwd(original_dir)  # return to cwd of our caller
 
-ftp = FTP('ftp.kernel.org')
-ftp.login()
-walk_dir(ftp, '/pub/linux/kernel/Historic/old-versions')
-ftp.quit()
+def main():
+    ftp = FTP('ftp.kernel.org')
+    ftp.login()
+    walk_dir(ftp, '/pub/linux/kernel/Historic/old-versions')
+    ftp.quit()
+
+if __name__ == '__main__':
+    main()
