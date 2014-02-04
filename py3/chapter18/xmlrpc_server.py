@@ -7,6 +7,16 @@ import operator, math
 from xmlrpc.server import SimpleXMLRPCServer
 from functools import reduce
 
+def main():
+    server = SimpleXMLRPCServer(('127.0.0.1', 7001))
+    server.register_introspection_functions()
+    server.register_multicall_functions()
+    server.register_function(addtogether)
+    server.register_function(quadratic)
+    server.register_function(remote_repr)
+    print("Server ready")
+    server.serve_forever()
+
 def addtogether(*things):
     """Add together everything in the list `things`."""
     return reduce(operator.add, things)
@@ -21,11 +31,5 @@ def remote_repr(arg):
     """Return the `repr()` rendering of the supplied `arg`."""
     return arg
 
-server = SimpleXMLRPCServer(('127.0.0.1', 7001))
-server.register_introspection_functions()
-server.register_multicall_functions()
-server.register_function(addtogether)
-server.register_function(quadratic)
-server.register_function(remote_repr)
-print("Server ready")
-server.serve_forever()
+if __name__ == '__main__':
+    main()

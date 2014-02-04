@@ -1,2 +1,4 @@
+jsonrpclib-pelix
 pygeocoder
 requests
+rpyc

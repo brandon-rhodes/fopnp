@@ -22,7 +22,11 @@ def lengths(*args):
         results.append((arglen, arg))
     return results
 
-server = SimpleJSONRPCServer(('localhost', 7002))
-server.register_function(lengths)
-print("Starting server")
-server.serve_forever()
+def main():
+    server = SimpleJSONRPCServer(('localhost', 7002))
+    server.register_function(lengths)
+    print("Starting server")
+    server.serve_forever()
+
+if __name__ == '__main__':
+    main()
