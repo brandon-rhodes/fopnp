@@ -17,18 +17,19 @@ Content-Transfer-Encoding: 7bit
 
 Hello,
 
-This is a *great* test message from Chapter 12.  I hope you enjoy it!
+This is a *test message* from Chapter 12.  I hope you enjoy it!
 
 -- Anonymous
+
 --===============1437683091==
 Content-Type: text/html; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
 
-Hello,<P>
-This is a <B>great</B> test message from Chapter 12.  I hope you enjoy
-it!<P>
--- <I>Anonymous</I>
+<p>Hello,</p>
+<p>This is a <i>test message</i> from Chapter 12.
+I hope you enjoy it!<p>
+<p>-- Anonymous</p>
 --===============1437683091==--
 --===============1668983823==
 Content-Type: text/plain; charset="us-ascii"
