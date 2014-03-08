@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import argparse
+import os
 import sys
 from mininet.cli import CLI
 from mininet.log import setLogLevel
@@ -8,6 +9,8 @@ from mininet.net import Mininet, makeTerms
 from mininet.node import OVSController
 from mininet.topo import Topo
 from mininet.util import dumpNodeConnections
+
+this_dir = os.path.dirname(os.path.abspath(__file__))
 
 class RoutedTopo(Topo):
     def __init__(self, **opts):
@@ -117,13 +120,16 @@ def start_dns(net):
         host.cleanup_commands.append('kill %dnsmasq')
 
 def start_http(net):
-    net['www'].cmd('')
+    net['www'].cmd('cd %s' % this_dir)
+    net['www'].cmd('cd ../py3')
+    net['www'].cmd('python -m SimpleHTTPServer 80 &')
+    net['www'].cleanup_commands.append('kill %python')
 
 def start_services(net):
     for host in net.hosts:
         host.cleanup_commands = []
     start_dns(net)
-    # start_http(net)
+    start_http(net)
 
 def main(do_interactive):
     topo = RoutedTopo()
