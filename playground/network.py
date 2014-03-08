@@ -1,6 +1,7 @@
 #!/usr/bin/python
 
 import argparse
+import sys
 from mininet.cli import CLI
 from mininet.log import setLogLevel
 from mininet.net import Mininet, makeTerms
@@ -12,9 +13,9 @@ class RoutedTopo(Topo):
     def __init__(self, **opts):
         Topo.__init__(self, **opts)
 
-        # The ISP and its customers.
-
         backbone = self.addHost('backbone', ip='10.1.1.1/32')
+
+        # The ISP and its customers.
 
         isp = self.addHost('isp', ip='10.25.1.1/32')
         self.addLink(isp, backbone)
@@ -100,11 +101,29 @@ def configure_network(net):
     for gateway in gateways + modems:
         net[gateway].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
 
-def start_services(net):
+def start_dns(net):
+    """Start dnsmasq on every server.
+
+    Since all network programs share the parent host's /etc/resolv.conf
+    which, per Ubuntu practice, points at localhost, we simply provide
+    each host with its own loopback-bound copy of dnsmasq that is hard
+    coded to serve up IPs from our custom hosts file.  Works great.
+
+    """
     for host in net.hosts:
         host.cmd('dnsmasq --interface=lo --no-dhcp-interface=lo'
                  ' --no-daemon --no-resolv --no-hosts'
                  ' --addn-hosts=/home/brandon/fopnp/playground/hosts &')
+        host.cleanup_commands.append('kill %dnsmasq')
+
+def start_http(net):
+    net['www'].cmd('')
+
+def start_services(net):
+    for host in net.hosts:
+        host.cleanup_commands = []
+    start_dns(net)
+    # start_http(net)
 
 def main(do_interactive):
     topo = RoutedTopo()
@@ -112,18 +131,22 @@ def main(do_interactive):
     net.start()
     try:
         configure_network(net)
-        start_services(net)
         print "Host connections:"
         dumpNodeConnections(net.hosts)
         if do_interactive:
+            start_services(net)
             hosts = [net['h1'], net['h4']]
             net.terms += makeTerms(hosts, 'host')  # net.hosts
             CLI(net)
-            # for host in hosts:
-            #     host.cmd('kill %dnsmasq')
         else:
             net.pingAll()
     finally:
+        for host in net.hosts:
+            for command in getattr(host, 'cleanup_commands'):
+                try:
+                    host.cmd(command)
+                except:
+                    print >>sys.stderr, 'Error on %s: %r' % (host.name, command)
         net.stop()
 
     #net['isp'].cmd('ip
