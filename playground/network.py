@@ -116,7 +116,7 @@ def start_dns(net):
     for host in net.hosts:
         host.cmd('dnsmasq --interface=lo --no-dhcp-interface=lo'
                  ' --no-daemon --no-resolv --no-hosts'
-                 ' --addn-hosts=/home/brandon/fopnp/playground/hosts &')
+                 ' --addn-hosts=/home/brandon/fopnp/playground/services/hosts &')
         host.cleanup_commands.append('kill %dnsmasq')
 
 def start_http(net):
