@@ -75,6 +75,9 @@ def main(do_interactive):
         net[modem].cmd('ip addr add 192.168.1.1/24 dev %s-eth1' % modem)
         net[modem].cmd('route add default gw 10.25.1.1')
         net[modem].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
+        net[modem].cmd('iptables --table nat --append POSTROUTING'
+                       ' --out-interface %s-eth0 -j MASQUERADE' % modem)
+
 
     # for name in hosts + modems + gateways:
     #     net[host].cmd('dnsmasq --interface=lo --no-dhcp-interface=lo'
