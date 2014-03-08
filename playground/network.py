@@ -14,7 +14,11 @@ class RoutedTopo(Topo):
 
         # The ISP and its customers.
 
-        isp = self.addHost('isp', ip='10.25.1.1/16')
+        backbone = self.addHost('backbone', ip='10.1.1.1/32')
+
+        isp = self.addHost('isp', ip='10.25.1.1/32')
+        self.addLink(isp, backbone)
+
         modemA = self.addHost('modemA', ip='10.25.1.65/16')
         modemB = self.addHost('modemB', ip='10.25.1.66/16')
 
@@ -24,19 +28,19 @@ class RoutedTopo(Topo):
 
         h4 = self.addHost('h4', ip='192.168.1.11/24')
 
-        self.addLink(modemB, isp)
         self.addLink(modemA, isp)
+        self.addLink(modemB, isp)
 
-        s1 = self.addSwitch('s1')
-        s2 = self.addSwitch('s2')
+        sA = self.addSwitch('s1')
+        sB = self.addSwitch('s2')
 
-        self.addLink(modemA, s1)
-        self.addLink(h1, s1)
-        self.addLink(h2, s1)
-        self.addLink(h3, s1)
+        self.addLink(modemA, sA)
+        self.addLink(h1, sA)
+        self.addLink(h2, sA)
+        self.addLink(h3, sA)
 
-        self.addLink(modemB, s2)
-        self.addLink(h4, s2)
+        self.addLink(modemB, sB)
+        self.addLink(h4, sB)
 
         # The example.com corporation.
 
@@ -56,14 +60,12 @@ class RoutedTopo(Topo):
 
         # The Internet backbone.
 
-        backbone = self.addHost('backbone', ip='10.1.1.1/8')
-        self.addLink(backbone, isp)
         self.addLink(backbone, example)
 
 def configure_network(net):
     hosts = 'h1', 'h2', 'h3', 'h4'
     modems = 'modemA', 'modemB'
-    gateways = 'isp', 'backbone', 'example.com'
+    gateways = 'isp', # 'backbone', 'example.com'
     servers = ()#'ftp', 'mail', 'www'
 
     for host in hosts:
@@ -79,8 +81,17 @@ def configure_network(net):
     for server in servers:
         net[host].cmd('route add default gw 10.130.1.1')
 
-    # for gateway in gateways:
-    #     net[gateway].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
+    for gateway in gateways:
+        net[gateway].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
+
+    net['backbone'].cmd('ip route add 10.25.1.1/32 dev backbone-eth0')
+    net['backbone'].cmd('ip route add 10.25.0.0/16 via 10.25.1.1')
+
+    net['isp'].cmd('ip addr add 10.25.1.1/32 dev isp-eth1')
+    net['isp'].cmd('ip addr add 10.25.1.1/32 dev isp-eth2')
+    net['isp'].cmd('ip route add 10.1.1.1/32 dev isp-eth0')
+    net['isp'].cmd('ip route add 10.25.1.65/32 dev isp-eth1')
+    net['isp'].cmd('ip route add 10.25.1.66/32 dev isp-eth2')
 
 def main(do_interactive):
     topo = RoutedTopo()
