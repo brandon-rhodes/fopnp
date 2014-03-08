@@ -119,17 +119,18 @@ def start_dns(net):
                  ' --addn-hosts=/home/brandon/fopnp/playground/services/hosts &')
         host.cleanup_commands.append('kill %dnsmasq')
 
-def start_http(net):
+def start_httpd(net):
     net['www'].cmd('cd %s' % this_dir)
     net['www'].cmd('cd ../py3')
-    net['www'].cmd('python -m SimpleHTTPServer 80 &')
+    net['www'].cmd('python ../playground/services/httpd.py'
+                   ' ../playground/certs/www.pem &')
     net['www'].cleanup_commands.append('kill %python')
 
 def start_services(net):
     for host in net.hosts:
         host.cleanup_commands = []
     start_dns(net)
-    start_http(net)
+    start_httpd(net)
 
 def main(do_interactive):
     topo = RoutedTopo()
