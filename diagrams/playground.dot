@@ -1,42 +1,42 @@
 digraph Network {
     node [shape=rectangle]
-    edge [dir=none color="#dddddd"]
+    edge [dir=none]
     {
         node [shape=rect style=filled height=0.05 width=1 label=""]
-        lanA lanB lanE
+        s1 s2 s3
     }
     backbone -> isp
     isp -> modemA
     isp -> modemB
-    modemA -> lanA
-    lanA -> h1
-    lanA -> h2
-    lanA -> h3
-    modemB -> lanB
-    lanB -> h4
+    modemA -> s1
+    s1 -> h1
+    s1 -> h2
+    s1 -> h3
+    modemB -> s2
+    s2 -> h4
     backbone -> "example.com"
-    "example.com" -> lanE
-    lanE -> "ftp"
-    lanE -> "mail"
-    lanE -> "www"
+    "example.com" -> s3
+    s3 -> "ftp"
+    s3 -> "mail"
+    s3 -> "www"
 
     {rank=same; modemA modemB "example.com"}
 
     backbone [label=<backbone<br/><font color="blue" point-size="7">10.1.1.1</font><br/>>]
 
-    isp [label=<<font color="blue" point-size="7">10.1.1.2</font><br/>isp<br/><font color="blue" point-size="7">10.50.1.1</font><br/>>]
+    isp [label=<isp<br/><font color="blue" point-size="7">10.25.1.1</font><br/>>]
 
-    modemA [label=<<font color="blue" point-size="7">10.50.1.11</font><br/>modemA<br/><font color="blue" point-size="7">192.168.1.1</font><br/>>]
-    modemB [label=<<font color="blue" point-size="7">10.50.1.12</font><br/>modemB<br/><font color="blue" point-size="7">192.168.1.1</font><br/>>]
+    modemA [label=<<font color="blue" point-size="7">10.25.1.65</font><br/>modemA<br/><font color="blue" point-size="7">192.168.1.1</font><br/>>]
+    modemB [label=<<font color="blue" point-size="7">10.25.1.66</font><br/>modemB<br/><font color="blue" point-size="7">192.168.1.1</font><br/>>]
 
     h1 [label=<<font color="blue" point-size="7">192.168.1.11</font><br/>h1>]
     h2 [label=<<font color="blue" point-size="7">192.168.1.12</font><br/>h2>]
     h3 [label=<<font color="blue" point-size="7">192.168.1.13</font><br/>h3>]
     h4 [label=<<font color="blue" point-size="7">192.168.1.11</font><br/>h4>]
 
-    "example.com" [label=<<font color="blue" point-size="7">10.1.1.3</font><br/>example.com<br/><font color="blue" point-size="7">10.70.1.1</font><br/>>]
+    "example.com" [label=<<font color="blue" point-size="7"> </font><br/>example.com<br/><font color="blue" point-size="7">10.130.1.1</font><br/>>]
 
-    ftp [label=<<font color="blue" point-size="7">10.70.1.10</font><br/>ftp>]
-    mail [label=<<font color="blue" point-size="7">10.70.1.20</font><br/>mail>]
-    www [label=<<font color="blue" point-size="7">10.70.1.30</font><br/>www>]
+    ftp [label=<<font color="blue" point-size="7">10.130.1.2</font><br/>ftp>]
+    mail [label=<<font color="blue" point-size="7">10.130.1.3</font><br/>mail>]
+    www [label=<<font color="blue" point-size="7">10.130.1.4</font><br/>www>]
 }
