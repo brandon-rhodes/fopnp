@@ -100,12 +100,19 @@ def configure_network(net):
     for gateway in gateways + modems:
         net[gateway].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
 
+def start_services(net):
+    for host in net.hosts:
+        host.cmd('dnsmasq --interface=lo --no-dhcp-interface=lo'
+                 ' --no-daemon --no-resolv --no-hosts'
+                 ' --addn-hosts=/home/brandon/fopnp/playground/hosts &')
+
 def main(do_interactive):
     topo = RoutedTopo()
     net = Mininet(topo, controller=OVSController)
     net.start()
     try:
         configure_network(net)
+        start_services(net)
         print "Host connections:"
         dumpNodeConnections(net.hosts)
         if do_interactive:
@@ -118,11 +125,6 @@ def main(do_interactive):
             net.pingAll()
     finally:
         net.stop()
-
-    # for name in hosts + modems + gateways:
-    #     net[host].cmd('dnsmasq --interface=lo --no-dhcp-interface=lo'
-    #                   ' --no-daemon --no-resolv --no-hosts'
-    #                   ' --addn-hosts=/home/brandon/fopnp/playground/hosts &')
 
     #net['isp'].cmd('ip
     #net['h2'].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
