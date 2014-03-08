@@ -19,8 +19,8 @@ class RoutedTopo(Topo):
         isp = self.addHost('isp', ip='10.25.1.1/32')
         self.addLink(isp, backbone)
 
-        modemA = self.addHost('modemA', ip='10.25.1.65/16')
-        modemB = self.addHost('modemB', ip='10.25.1.66/16')
+        modemA = self.addHost('modemA', ip='10.25.1.65/24')
+        modemB = self.addHost('modemB', ip='10.25.1.66/24')
 
         h1 = self.addHost('h1', ip='192.168.1.11/24')
         h2 = self.addHost('h2', ip='192.168.1.12/24')
@@ -44,9 +44,9 @@ class RoutedTopo(Topo):
 
         # The example.com corporation.
 
-        example = self.addHost('example.com', ip='10.130.1.1/24')
+        example = self.addHost('example', ip='10.130.1.1/32')
+        self.addLink(backbone, example)
 
-        return
         ftp = self.addHost('ftp', ip='10.130.1.2/24')
         mail = self.addHost('mail', ip='10.130.1.3/24')
         www = self.addHost('www', ip='10.130.1.4/24')
@@ -58,40 +58,47 @@ class RoutedTopo(Topo):
         self.addLink(mail, s3)
         self.addLink(www, s3)
 
-        # The Internet backbone.
-
-        self.addLink(backbone, example)
-
 def configure_network(net):
     hosts = 'h1', 'h2', 'h3', 'h4'
     modems = 'modemA', 'modemB'
-    gateways = 'isp', # 'backbone', 'example.com'
-    servers = ()#'ftp', 'mail', 'www'
+    gateways = 'isp', 'backbone', 'example'
+    servers = 'ftp', 'mail', 'www'
 
     for host in hosts:
-        net[host].cmd('route add default gw 192.168.1.1')
+        net[host].cmd('ip route add default via 192.168.1.1')
 
     for modem in modems:
         net[modem].cmd('ip addr add 192.168.1.1/24 dev %s-eth1' % modem)
-        net[modem].cmd('route add default gw 10.25.1.1')
-        net[modem].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
+        net[modem].cmd('ip route add default via 10.25.1.1')
         net[modem].cmd('iptables --table nat --append POSTROUTING'
                        ' --out-interface %s-eth0 -j MASQUERADE' % modem)
 
-    for server in servers:
-        net[host].cmd('route add default gw 10.130.1.1')
+    net['isp'].cmd('ip addr add 10.25.1.1/32 dev isp-eth1')
+    net['isp'].cmd('ip addr add 10.25.1.1/32 dev isp-eth2')
 
-    for gateway in gateways:
-        net[gateway].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
+    net['isp'].cmd('ip route add 10.1.1.1/32 dev isp-eth0')
+    net['isp'].cmd('ip route add 10.25.1.65/32 dev isp-eth1')
+    net['isp'].cmd('ip route add 10.25.1.66/32 dev isp-eth2')
+    net['isp'].cmd('ip route add default via 10.1.1.1')
+
+    net['backbone'].cmd('ip addr add 10.1.1.1/32 dev backbone-eth1')
 
     net['backbone'].cmd('ip route add 10.25.1.1/32 dev backbone-eth0')
     net['backbone'].cmd('ip route add 10.25.0.0/16 via 10.25.1.1')
 
-    net['isp'].cmd('ip addr add 10.25.1.1/32 dev isp-eth1')
-    net['isp'].cmd('ip addr add 10.25.1.1/32 dev isp-eth2')
-    net['isp'].cmd('ip route add 10.1.1.1/32 dev isp-eth0')
-    net['isp'].cmd('ip route add 10.25.1.65/32 dev isp-eth1')
-    net['isp'].cmd('ip route add 10.25.1.66/32 dev isp-eth2')
+    net['backbone'].cmd('ip route add 10.130.1.1/32 dev backbone-eth1')
+    net['backbone'].cmd('ip route add 10.130.1.0/24 via 10.130.1.1')
+
+    net['example'].cmd('ip addr add 10.130.1.1/24 dev example-eth1')
+
+    net['example'].cmd('ip route add 10.1.1.1/32 dev example-eth0')
+    net['example'].cmd('ip route add default via 10.1.1.1')
+
+    for server in servers:
+        net[server].cmd('ip route add default via 10.130.1.1')
+
+    for gateway in gateways + modems:
+        net[gateway].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
 
 def main(do_interactive):
     topo = RoutedTopo()
