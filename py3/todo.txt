@@ -1,0 +1,68 @@
+
+1
+
+* Can ctypes be used to build and parse packets, or just struct?
+* Physical layer example; maybe building an ARP packet?
+* Doing raw ping with another machine on the subnet.
+* Doing raw ping with a machine on another subnet.
+* Packet fragmentation: show a packet being fragmented, or refused.
+* MTU discovery
+* Traceroute
+
+2
+
+* Build raw UDP packet by hand and talk to UDP service on another host.
+* Add unreliability and delay to Mininet h3 for Backoff example.
+* (Also keep fake unreliability as an option?)
+* Different MTUs from different Mininet hosts?
+* Make sure broadcast examples work on Mininet.
+
+3
+
+* Add Python sniffer that can see packets travel.
+* Use sniffer to illustrate various conversations from example scripts.
+
+4
+
+* Build DNS packet?  Or is that silly?
+* Build a diagram for "A Sketch of how DNS works".
+* Zeroconf and TFTP?
+
+5
+
+* Big discussion of Python 3 lack of methods on bytes objects.
+
+6
+
+* Change examples to use Mininet web server.
+* Show that sniffer can intercept information.
+* Add little web app that user can log in to, to intercept cookies.
+
+7
+
+* Funkload?
+* Make sure a raw async solution is included.
+* Add asyncio.
+
+8
+
+* Add real Map-Reduce example.
+
+9
+
+* Requests.
+* Add Werkzeug example to WebOb?
+
+10
+
+* Scrapy!
+* Show now only xpath, but cssselect example with lxml.
+* Show pure ElementTree solution?  Or not?
+
+11
+
+* Add more web frameworks?
+
+12
+
+* Finish rewriting scripts to newer API.
