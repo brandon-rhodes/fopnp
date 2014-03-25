@@ -1,0 +1,11 @@
+
+These are the shell commands invoked in the text of the book, together
+with their expected output, so that the result can be version-controlled
+and verified as the scripts are updated and corrected.
+
+$ cd chapter12
+$ python mime_decode.py
+usage: mime_decode.py [-h] filename
+mime_decode.py: error: the following arguments are required: filename
+$ cd ..
+$ 
