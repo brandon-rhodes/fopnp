@@ -1,4 +1,4 @@
 diagrams/*.png
 diagrams/*.svg
 *.old
-session2.txt
+session_out.txt
