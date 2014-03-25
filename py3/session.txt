@@ -26,7 +26,7 @@ To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325211401.9307.43420@guinness>
+Message-ID: <20140325224618.14043.50494@guinness>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
@@ -80,7 +80,7 @@ To: recipient@example.com
 ------------ Other Headers -------------
 Content-Type: multipart/mixed; boundary="===============1668983823=="
 MIME-Version: 1.0
-Message-ID: <20140325211401.9307.43420@guinness>
+Message-ID: <20130801232320.2594.99930@guinness>
 ----------------- Body -----------------
 Hello,
 
@@ -90,15 +90,15 @@ This is a *test message* from Chapter 12.
 
                                    ~
 $ python build_mime_basic.py
-Content-Type: multipart/mixed; boundary="===============0686707825=="
+Content-Type: multipart/mixed; boundary="===============1627694678=="
 MIME-Version: 1.0
 To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325211401.9307.43420@guinness>
+Message-ID: <20140325224619.14047.50494@guinness>
 
---===============0686707825==
+--===============1627694678==
 Content-Type: text/plain; charset="us-ascii"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 7bit
@@ -108,7 +108,7 @@ Hello,
 This is a test message from Chapter 12.  I hope you enjoy it!
 
 -- Anonymous
---===============0686707825==--
+--===============1627694678==--
 
                                    ~
 $ cd ..
