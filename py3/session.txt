@@ -89,5 +89,7 @@ This is a *test message* from Chapter 12.
  - Anonymous
 
                                    ~
+$ python build_mime_basic.py
+                                   ~
 $ cd ..
                                    ~

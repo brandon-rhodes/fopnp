@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/mime_gen_basic.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/build_mime_basic.py
 
 from email.mime.base import MIMEBase
 from email.mime.multipart import MIMEMultipart
@@ -31,15 +31,19 @@ This is a test message from Chapter 12.  I hope you enjoy it!
 
 -- Anonymous"""
 
-msg = MIMEMultipart()
-msg['To'] = 'recipient@example.com'
-msg['From'] = 'Test Sender <sender@example.com>'
-msg['Subject'] = 'Test Message, Chapter 12'
-msg['Date'] = utils.formatdate(localtime = 1)
-msg['Message-ID'] = utils.make_msgid()
+def main():
+    msg = MIMEMultipart()
+    msg['To'] = 'recipient@example.com'
+    msg['From'] = 'Test Sender <sender@example.com>'
+    msg['Subject'] = 'Test Message, Chapter 12'
+    msg['Date'] = utils.formatdate(localtime = 1)
+    msg['Message-ID'] = utils.make_msgid()
 
-body = MIMEText(message, _subtype='plain')
-msg.attach(body)
-for filename in sys.argv[1:]:
-    msg.attach(build_attachment(filename))
-print(msg.as_string())
+    body = MIMEText(message, _subtype='plain')
+    msg.attach(body)
+    for filename in sys.argv[1:]:
+        msg.attach(build_attachment(filename))
+    print(msg.as_string())
+
+if __name__ == '__main__':
+    main()
