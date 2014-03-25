@@ -35,6 +35,7 @@ def main():
         '-v',  # verbose: echo commands, even without an input tty
         ], stdin=PIPE, stdout=PIPE, stderr=STDOUT, env=env)
     output, code = p.communicate(shell_input)
+    output = output.replace(b'$ \n', b'')
     results.append(output.decode('utf-8'))
 
     open('session2.txt', 'w', encoding='utf-8').write(''.join(results))

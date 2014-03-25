@@ -8,4 +8,3 @@ $ python mime_decode.py
 usage: mime_decode.py [-h] filename
 mime_decode.py: error: the following arguments are required: filename
 $ cd ..
-$ 

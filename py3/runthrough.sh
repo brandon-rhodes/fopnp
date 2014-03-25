@@ -4,6 +4,12 @@
 set -e
 cd "$(dirname ${BASH_SOURCE[0]})"
 
+# New new way:
+
+python run_session.py && diff -u session.txt session2.txt
+
+exit
+
 # New way:
 
 if [ -z "$1" -o ! -d "$1" ]
