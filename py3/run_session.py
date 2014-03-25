@@ -3,6 +3,7 @@
 # Re-run session.txt and optionally update it inline.
 
 import os
+import re
 from subprocess import PIPE, Popen, STDOUT
 
 prompt = '$ '
@@ -36,6 +37,12 @@ def main():
         ], stdin=PIPE, stdout=PIPE, stderr=STDOUT, env=env)
     output, code = p.communicate(shell_input)
     output = output.replace(b'$ \n', b'')
+    output = re.sub(rb'Date: .*',
+                    b'Date: Tue, 25 Mar 2014 17:14:01 -0400',
+                    output)
+    output = re.sub(rb'Message-ID: <[\d.]+@guinness>',
+                    b'Message-ID: <20140325211401.9307.43420@guinness>',
+                    output)
     results.append(output.decode('utf-8'))
 
     open('session2.txt', 'w', encoding='utf-8').write(''.join(results))
