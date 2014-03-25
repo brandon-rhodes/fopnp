@@ -6,11 +6,11 @@ import socket
 from urllib.parse import quote_plus
 
 request_text = """\
-GET /maps/api/geocode/json?address={}&sensor=false HTTP/1.1\r
-Host: maps.google.com:80\r
-User-Agent: search4.py (Foundations of Python Network Programming)\r
-Connection: close\r
-\r
+GET /maps/api/geocode/json?address={}&sensor=false HTTP/1.1\r\n\
+Host: maps.google.com:80\r\n\
+User-Agent: search4.py (Foundations of Python Network Programming)\r\n\
+Connection: close\r\n\
+\r\n\
 """
 
 def geocode(address):
