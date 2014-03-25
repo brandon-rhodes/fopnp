@@ -90,6 +90,26 @@ This is a *test message* from Chapter 12.
 
                                    ~
 $ python build_mime_basic.py
+Content-Type: multipart/mixed; boundary="===============0686707825=="
+MIME-Version: 1.0
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325211401.9307.43420@guinness>
+
+--===============0686707825==
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+This is a test message from Chapter 12.  I hope you enjoy it!
+
+-- Anonymous
+--===============0686707825==--
+
                                    ~
 $ cd ..
                                    ~
