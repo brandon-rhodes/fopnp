@@ -33,7 +33,7 @@ def main():
 
     shell_input = ''.join(commands).encode('ascii')
     env = {'LANG': 'en_US.UTF-8', 'PS1': banner + '\n' + '$ ',
-           'PATH': os.environ['PATH'], 'PYTHONPATH': '..',
+           'PATH': os.environ['PATH'], 'PYTHONPATH': '../monkeys',
            'PYTHONDONTWRITEBYTECODE': '1'}
     p = Popen([
         '/bin/sh',
