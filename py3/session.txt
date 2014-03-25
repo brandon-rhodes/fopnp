@@ -4,7 +4,7 @@ with their expected output, so that the result can be version-controlled
 and verified as the scripts are updated and corrected.
 
 $ cd chapter12
-$ python build_simple_email.py
+$ python build_basic_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
