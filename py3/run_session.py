@@ -11,11 +11,11 @@ prompt = '$ '
 def main():
     session_txt = open('session.txt', encoding='utf-8')
     results = []
-    banner = '_' * 72
+    banner = '~'.center(72).rstrip(' ')
 
     lines = iter(session_txt)
     for line in lines:
-        if line.strip() == banner:
+        if line.rstrip() == banner:
             continue
         if line.startswith(prompt):
             break

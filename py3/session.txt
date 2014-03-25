@@ -3,9 +3,9 @@ These are the shell commands invoked in the text of the book, together
 with their expected output, so that the result can be version-controlled
 and verified as the scripts are updated and corrected.
 
-________________________________________________________________________
+                                   ~
 $ cd chapter12
-________________________________________________________________________
+                                   ~
 $ python build_basic_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
@@ -20,7 +20,7 @@ This is a test message from Chapter 12.
 
  - Anonymous
 
-________________________________________________________________________
+                                   ~
 $ python build_fancier_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
@@ -37,7 +37,7 @@ This is a test message from Chapter 12.
 
  - Anonymous
 
-________________________________________________________________________
+                                   ~
 $ python parse_basic.py message1.txt
 ----------- Display Headers ------------
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -53,7 +53,7 @@ This is a *test message* from Chapter 12.
 
  - Anonymous
 
-________________________________________________________________________
+                                   ~
 $ python parse_basic.py message2.txt
 ----------- Display Headers ------------
 From: Michael Müller <mmueller@example.com>
@@ -70,7 +70,7 @@ This is a *test message* from Chapter 12.
 
  - Anonymous
 
-________________________________________________________________________
+                                   ~
 $ python parse_basic.py message3.txt
 ----------- Display Headers ------------
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -88,6 +88,6 @@ This is a *test message* from Chapter 12.
 
  - Anonymous
 
-________________________________________________________________________
+                                   ~
 $ cd ..
-________________________________________________________________________
+                                   ~
