@@ -43,3 +43,10 @@ def time():
     return 1395789608.667911
 time_module.time = time
 del time
+
+import os
+def getpid():
+    return 15748
+os.getpid = getpid
+del getpid
+del os

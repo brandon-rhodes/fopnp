@@ -96,7 +96,7 @@ To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325232008.15752.50494@guinness>
+Message-ID: <20140325232008.15748.50494@guinness>
 
 --===============1627694678==
 Content-Type: text/plain; charset="us-ascii"
