@@ -18,7 +18,7 @@ def main():
             path = os.path.join(dirpath, filename)
             content = open(path).read()
             url = base + path
-            if url + '\n' not in content:
+            if '\n# {}\n'.format(url) not in content:
                 print(path)
 
 if __name__ == '__main__':
