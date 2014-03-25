@@ -4,6 +4,17 @@
 
 import os
 
+start1 = """#!/usr/bin/env python3
+# Foundations of Python Network Programming, Third Edition
+# {}
+"""
+
+start2 = """#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# Foundations of Python Network Programming, Third Edition
+# {}
+"""
+
 base = 'https://github.com/brandon-rhodes/fopnp/blob/m/py3/'
 
 def main():
@@ -18,7 +29,8 @@ def main():
             path = os.path.join(dirpath, filename)
             content = open(path).read()
             url = base + path
-            if '\n# {}\n'.format(url) not in content:
+            if not (content.startswith(start1.format(url)) or
+                    content.startswith(start2.format(url))):
                 print(path)
 
 if __name__ == '__main__':
