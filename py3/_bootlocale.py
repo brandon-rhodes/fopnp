@@ -37,3 +37,9 @@ else:
 import random
 random.seed(0)
 del random
+
+import time as time_module
+def time():
+    return 1395789608.667911
+time_module.time = time
+del time
