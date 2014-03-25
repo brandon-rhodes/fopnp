@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/trad_parse.py
-# Traditional Message Parsing
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/parse_basic.py
 
 import argparse, email.policy
 
