@@ -4,7 +4,34 @@ with their expected output, so that the result can be version-controlled
 and verified as the scripts are updated and corrected.
 
 $ cd chapter12
-$ python mime_decode.py
-usage: mime_decode.py [-h] filename
-mime_decode.py: error: the following arguments are required: filename
+$ python build_simple_email.py
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+$ python build_fancier_email.py
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325211401.9307.43420@guinness>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
 $ cd ..

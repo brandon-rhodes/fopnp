@@ -6,25 +6,13 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 
 # New new way:
 
-python run_session.py && diff -u session.txt session2.txt
-
-exit
-
-# New way:
-
-if [ -z "$1" -o ! -d "$1" ]
+python run_session.py
+if [ -z "$1" ]
 then
-    echo usage: runthrough.sh CHAPTER
-    exit 2
+    diff -u session.txt session2.txt
+else
+    cp session2.txt session.txt
 fi
-
-for script in $1/*.py
-do
-    echo
-    echo "==================== $script ===================="
-    echo
-    (cd $(dirname $script) && python3 $(basename $script))
-done
 
 exit
 
