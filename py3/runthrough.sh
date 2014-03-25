@@ -9,9 +9,9 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 python run_session.py
 if [ -z "$1" ]
 then
-    diff -u session.txt session2.txt
+    diff -u session.txt session_out.txt
 else
-    cp session2.txt session.txt
+    cp session_out.txt session.txt
 fi
 
 exit

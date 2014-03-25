@@ -3,7 +3,9 @@ These are the shell commands invoked in the text of the book, together
 with their expected output, so that the result can be version-controlled
 and verified as the scripts are updated and corrected.
 
+________________________________________________________________________
 $ cd chapter12
+________________________________________________________________________
 $ python build_basic_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
@@ -18,6 +20,7 @@ This is a test message from Chapter 12.
 
  - Anonymous
 
+________________________________________________________________________
 $ python build_fancier_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
@@ -34,4 +37,57 @@ This is a test message from Chapter 12.
 
  - Anonymous
 
+________________________________________________________________________
+$ python parse_basic.py message1.txt
+----------- Display Headers ------------
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+To: recipient@example.com
+------------ Other Headers -------------
+Message-ID: <20100802140555.11734.89229@guinness.ten22>
+----------------- Body -----------------
+Hello,
+
+This is a *test message* from Chapter 12.
+
+ - Anonymous
+
+________________________________________________________________________
+$ python parse_basic.py message2.txt
+----------- Display Headers ------------
+From: Michael Müller <mmueller@example.com>
+Subject: Test Message, Chapter 12
+To: recipient@example.com
+------------ Other Headers -------------
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+MIME-Version: 1.0
+----------------- Body -----------------
+Hello,
+
+This is a *test message* from Chapter 12.
+
+ - Anonymous
+
+________________________________________________________________________
+$ python parse_basic.py message3.txt
+----------- Display Headers ------------
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+To: recipient@example.com
+------------ Other Headers -------------
+Content-Type: multipart/mixed; boundary="===============1668983823=="
+MIME-Version: 1.0
+Message-ID: <20140325211401.9307.43420@guinness>
+----------------- Body -----------------
+Hello,
+
+This is a *test message* from Chapter 12.
+
+ - Anonymous
+
+________________________________________________________________________
 $ cd ..
+________________________________________________________________________

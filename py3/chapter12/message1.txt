@@ -6,6 +6,6 @@ Message-ID: <20100802140555.11734.89229@guinness.ten22>
 
 Hello,
 
-This is a *test message* from Chapter 12.  I hope you enjoy it!
+This is a *test message* from Chapter 12.
 
--- Anonymous
+ - Anonymous

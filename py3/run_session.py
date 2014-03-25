@@ -11,9 +11,12 @@ prompt = '$ '
 def main():
     session_txt = open('session.txt', encoding='utf-8')
     results = []
+    banner = '_' * 72
 
     lines = iter(session_txt)
     for line in lines:
+        if line.strip() == banner:
+            continue
         if line.startswith(prompt):
             break
         results.append(line)
@@ -29,7 +32,8 @@ def main():
             break
 
     shell_input = ''.join(commands).encode('ascii')
-    env = {'PS1': '$ ', 'PATH': os.environ['PATH']}
+    env = {'LANG': 'en_US.UTF-8', 'PS1': banner + '\n' + '$ ',
+           'PATH': os.environ['PATH']}
     p = Popen([
         '/bin/sh',
         '-i',  # interactive: print PS1 prompt before each line
@@ -45,7 +49,7 @@ def main():
                     output)
     results.append(output.decode('utf-8'))
 
-    open('session2.txt', 'w', encoding='utf-8').write(''.join(results))
+    open('session_out.txt', 'w', encoding='utf-8').write(''.join(results))
 
 if __name__ == '__main__':
     main()
