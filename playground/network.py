@@ -132,7 +132,7 @@ def start_services(net):
     start_dns(net)
     start_httpd(net)
 
-def main(do_interactive):
+def main(hostnames, do_ping):
     topo = RoutedTopo()
     net = Mininet(topo, controller=OVSController)
     net.start()
@@ -140,29 +140,40 @@ def main(do_interactive):
         configure_network(net)
         print "Host connections:"
         dumpNodeConnections(net.hosts)
-        if do_interactive:
+        if do_ping:
+            net.pingAll()
+        else:
             start_services(net)
-            hosts = [net['h1'], net['h4']]
+            hosts = [net[hostname] for hostname in hostnames]
             net.terms += makeTerms(hosts, 'host')  # net.hosts
             CLI(net)
-        else:
-            net.pingAll()
     finally:
-        for host in net.hosts:
-            for command in getattr(host, 'cleanup_commands'):
-                try:
-                    host.cmd(command)
-                except:
-                    print >>sys.stderr, 'Error on %s: %r' % (host.name, command)
-        net.stop()
+        try:
+            for host in net.hosts:
+                for command in getattr(host, 'cleanup_commands', ()):
+                    try:
+                        host.cmd(command)
+                    except:
+                        print >>sys.stderr, ('Error on %s: %r'
+                                             % (host.name, command))
+        finally:
+            net.stop()
 
     #net['isp'].cmd('ip
     #net['h2'].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='A simple Mininet with a router')
-    parser.add_argument('-i', action='store_true',
-                        help='run interactively with xterms and a cli')
+    parser = argparse.ArgumentParser(
+        description='A simple Mininet with a router')
+    parser.add_argument('-p', action='store_true',
+                        help='run ping test between all hosts')
+    parser.add_argument('host', nargs='*',
+                        help='hosts for which to spin up xterms at start')
     args = parser.parse_args()
+    if not args.host:
+        args.host = ['h1', 'h2', 'h4']
     setLogLevel('info')
-    main(args.i)
+    try:
+        main(args.host, args.p)
+    except KeyboardInterrupt:
+        pass
