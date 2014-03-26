@@ -18,7 +18,7 @@ This is a test message from Chapter 12.
 
  - Anonymous
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_fancier_email.py
+$ python build_mime_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
