@@ -4,8 +4,9 @@ with their expected output, so that the result can be version-controlled
 and verified as the scripts are updated and corrected.
 
                                    ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter12
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python build_basic_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
@@ -20,7 +21,7 @@ This is a test message from Chapter 12.
 
  - Anonymous
 
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python build_fancier_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
@@ -37,7 +38,7 @@ This is a test message from Chapter 12.
 
  - Anonymous
 
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python parse_basic.py message1.txt
 ----------- Display Headers ------------
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -53,7 +54,7 @@ This is a *test message* from Chapter 12.
 
  - Anonymous
 
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python parse_basic.py message2.txt
 ----------- Display Headers ------------
 From: Michael Müller <mmueller@example.com>
@@ -70,7 +71,7 @@ This is a *test message* from Chapter 12.
 
  - Anonymous
 
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python parse_basic.py message3.txt
 ----------- Display Headers ------------
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -88,7 +89,7 @@ This is a *test message* from Chapter 12.
 
  - Anonymous
 
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python build_mime_basic.py
 Content-Type: multipart/mixed; boundary="===============1627694678=="
 MIME-Version: 1.0
@@ -110,7 +111,7 @@ This is a test message from Chapter 12.  I hope you enjoy it!
 -- Anonymous
 --===============1627694678==--
 
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python mime_gen_alt.py
 Content-Type: multipart/alternative; boundary="===============1627694678=="
 MIME-Version: 1.0
@@ -140,7 +141,7 @@ Content-Transfer-Encoding: 7bit
 <p> - <i>Anonymous</i></p>
 --===============1627694678==--
 
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python mime_gen_both.py
 Content-Type: multipart/mixed; boundary="===============1911784257=="
 MIME-Version: 1.0
@@ -177,6 +178,6 @@ it!<P>
 
 --===============1911784257==--
 
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd ..
-                                   ~
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

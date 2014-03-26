@@ -11,7 +11,7 @@ prompt = '$ '
 def main():
     session_txt = open('session.txt', encoding='utf-8')
     results = []
-    banner = '~'.center(72).rstrip(' ')
+    banner = ' ' * 40 + '~' * 32
 
     lines = iter(session_txt)
     for line in lines:
