@@ -7,12 +7,7 @@ cd "$(dirname ${BASH_SOURCE[0]})"
 # New new way:
 
 python run_session.py
-if [ -z "$1" ]
-then
-    diff -u session.txt session_out.txt
-else
-    cp session_out.txt session.txt
-fi
+git diff session.txt
 
 exit
 

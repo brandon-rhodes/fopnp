@@ -47,7 +47,7 @@ def main():
                     output)
     results.append(output.decode('utf-8'))
 
-    open('session_out.txt', 'w', encoding='utf-8').write(''.join(results))
+    open('session.txt', 'w', encoding='utf-8').write(''.join(results))
 
 if __name__ == '__main__':
     main()
