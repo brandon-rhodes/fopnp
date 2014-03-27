@@ -9,6 +9,8 @@ from subprocess import PIPE, Popen, STDOUT
 prompt = '$ '
 
 def main():
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
     session_txt = open('session.txt', encoding='utf-8')
     results = []
     banner = ' ' * 40 + '~' * 32
