@@ -23,7 +23,7 @@ To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325232008.15748.50494@guinness>
+Message-ID: <20140325232008.15748.99346@guinness>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
@@ -33,6 +33,306 @@ Hello,
 This is a test message from Chapter 12.
 
  - Anonymous
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py attachment.txt
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.99346@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1911784257=="
+
+--===============1911784257==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+--===============1911784257==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="attachment.txt"
+MIME-Version: 1.0
+
+This is a test
+
+--===============1911784257==--
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -i
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.99346@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1911784257=="
+
+--===============1911784257==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+--===============1911784257==
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Disposition: inline; filename="blue-dot.gif"
+MIME-Version: 1.0
+
+R0lGODlhAQABAJAAAAAA/wAAACwAAAAAAQABAAACAgQBADs=
+
+--===============1911784257==--
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -i attachment.txt
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.99346@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============1911784257=="
+
+--===============1911784257==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+--===============1911784257==
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Disposition: inline; filename="blue-dot.gif"
+MIME-Version: 1.0
+
+R0lGODlhAQABAJAAAAAA/wAAACwAAAAAAQABAAACAgQBADs=
+
+--===============1911784257==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="attachment.txt"
+MIME-Version: 1.0
+
+This is a test
+
+--===============1911784257==--
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.99346@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="===============1911784257=="
+
+--===============1911784257==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>This is the smallest possible blue GIF:</p>
+<img src="cid:20140325232008.15748.50494@guinness" height="80" width="80">
+<p>- <i>Anonymous</i></p>
+
+--===============1911784257==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+--===============1911784257==--
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h attachment.txt attachment.gz
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.99346@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0903170602=="
+
+--===============0903170602==
+Content-Type: multipart/alternative; boundary="===============1911784257=="
+
+--===============1911784257==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>This is the smallest possible blue GIF:</p>
+<img src="cid:20140325232008.15748.50494@guinness" height="80" width="80">
+<p>- <i>Anonymous</i></p>
+
+--===============1911784257==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+--===============1911784257==--
+
+--===============0903170602==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="attachment.txt"
+MIME-Version: 1.0
+
+This is a test
+
+--===============0903170602==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.gz"
+MIME-Version: 1.0
+
+H4sIAP3o2D8AAwvJyCxWAKJEhZLU4hIuAIwtwPoPAAAA
+
+--===============0903170602==--
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h -i
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.99346@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/alternative; boundary="===============0903170602=="
+
+--===============0903170602==
+Content-Type: multipart/related; boundary="===============1911784257=="
+
+--===============1911784257==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>This is the smallest possible blue GIF:</p>
+<img src="cid:20140325232008.15748.50494@guinness" height="80" width="80">
+<p>- <i>Anonymous</i></p>
+
+--===============1911784257==
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="blue-dot.gif"
+Content-ID: <20140325232008.15748.50494@guinness>
+MIME-Version: 1.0
+
+R0lGODlhAQABAJAAAAAA/wAAACwAAAAAAQABAAACAgQBADs=
+
+--===============1911784257==--
+
+--===============0903170602==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+--===============0903170602==--
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h -i attachment.txt attachment.gz
+To: recipient@example.com
+From: Test Sender <sender@example.com>
+Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.99346@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0086939546=="
+
+--===============0086939546==
+Content-Type: multipart/alternative; boundary="===============0903170602=="
+
+--===============0903170602==
+Content-Type: multipart/related; boundary="===============1911784257=="
+
+--===============1911784257==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>This is the smallest possible blue GIF:</p>
+<img src="cid:20140325232008.15748.50494@guinness" height="80" width="80">
+<p>- <i>Anonymous</i></p>
+
+--===============1911784257==
+Content-Type: image/gif
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="blue-dot.gif"
+Content-ID: <20140325232008.15748.50494@guinness>
+MIME-Version: 1.0
+
+R0lGODlhAQABAJAAAAAA/wAAACwAAAAAAQABAAACAgQBADs=
+
+--===============1911784257==--
+
+--===============0903170602==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+--===============0903170602==--
+
+--===============0086939546==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="attachment.txt"
+MIME-Version: 1.0
+
+This is a test
+
+--===============0086939546==
+Content-Type: application/octet-stream
+Content-Transfer-Encoding: base64
+Content-Disposition: attachment; filename="attachment.gz"
+MIME-Version: 1.0
+
+H4sIAP3o2D8AAwvJyCxWAKJEhZLU4hIuAIwtwPoPAAAA
+
+--===============0086939546==--
 
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python parse_basic.py message1.txt
