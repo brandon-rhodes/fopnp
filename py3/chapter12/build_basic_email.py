@@ -9,11 +9,11 @@ This is a basic message from Chapter 12.
  - Anonymous"""
 
 def main():
-    message = email.message.Message()
+    message = email.message.EmailMessage()
     message['To'] = 'recipient@example.com'
     message['From'] = 'Test Sender <sender@example.com>'
     message['Subject'] = 'Test Message, Chapter 12'
-    message.set_payload(text + ('' if text.endswith('\n') else '\n'))
+    message.set_content(text)
     sys.stdout.buffer.write(message.as_bytes())
 
 if __name__ == '__main__':
