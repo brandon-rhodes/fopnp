@@ -7,6 +7,16 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email import utils, encoders
 
+message_text = """Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous"""
+
+message_html = """<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p> - <i>Anonymous</i></p>"""
+
 def build_alternative(data, contenttype):
     maintype, subtype = contenttype.split('/')
     if maintype == 'text':
@@ -17,24 +27,17 @@ def build_alternative(data, contenttype):
         encoders.encode_base64(part)
     return part
 
-messagetext = """Hello,
+def main():
+    msg = MIMEMultipart('alternative')
+    msg['To'] = 'recipient@example.com'
+    msg['From'] = 'Test Sender <sender@example.com>'
+    msg['Subject'] = 'Test Message, Chapter 12'
+    msg['Date'] = utils.formatdate(localtime = 1)
+    msg['Message-ID'] = utils.make_msgid()
 
-This is a *great* test message from Chapter 12.  I hope you enjoy it!
+    msg.attach(build_alternative(message_text, 'text/plain'))
+    msg.attach(build_alternative(message_html, 'text/html'))
+    print(msg.as_string())
 
--- Anonymous"""
-messagehtml = """Hello,<P>
-This is a <B>great</B> test message from Chapter 12.  I hope you enjoy
-it!<P>
--- <I>Anonymous</I>"""
-
-
-msg = MIMEMultipart('alternative')
-msg['To'] = 'recipient@example.com'
-msg['From'] = 'Test Sender <sender@example.com>'
-msg['Subject'] = 'Test Message, Chapter 12'
-msg['Date'] = utils.formatdate(localtime = 1)
-msg['Message-ID'] = utils.make_msgid()
-
-msg.attach(build_alternative(messagetext, 'text/plain'))
-msg.attach(build_alternative(messagehtml, 'text/html'))
-print(msg.as_string())
+if __name__ == '__main__':
+    main()

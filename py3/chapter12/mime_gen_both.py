@@ -38,18 +38,22 @@ This is a <B>great</B> test message from Chapter 12.  I hope you enjoy
 it!<P>
 -- <I>Anonymous</I>"""
 
-msg = MIMEMultipart()
-msg['To'] = 'recipient@example.com'
-msg['From'] = 'Test Sender <sender@example.com>'
-msg['Subject'] = 'Test Message, Chapter 12'
-msg['Date'] = utils.formatdate(localtime = 1)
-msg['Message-ID'] = utils.make_msgid()
+def main():
+    msg = MIMEMultipart()
+    msg['To'] = 'recipient@example.com'
+    msg['From'] = 'Test Sender <sender@example.com>'
+    msg['Subject'] = 'Test Message, Chapter 12'
+    msg['Date'] = utils.formatdate(localtime = 1)
+    msg['Message-ID'] = utils.make_msgid()
 
-body = MIMEMultipart('alternative')
-body.attach(build_part(messagetext, 'text/plain'))
-body.attach(build_part(messagehtml, 'text/html'))
-msg.attach(body)
+    body = MIMEMultipart('alternative')
+    body.attach(build_part(messagetext, 'text/plain'))
+    body.attach(build_part(messagehtml, 'text/html'))
+    msg.attach(body)
 
-for filename in sys.argv[1:]:
-    msg.attach(build_attachment(filename))
-print(msg.as_string())
+    for filename in sys.argv[1:]:
+        msg.attach(build_attachment(filename))
+    print(msg.as_string())
+
+if __name__ == '__main__':
+    main()
