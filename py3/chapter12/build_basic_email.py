@@ -5,9 +5,7 @@
 import email.message
 
 text = """Hello,
-
-This is a test message from Chapter 12.
-
+This is a basic message from Chapter 12.
  - Anonymous"""
 
 def main():
