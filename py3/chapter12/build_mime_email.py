@@ -4,7 +4,9 @@
 
 import argparse, email.message, email.utils, mimetypes
 
-plain = """Hello,\n\nThis is a test message from Chapter 12.\n\n - Anonymous"""
+plain = """Hello,
+This is a MIME message from Chapter 12.
+- Anonymous"""
 
 html = """<p>Hello,</p>
 <p>This is a <b>test message</b> from Chapter 12.</p>
@@ -20,15 +22,15 @@ def main(args):
     cid = email.utils.make_msgid()  # per RFC 2392, must be globally unique!
 
     message = email.message.EmailMessage()
-    message['To'] = 'recipient@example.com'
+    message['To'] = 'Test Recipient <recipient@example.com>'
     message['From'] = 'Test Sender <sender@example.com>'
-    message['Subject'] = 'Test Message, Chapter 12'
+    message['Subject'] = 'Foundations of Python Network Programming'
     message['Date'] = email.utils.formatdate(localtime=True)
     message['Message-ID'] = email.utils.make_msgid()
 
-    if not args.h and not args.i:
+    if not args.w and not args.i:
         message.set_content(plain)
-    elif not args.h:
+    elif not args.w:
         message.set_content(plain)
         message.add_attachment(blue_dot, 'image', 'gif', disposition='inline',
                                filename='blue-dot.gif')
@@ -56,8 +58,8 @@ def main(args):
     print(message.as_string())
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(add_help=False, description='Build email')
-    parser.add_argument('-h', action='store_true', help='Include HTML part')
+    parser = argparse.ArgumentParser(description='Build, print a MIME email')
+    parser.add_argument('-w', action='store_true', help='Include HTML part')
     parser.add_argument('-i', action='store_true', help='Include GIF image')
     parser.add_argument('filename', nargs='*', help='Attachment filename')
     main(parser.parse_args())
