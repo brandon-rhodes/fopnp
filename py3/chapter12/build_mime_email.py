@@ -2,7 +2,7 @@
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/build_mime_email.py
 
-import argparse, email.message, email.utils, mimetypes
+import argparse, email.message, email.utils, mimetypes, sys
 
 plain = """Hello,
 This is a MIME message from Chapter 12.
@@ -55,7 +55,7 @@ def main(args):
                 data = f.read()
             message.add_attachment(data, main, sub, filename=filename)
 
-    print(message.as_string())
+    sys.stdout.buffer.write(message.as_bytes())
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Build, print a MIME email')

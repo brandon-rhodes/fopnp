@@ -2,7 +2,7 @@
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/build_basic_email.py
 
-import email.message
+import email.message, sys
 
 text = """Hello,
 This is a basic message from Chapter 12.
@@ -13,8 +13,8 @@ def main():
     message['To'] = 'recipient@example.com'
     message['From'] = 'Test Sender <sender@example.com>'
     message['Subject'] = 'Test Message, Chapter 12'
-    message.set_payload(text)
-    print(message.as_string())
+    message.set_payload(text + ('' if text.endswith('\n') else '\n'))
+    sys.stdout.buffer.write(message.as_bytes())
 
 if __name__ == '__main__':
     main()
