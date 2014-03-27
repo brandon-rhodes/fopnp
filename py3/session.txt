@@ -11,6 +11,8 @@ $ python build_basic_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.50494@guinness>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
