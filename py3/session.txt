@@ -335,56 +335,183 @@ H4sIAP3o2D8AAwvJyCxWAKJEhZLU4hIuAIwtwPoPAAAA
 --===============0086939546==--
 
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python parse_basic.py message1.txt
------------ Display Headers ------------
-Date: Tue, 25 Mar 2014 17:14:01 -0400
+$ python build_basic_email.py | python display_email.py
 From: Test Sender <sender@example.com>
-Subject: Test Message, Chapter 12
 To: recipient@example.com
------------- Other Headers -------------
-Message-ID: <20100802140555.11734.89229@guinness.ten22>
------------------ Body -----------------
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
 Hello,
 
-This is a *test message* from Chapter 12.
+This is a test message from Chapter 12.
 
  - Anonymous
 
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python parse_basic.py message2.txt
------------ Display Headers ------------
-From: Michael Müller <mmueller@example.com>
-Subject: Test Message, Chapter 12
+$ python build_mime_email.py | python display_email.py
+From: Test Sender <sender@example.com>
 To: recipient@example.com
------------- Other Headers -------------
-Content-Transfer-Encoding: 7bit
-Content-Type: text/plain; charset="us-ascii"
-MIME-Version: 1.0
------------------ Body -----------------
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
 Hello,
 
-This is a *test message* from Chapter 12.
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py attachment.txt | python display_email.py
+From: Test Sender <sender@example.com>
+To: recipient@example.com
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+* Attachment named 'attachment.txt': str object of length 15
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -i | python display_email.py
+From: Test Sender <sender@example.com>
+To: recipient@example.com
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
+Hello,
+
+This is a test message from Chapter 12.
 
  - Anonymous
 
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python parse_basic.py message3.txt
------------ Display Headers ------------
-Date: Tue, 25 Mar 2014 17:14:01 -0400
+$ python build_mime_email.py -i attachment.txt | python display_email.py
 From: Test Sender <sender@example.com>
-Subject: Test Message, Chapter 12
 To: recipient@example.com
------------- Other Headers -------------
-Content-Type: multipart/mixed; boundary="===============1668983823=="
-MIME-Version: 1.0
-Message-ID: <20130801232320.2594.99930@guinness>
------------------ Body -----------------
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
 Hello,
 
-This is a *test message* from Chapter 12.
+This is a test message from Chapter 12.
 
  - Anonymous
 
+* Attachment named 'attachment.txt': str object of length 15
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h | python display_email.py
+From: Test Sender <sender@example.com>
+To: recipient@example.com
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h attachment.txt attachment.gz | python display_email.py
+From: Test Sender <sender@example.com>
+To: recipient@example.com
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+* Attachment named 'attachment.txt': str object of length 15
+* Attachment named 'attachment.gz': bytes object of length 33
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h -i | python display_email.py
+From: Test Sender <sender@example.com>
+To: recipient@example.com
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+* Attachment named 'blue-dot.gif': bytes object of length 35
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h -i attachment.txt attachment.gz | python display_email.py
+From: Test Sender <sender@example.com>
+To: recipient@example.com
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Subject: Test Message, Chapter 12
+
+Hello,
+
+This is a test message from Chapter 12.
+
+ - Anonymous
+
+* Attachment named 'blue-dot.gif': bytes object of length 35
+* Attachment named 'attachment.txt': str object of length 15
+* Attachment named 'attachment.gz': bytes object of length 33
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_basic_email.py | python display_structure.py
+ type=text/plain str len=62
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py | python display_structure.py
+ type=text/plain str len=63
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py attachment.txt | python display_structure.py
+ type=multipart/mixed
+.0 type=text/plain str len=62
+.1 type=text/plain str len=15 attachment filename='attachment.txt'
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -i | python display_structure.py
+ type=multipart/mixed
+.0 type=text/plain str len=62
+.1 type=image/gif bytes len=35 filename='blue-dot.gif'
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -i attachment.txt | python display_structure.py
+ type=multipart/mixed
+.0 type=text/plain str len=62
+.1 type=image/gif bytes len=35 filename='blue-dot.gif'
+.2 type=text/plain str len=15 attachment filename='attachment.txt'
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h | python display_structure.py
+ type=multipart/alternative
+.0 type=text/html str len=216
+.1 type=text/plain str len=62
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h attachment.txt attachment.gz | python display_structure.py
+ type=multipart/mixed
+.0 type=multipart/alternative
+.0.0 type=text/html str len=216
+.0.1 type=text/plain str len=62
+.1 type=text/plain str len=15 attachment filename='attachment.txt'
+.2 type=application/octet-stream bytes len=33 attachment filename='attachment.gz'
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h -i | python display_structure.py
+ type=multipart/alternative
+.0 type=multipart/related
+.0.0 type=text/html str len=216
+.0.1 type=image/gif bytes len=35 attachment filename='blue-dot.gif'
+.1 type=text/plain str len=62
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python build_mime_email.py -h -i attachment.txt attachment.gz | python display_structure.py
+ type=multipart/mixed
+.0 type=multipart/alternative
+.0.0 type=multipart/related
+.0.0.0 type=text/html str len=216
+.0.0.1 type=image/gif bytes len=35 attachment filename='blue-dot.gif'
+.0.1 type=text/plain str len=62
+.1 type=text/plain str len=15 attachment filename='attachment.txt'
+.2 type=application/octet-stream bytes len=33 attachment filename='attachment.gz'
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd ..
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
