@@ -21,8 +21,9 @@ def main():
     for dirpath, dirnames, filenames in os.walk('.'):
         if dirpath == '.':
             continue
-        if dirpath.startswith('./'):
-            dirpath = dirpath[2:]
+        if not dirpath.startswith('./chapter'):
+            continue
+        dirpath = dirpath[2:]
         for filename in filenames:
             if not filename.endswith('.py'):
                 continue
