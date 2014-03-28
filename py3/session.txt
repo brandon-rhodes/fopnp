@@ -5,9 +5,18 @@ and verified as the scripts are updated and corrected.
 
                                    ~
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo $PATH
+/home/brandon/usr/3.4/bin:/bin:/usr/bin
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ which python3
+/home/brandon/usr/3.4/bin/python3
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 --version
+Python 3.4.0
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter12
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_basic_email.py
+$ python3 build_basic_email.py
 To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
@@ -21,7 +30,7 @@ Hello,
 This is a basic message from Chapter 12.
  - Anonymous
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_basic_email.py | python display_email.py
+$ python3 build_basic_email.py | python3 display_email.py
 From: Test Sender <sender@example.com>
 To: recipient@example.com
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -32,10 +41,10 @@ This is a basic message from Chapter 12.
  - Anonymous
 
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_basic_email.py | python display_structure.py
+$ python3 build_basic_email.py | python3 display_structure.py
  type=text/plain str len=61
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py
+$ python3 build_mime_email.py
 To: Test Recipient <recipient@example.com>
 From: Test Sender <sender@example.com>
 Subject: Foundations of Python Network Programming
@@ -63,7 +72,7 @@ This is a MIME message from Chapter 12.
 
 --===============1627694678==--
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py attachment.txt
+$ python3 build_mime_email.py attachment.txt
 To: Test Recipient <recipient@example.com>
 From: Test Sender <sender@example.com>
 Subject: Foundations of Python Network Programming
@@ -104,7 +113,7 @@ This is a test
 
 --===============1911784257==--
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py -i
+$ python3 build_mime_email.py -i
 To: Test Recipient <recipient@example.com>
 From: Test Sender <sender@example.com>
 Subject: Foundations of Python Network Programming
@@ -147,7 +156,7 @@ This is a MIME message from Chapter 12.
 
 --===============0903170602==--
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py -i attachment.txt attachment.gz
+$ python3 build_mime_email.py -i attachment.txt attachment.gz
 To: Test Recipient <recipient@example.com>
 From: Test Sender <sender@example.com>
 Subject: Foundations of Python Network Programming
@@ -211,7 +220,7 @@ H4sIAP3o2D8AAwvJyCxWAKJEhZLU4hIuAIwtwPoPAAAA
 
 --===============0086939546==--
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py | python display_email.py
+$ python3 build_mime_email.py | python3 display_email.py
 From: Test Sender <sender@example.com>
 To: Test Recipient <recipient@example.com>
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -222,7 +231,7 @@ This is a MIME message from Chapter 12.
 - Anonymous
 
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py attachment.txt | python display_email.py
+$ python3 build_mime_email.py attachment.txt | python3 display_email.py
 From: Test Sender <sender@example.com>
 To: Test Recipient <recipient@example.com>
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -234,7 +243,7 @@ This is a MIME message from Chapter 12.
 
 * Attachment named 'attachment.txt': str object of length 15
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py -i | python display_email.py
+$ python3 build_mime_email.py -i | python3 display_email.py
 From: Test Sender <sender@example.com>
 To: Test Recipient <recipient@example.com>
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -246,7 +255,7 @@ This is a MIME message from Chapter 12.
 
 * Attachment named 'blue-dot.gif': bytes object of length 35
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py -i attachment.txt attachment.gz | python display_email.py
+$ python3 build_mime_email.py -i attachment.txt attachment.gz | python3 display_email.py
 From: Test Sender <sender@example.com>
 To: Test Recipient <recipient@example.com>
 Date: Tue, 25 Mar 2014 17:14:01 -0400
@@ -260,26 +269,26 @@ This is a MIME message from Chapter 12.
 * Attachment named 'attachment.txt': str object of length 15
 * Attachment named 'attachment.gz': bytes object of length 33
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py | python display_structure.py
+$ python3 build_mime_email.py | python3 display_structure.py
  type=multipart/alternative
 .0 type=text/html str len=94
 .1 type=text/plain str len=59
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py attachment.txt | python display_structure.py
+$ python3 build_mime_email.py attachment.txt | python3 display_structure.py
  type=multipart/mixed
 .0 type=multipart/alternative
 .0.0 type=text/html str len=94
 .0.1 type=text/plain str len=59
 .1 type=text/plain str len=15 attachment filename='attachment.txt'
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py -i | python display_structure.py
+$ python3 build_mime_email.py -i | python3 display_structure.py
  type=multipart/alternative
 .0 type=multipart/related
 .0.0 type=text/html str len=215
 .0.1 type=image/gif bytes len=35 attachment filename='blue-dot.gif'
 .1 type=text/plain str len=59
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_mime_email.py -i attachment.txt attachment.gz | python display_structure.py
+$ python3 build_mime_email.py -i attachment.txt attachment.gz | python3 display_structure.py
  type=multipart/mixed
 .0 type=multipart/alternative
 .0.0 type=multipart/related
@@ -289,7 +298,7 @@ $ python build_mime_email.py -i attachment.txt attachment.gz | python display_st
 .1 type=text/plain str len=15 attachment filename='attachment.txt'
 .2 type=application/octet-stream bytes len=33 attachment filename='attachment.gz'
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_unicode_email.py
+$ python3 build_unicode_email.py
 To: =?utf-8?b?QsO2w7B2YXJy?= <recipient@example.com>
 From: Eardstapa <sender@example.com>
 Subject: Four lines from The Wanderer
@@ -303,7 +312,7 @@ Hw=C3=A6r cwom ma=C3=BE=C3=BEumgyfa?
 Hw=C3=A6r cwom symbla gesetu?
 Hw=C3=A6r sindon seledreamas?
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python build_unicode_email.py | python display_email.py
+$ python3 build_unicode_email.py | python3 display_email.py
 From: Eardstapa <sender@example.com>
 To: Böðvarr <recipient@example.com>
 Date: Tue, 25 Mar 2014 17:14:01 -0400
