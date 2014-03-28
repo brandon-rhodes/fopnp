@@ -2,7 +2,7 @@
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/build_mime_email.py
 
-import argparse, email.message, email.utils, mimetypes, sys
+import argparse, email.message, email.policy, email.utils, mimetypes, sys
 
 plain = """Hello,
 This is a MIME message from Chapter 12.
@@ -20,7 +20,7 @@ blue_dot = (b'GIF89a1010\x900000\xff000,000010100\x02\x02\x0410;'
             .replace(b'0', b'\x00').replace(b'1', b'\x01'))
 
 def main(args):
-    message = email.message.EmailMessage()
+    message = email.message.EmailMessage(email.policy.SMTP)
     message['To'] = 'Test Recipient <recipient@example.com>'
     message['From'] = 'Test Sender <sender@example.com>'
     message['Subject'] = 'Foundations of Python Network Programming'

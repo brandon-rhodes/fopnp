@@ -2,7 +2,7 @@
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/build_unicode_email.py
 
-import email.message, sys
+import email.message, email.policy, sys
 
 text = """\
 Hwær cwom mearg? Hwær cwom mago?
@@ -11,7 +11,7 @@ Hwær cwom symbla gesetu?
 Hwær sindon seledreamas?"""
 
 def main():
-    message = email.message.EmailMessage()
+    message = email.message.EmailMessage(email.policy.SMTP)
     message['To'] = 'Böðvarr <recipient@example.com>'
     message['From'] = 'Eardstapa <sender@example.com>'
     message['Subject'] = 'Four lines from The Wanderer'

@@ -2,14 +2,14 @@
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/build_basic_email.py
 
-import email.message, email.utils, sys
+import email.message, email.policy, email.utils, sys
 
 text = """Hello,
 This is a basic message from Chapter 12.
  - Anonymous"""
 
 def main():
-    message = email.message.EmailMessage()
+    message = email.message.EmailMessage(email.policy.SMTP)
     message['To'] = 'recipient@example.com'
     message['From'] = 'Test Sender <sender@example.com>'
     message['Subject'] = 'Test Message, Chapter 12'
