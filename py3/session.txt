@@ -324,5 +324,10 @@ Hwær cwom symbla gesetu?
 Hwær sindon seledreamas?
 
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ (echo "from email import utils"; echo "print(utils.parsedate('Tue, 25 Mar 2014 17:14:01 -0400'))"; echo "print(utils.parsedate_tz('Tue, 25 Mar 2014 17:14:01 -0400'))"; echo "print(repr(utils.parsedate_to_datetime('Tue, 25 Mar 2014 17:14:01 -0400')))") | python3
+(2014, 3, 25, 17, 14, 1, 0, 1, -1)
+(2014, 3, 25, 17, 14, 1, 0, 1, -1, -14400)
+datetime.datetime(2014, 3, 25, 17, 14, 1, tzinfo=datetime.timezone(datetime.timedelta(-1, 72000)))
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd ..
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
