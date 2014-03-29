@@ -8,8 +8,8 @@
 import argparse, email.policy, sys
 
 def main(binary_file):
-    default = email.policy.default
-    message = email.message_from_binary_file(binary_file, policy=default)
+    policy = email.policy.SMTP
+    message = email.message_from_binary_file(binary_file, policy=policy)
     for header in ['From', 'To', 'Date', 'Subject']:
         print(header + ':', message.get(header, '(none)'))
     print()

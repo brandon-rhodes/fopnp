@@ -13,8 +13,8 @@ def walk(part, prefix=''):
         yield from walk(subpart, prefix + '.{}'.format(i))
 
 def main(binary_file):
-    default = email.policy.default
-    message = email.message_from_binary_file(binary_file, policy=default)
+    policy = email.policy.SMTP
+    message = email.message_from_binary_file(binary_file, policy=policy)
     for prefix, part in walk(message):
         line = '{} type={}'.format(prefix, part.get_content_type())
         if part.get_content_maintype() != 'multipart':
