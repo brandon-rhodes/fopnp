@@ -241,7 +241,7 @@ Hello,
 This is a MIME message from Chapter 12.
 - Anonymous
 
-* Attachment named 'attachment.txt': str object of length 15
+* text/plain attachment named 'attachment.txt': str object of length 15
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 build_mime_email.py -i | python3 display_email.py
 From: Test Sender <sender@example.com>
@@ -253,7 +253,7 @@ Hello,
 This is a MIME message from Chapter 12.
 - Anonymous
 
-* Attachment named 'blue-dot.gif': bytes object of length 35
+* image/gif attachment named 'blue-dot.gif': bytes object of length 35
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 build_mime_email.py -i attachment.txt attachment.gz | python3 display_email.py
 From: Test Sender <sender@example.com>
@@ -265,9 +265,9 @@ Hello,
 This is a MIME message from Chapter 12.
 - Anonymous
 
-* Attachment named 'blue-dot.gif': bytes object of length 35
-* Attachment named 'attachment.txt': str object of length 15
-* Attachment named 'attachment.gz': bytes object of length 33
+* image/gif attachment named 'blue-dot.gif': bytes object of length 35
+* text/plain attachment named 'attachment.txt': str object of length 15
+* application/octet-stream attachment named 'attachment.gz': bytes object of length 33
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 build_mime_email.py | python3 display_structure.py
  type=multipart/alternative

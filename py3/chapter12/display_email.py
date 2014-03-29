@@ -27,8 +27,9 @@ def main(binary_file):
         if not is_attachment:
             continue
         content = part.get_content()
-        print('* Attachment named {!r}: {} object of length {}'.format(
-            part.get_filename(), type(content).__name__, len(content)))
+        print('* {} attachment named {!r}: {} object of length {}'.format(
+            part.get_content_type(), part.get_filename(),
+            type(content).__name__, len(content)))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Parse and print an email')
