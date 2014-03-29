@@ -17,7 +17,7 @@ def main(binary_file):
     message = email.message_from_binary_file(binary_file, policy=policy)
     for prefix, part in walk(message):
         line = '{} type={}'.format(prefix, part.get_content_type())
-        if part.get_content_maintype() != 'multipart':
+        if not part.is_multipart():
             content = part.get_content()
             line += ' {} len={}'.format(type(content).__name__, len(content))
             cd = part['Content-Disposition']
