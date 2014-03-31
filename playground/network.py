@@ -132,19 +132,21 @@ def start_services(net):
     start_dns(net)
     start_httpd(net)
 
-def main(hostnames, do_ping):
+def main(args):
     topo = RoutedTopo()
     net = Mininet(topo, controller=OVSController)
     net.start()
     try:
         configure_network(net)
-        print "Host connections:"
+        print("Host connections:")
         dumpNodeConnections(net.hosts)
-        if do_ping:
+        if args.p:
             net.pingAll()
-        else:
+        if args.s:
+            net['h1'].cmd(this_dir + '/run_session.sh')
+        if args.i:
             start_services(net)
-            hosts = [net[hostname] for hostname in hostnames]
+            hosts = [net[hostname] for hostname in args.host]
             net.terms += makeTerms(hosts, 'host')  # net.hosts
             CLI(net)
     finally:
@@ -159,21 +161,27 @@ def main(hostnames, do_ping):
         finally:
             net.stop()
 
-    #net['isp'].cmd('ip
-    #net['h2'].cmd('echo 1 > /proc/sys/net/ipv4/ip_forward')
-
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
-        description='A simple Mininet with a router')
-    parser.add_argument('-p', action='store_true',
-                        help='run ping test between all hosts')
-    parser.add_argument('host', nargs='*',
-                        help='hosts for which to spin up xterms at start')
+        description='The Foundations of Python Network Programming'
+        ' Mininet playground')
+    parser.add_argument('host', nargs='*', help='hosts for which xterms'
+                        ' will be automatically started in "-i" mode'
+                        ' (defaults to "h1" and "h2")')
+    parser.add_argument('-i', action='store_true', help='build network then'
+                        ' go interactive, with CLI and xterms')
+    parser.add_argument('-p', action='store_true', help='build network then'
+                        ' run ping test between all hosts')
+    parser.add_argument('-s', action='store_true', help='build network then'
+                        ' re-run py3/session.txt on host "h1"')
     args = parser.parse_args()
+    if not (args.i or args.p or args.s):
+        parser.print_help()
+        parser.exit(2)
     if not args.host:
         args.host = ['h1', 'h2']
     setLogLevel('info')
     try:
-        main(args.host, args.p)
+        main(args)
     except KeyboardInterrupt:
         pass
