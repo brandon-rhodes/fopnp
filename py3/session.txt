@@ -340,5 +340,5 @@ $ sleep 1
 $ cd chapter13
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 simple.py mail.example.com sender@example.com recipient@example.com
-Message successfully sent to 1 recipient(s)
+Message sent to 1 recipient
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
