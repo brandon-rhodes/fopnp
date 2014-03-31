@@ -6,10 +6,10 @@ and verified as the scripts are updated and corrected.
                                    ~
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo $PATH
-/home/brandon/.v/fopnp-py3/bin:/home/brandon/bin:/home/brandon/usr/bin:/usr/lib/lightdm/lightdm:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games
+/home/brandon/usr/3.4/bin:/bin:/usr/bin
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ which python3
-/home/brandon/.v/fopnp-py3/bin/python3
+/home/brandon/usr/3.4/bin/python3
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 --version
 Python 3.4.0
@@ -334,4 +334,11 @@ $ python3 -c "from email import utils; print(repr(utils.parsedate_to_datetime('T
 datetime.datetime(2014, 3, 25, 17, 14, 1, tzinfo=datetime.timezone(datetime.timedelta(-1, 72000)))
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd ..
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ sleep 1
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ cd chapter13
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 simple.py mail.example.com sender@example.com recipient@example.com
+Message successfully sent to 1 recipient(s)
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
