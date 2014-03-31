@@ -120,16 +120,16 @@ def start_dns(net):
         host.cleanup_commands.append('kill %dnsmasq')
 
 def start_httpd(net):
-    net['www'].cmd('cd %s' % this_dir)
-    net['www'].cmd('cd ../py3')
-    net['www'].cmd('python ../playground/services/custom_httpd.py'
-                   ' ../playground/certs/www.pem &')
+    net['www'].cmd('cd %s/services' % this_dir)
+    net['www'].cmd('python custom_httpd.py ../playground/certs/www.pem'
+                   ' >log.httpd 2>&1 &')
+    net['www'].cmd('chmod a+rw log.httpd')
     net['www'].cleanup_commands.append('kill %python')
 
 def start_smtpd(net):
-    net['mail'].cmd('cd %s' % this_dir)
-    net['mail'].cmd('cd ../py3')
-    net['mail'].cmd('python3 ../playground/services/custom_smtpd.py &')
+    net['mail'].cmd('cd %s/services' % this_dir)
+    net['mail'].cmd('python3 custom_smtpd.py >log.smtpd 2>&1 &')
+    net['mail'].cmd('chmod a+rw log.smtpd')
     net['mail'].cleanup_commands.append('kill %python3')
 
 def start_services(net):
