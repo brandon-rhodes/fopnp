@@ -2,3 +2,4 @@ diagrams/*.png
 diagrams/*.svg
 *.old
 log.*
+playground/var/
