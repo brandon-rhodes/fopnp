@@ -121,8 +121,7 @@ def start_dns(net):
 
 def start_httpd(net):
     net['www'].cmd('cd %s/services' % this_dir)
-    net['www'].cmd('python custom_httpd.py ../playground/certs/www.pem'
-                   ' >log.httpd 2>&1 &')
+    net['www'].cmd('python custom_httpd.py ../certs/www.pem >log.httpd 2>&1 &')
     net['www'].cmd('chmod a+rw log.httpd')
     net['www'].cleanup_commands.append('kill %python')
 
