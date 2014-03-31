@@ -171,7 +171,7 @@ if __name__ == '__main__':
                         help='hosts for which to spin up xterms at start')
     args = parser.parse_args()
     if not args.host:
-        args.host = ['h1', 'h2', 'h4']
+        args.host = ['h1', 'h2']
     setLogLevel('info')
     try:
         main(args.host, args.p)
