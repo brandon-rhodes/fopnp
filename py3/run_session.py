@@ -47,7 +47,8 @@ def main():
     output = re.sub(rb'Date: .*',
                     b'Date: Tue, 25 Mar 2014 17:14:01 -0400',
                     output)
-    results.append(output.decode('utf-8'))
+    results.append(output.decode('utf-8')
+        .replace("/bin/sh: 0: can't access tty; job control turned off\n", ''))
 
     open('session.txt', 'w', encoding='utf-8').write(''.join(results))
 
