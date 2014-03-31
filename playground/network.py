@@ -142,10 +142,11 @@ def main(args):
         dumpNodeConnections(net.hosts)
         if args.p:
             net.pingAll()
+        if args.i or args.s:
+            start_services(net)
         if args.s:
             net['h1'].cmd(this_dir + '/run_session.sh')
         if args.i:
-            start_services(net)
             hosts = [net[hostname] for hostname in args.host]
             net.terms += makeTerms(hosts, 'host')  # net.hosts
             CLI(net)
