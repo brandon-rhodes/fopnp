@@ -4,8 +4,8 @@
 
 import sys, smtplib, socket, ssl
 
-message_template = """To: %s
-From: %s
+message_template = """To: {}
+From: {}
 Subject: Test Message from simple.py
 
 Hello,
@@ -16,40 +16,42 @@ in Foundations of Python Network Programming.
 
 def main():
     if len(sys.argv) < 4:
-        print("Syntax: %s server fromaddr toaddr [toaddr...]" % sys.argv[0])
+        name = sys.argv[0]
+        print("Syntax: {} server fromaddr toaddr [toaddr...]".format(name))
         sys.exit(2)
 
     server, fromaddr, toaddrs = sys.argv[1], sys.argv[2], sys.argv[3:]
-    message = message_template % (', '.join(toaddrs), fromaddr)
+    message = message_template.format(', '.join(toaddrs), fromaddr)
 
     try:
-        s = smtplib.SMTP(server)
-        send_message_securely(s, fromaddr, toaddrs, message)
+        connection = smtplib.SMTP(server)
+        send_message_securely(connection, fromaddr, toaddrs, message)
     except (socket.gaierror, socket.error, socket.herror,
             smtplib.SMTPException) as e:
-        print(" *** Your message may not have been sent!")
+        print("Your message may not have been sent!")
         print(e)
         sys.exit(1)
     else:
-        print("Message successfully sent to %d recipient(s)" % len(toaddrs))
-        s.quit()
+        s = '' if len(toaddrs) == 1 else 's'
+        print("Message sent to {} recipient{}".format(len(toaddrs), s))
+        connection.quit()
 
-def send_message_securely(s, fromaddr, toaddrs, message):
-    code = s.ehlo()[0]
+def send_message_securely(connection, fromaddr, toaddrs, message):
+    code = connection.ehlo()[0]
     uses_esmtp = (200 <= code <= 299)
     if not uses_esmtp:
-        code = s.helo()[0]
+        code = connection.helo()[0]
         if not (200 <= code <= 299):
             print("Remove server refused HELO; code:", code)
             sys.exit(1)
 
-    if uses_esmtp and s.has_extn('starttls'):
+    if uses_esmtp and connection.has_extn('starttls'):
         print("Negotiating TLS....")
         context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
         context.set_default_verify_paths()
         context.verify_mode = ssl.CERT_REQUIRED
-        s.starttls(context=context)
-        code = s.ehlo()[0]
+        connection.starttls(context=context)
+        code = connection.ehlo()[0]
         if not (200 <= code <= 299):
             print("Couldn't EHLO after STARTTLS")
             sys.exit(5)
@@ -57,7 +59,7 @@ def send_message_securely(s, fromaddr, toaddrs, message):
     else:
         print("Server does not support TLS; using normal connection.")
 
-    s.sendmail(fromaddr, toaddrs, message)
+    connection.sendmail(fromaddr, toaddrs, message)
 
 if __name__ == '__main__':
     main()

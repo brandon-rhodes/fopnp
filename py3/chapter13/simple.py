@@ -16,7 +16,8 @@ in Foundations of Python Network Programming.
 
 def main():
     if len(sys.argv) < 4:
-        print("usage: {} server fromaddr toaddr ...".format(sys.argv[0]))
+        name = sys.argv[0]
+        print("usage: {} server fromaddr toaddr [toaddr...]".format(name))
         sys.exit(2)
 
     server, fromaddr, toaddrs = sys.argv[1], sys.argv[2], sys.argv[3:]

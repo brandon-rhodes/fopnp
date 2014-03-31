@@ -339,6 +339,52 @@ $ sleep 1
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter13
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 simple.py
+usage: simple.py server fromaddr toaddr [toaddr...]
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 simple.py mail.example.com sender@example.com recipient@example.com
+Message sent to 1 recipient
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 debug.py
+usage: debug.py server fromaddr toaddr [toaddr...]
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 debug.py unknown.example.com sender@example.com recipient@example.com
+Your message may not have been sent!
+[Errno -2] Name or service not known
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 debug.py mail.example.com sender@example.com recipient@example.com
+send: 'ehlo [127.0.1.1]\r\n'
+reply: b'250-guinness\r\n'
+reply: b'250-SIZE 33554432\r\n'
+reply: b'250 HELP\r\n'
+reply: retcode (250); Msg: b'guinness\nSIZE 33554432\nHELP'
+send: 'mail FROM:<sender@example.com> size=212\r\n'
+reply: b'250 OK\r\n'
+reply: retcode (250); Msg: b'OK'
+send: 'rcpt TO:<recipient@example.com>\r\n'
+reply: b'250 OK\r\n'
+reply: retcode (250); Msg: b'OK'
+send: 'data\r\n'
+reply: b'354 End data with <CR><LF>.<CR><LF>\r\n'
+reply: retcode (354); Msg: b'End data with <CR><LF>.<CR><LF>'
+data: (354, b'End data with <CR><LF>.<CR><LF>')
+send: b'To: recipient@example.com\r\nFrom: sender@example.com\r\nSubject: Test Message from simple.py\r\n\r\nHello,\r\n\r\nThis is a test message sent to you from the debug.py program\r\nin Foundations of Python Network Programming.\r\n.\r\n'
+reply: b'250 OK\r\n'
+reply: retcode (250); Msg: b'OK'
+data: (250, b'OK')
+send: 'quit\r\n'
+reply: b'221 Bye\r\n'
+reply: retcode (221); Msg: b'Bye'
+Message sent to 1 recipient
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 ehlo.py
+usage: ehlo.py server fromaddr toaddr [toaddr...]
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 ehlo.py unknown.example.com sender@example.com recipient@example.com
+Your message may not have been sent!
+[Errno -2] Name or service not known
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ python3 ehlo.py mail.example.com sender@example.com recipient@example.com
+Maximum message size is 33554432
 Message sent to 1 recipient
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
