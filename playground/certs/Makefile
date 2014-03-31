@@ -4,10 +4,10 @@
 
 BITS=3072
 
-all: ca.crt client.crt ftp.crt mail.crt www.pem
+all: ca.crt client.crt ftp.crt mail.pem www.pem
 
-www.pem: www.crt www.key
-	cat www.crt www.key > www.pem
+mail.pem www.pem: %.pem: %.crt %.key
+	cat $*.crt $*.key > $*.pem
 
 client.crt ftp.crt mail.crt www.crt: %.crt: ca.cnf ca.key ca.crt %.csr
 	openssl ca -batch -config ca.cnf -days 36500 \
