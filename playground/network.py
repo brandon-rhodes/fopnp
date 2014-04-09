@@ -117,24 +117,30 @@ def start_dns(net):
         host.cmd('dnsmasq --interface=lo --no-dhcp-interface=lo'
                  ' --no-daemon --no-resolv --no-hosts'
                  ' --addn-hosts=/home/brandon/fopnp/playground/services/hosts &')
-        host.cleanup_commands.append('kill %dnsmasq')
+        host.cleanup_commands.append('kill %?dnsmasq')
+
+def start_dovecot(net):
+    net['mail'].cmd('cd %s/services' % this_dir)
+    net['mail'].cmd('python3 services/custom_dovecot.py &')
+    net['mail'].cleanup_commands.append('kill %?custom_dovecot')
 
 def start_httpd(net):
     net['www'].cmd('cd %s/services' % this_dir)
     net['www'].cmd('python custom_httpd.py ../certs/www.pem >log.httpd 2>&1 &')
     net['www'].cmd('chmod a+rw log.httpd')
-    net['www'].cleanup_commands.append('kill %python')
+    net['www'].cleanup_commands.append('kill %?custom_httpd')
 
 def start_smtpd(net):
     net['mail'].cmd('cd %s/services' % this_dir)
     net['mail'].cmd('python3 custom_smtpd.py >log.smtpd 2>&1 &')
     net['mail'].cmd('chmod a+rw log.smtpd')
-    net['mail'].cleanup_commands.append('kill %python3')
+    net['mail'].cleanup_commands.append('kill %?custom_smtpd')
 
 def start_services(net):
     for host in net.hosts:
         host.cleanup_commands = []
     start_dns(net)
+    start_dovecot(net)
     start_httpd(net)
     start_smtpd(net)
 

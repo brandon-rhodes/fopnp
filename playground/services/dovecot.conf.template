@@ -1,11 +1,12 @@
 base_dir = PLAYGROUND/var/dovecot
-default_internal_user = brandon
-default_login_user = brandon
+default_internal_user = USER
+default_login_user = USER
 disable_plaintext_auth = no
 log_path = PLAYGROUND/var/dovecot.log
+mail_location = mbox:PLAYGROUND/var/folders:INBOX=PLAYGROUND/var/mail/%u
 passdb {
   driver = passwd-file
-  args = scheme=CRYPT username_format=%u PLAYGROUND/services/passwd
+  args = scheme=PLAIN username_format=%u PLAYGROUND/services/passwd
 }
 protocols = imap pop3
 service anvil {
