@@ -20,6 +20,8 @@ def main():
         print("Login failed:", e)
     else:
         response, listings, octet_count = p.list()
+        if not listings:
+            print("No messages")
         for listing in listings:
             number, size = listing.decode('ascii').split()
             print("Message %s has %s bytes" % (number, size))

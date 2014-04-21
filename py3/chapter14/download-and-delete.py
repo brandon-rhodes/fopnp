@@ -19,7 +19,7 @@ def main():
     except poplib.error_proto as e:
         print("Login failed:", e)
     else:
-        visit_all_listings()
+        visit_all_listings(p)
     finally:
         p.quit()
 

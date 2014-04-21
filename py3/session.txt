@@ -411,19 +411,76 @@ $ cd chapter14
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cat < /dev/null > $PLAYGROUND/var/mail/brandon
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python popconn.py mail.example.com brandon
-/usr/lib/python2.7/getpass.py:83: GetPassWarning: Can not control echo on the terminal.
-  passwd = fallback_getpass(prompt, stream)
+$ echo abc123 | python3 -W ignore popconn.py mail.example.com brandon
 Warning: Password input may be echoed.
 Password: 
 You have 0 messages totaling 0 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ cat $PLAYGROUND/services/sample-mbox > $PLAYGROUND/var/mail/brandon
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python popconn.py mail.example.com brandon
-/usr/lib/python2.7/getpass.py:83: GetPassWarning: Can not control echo on the terminal.
-  passwd = fallback_getpass(prompt, stream)
+$ echo abc123 | python3 -W ignore mailbox.py mail.example.com brandon
 Warning: Password input may be echoed.
 Password: 
-You have 2 messages totaling 773 bytes
+No messages
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ cat $PLAYGROUND/services/sample-mbox > $PLAYGROUND/var/mail/brandon
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore popconn.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+You have 2 messages totaling 797 bytes
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore mailbox.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+Message 1 has 354 bytes
+Message 2 has 443 bytes
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ (echo abc123; yes) | python3 -W ignore download-and-delete.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+Message 1 (size is 354 bytes):
+
+From: Administrator <admin@mail.example.com>
+To: Brandon <brandon@mail.example.com>
+Subject: Welcome to example.com!
+
+Read this message [ny]?
+------------------------------------------------------------------------
+We are happy that you have chosen to use example.com's industry-leading
+Internet e-mail service and we hope that you experience is a pleasant
+one.  If you ever need your password reset, simply contact our staff!
+
+- example.com
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 2 (size is 443 bytes):
+
+From: Administrator <admin@mail.example.com>
+To: Brandon <brandon@mail.example.com>
+Subject: Introduction to e-mail
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Each e-mail stored on this server is plain ASCII without MIME or other
+adornments, which we consider a distraction from the beauty of simple
+and straightforward text.  Your e-mail folder is stored in the old
+"mbox" format to make it easy to use "grep" and other commands beloved
+of e-mail power users.
+
+- example.com
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore popconn.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+You have 0 messages totaling 0 bytes
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore mailbox.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+No messages
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

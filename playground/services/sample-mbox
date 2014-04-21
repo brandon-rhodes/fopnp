@@ -14,9 +14,10 @@ From: Administrator <admin@mail.example.com>
 To: Brandon <brandon@mail.example.com>
 Subject: Introduction to e-mail
 
-Each e-mail stored on this server is a plain text document without MIME
-or other adornments, which we consider a distraction from the beauty of
-simple and straightforward verbage.  It is stored in the old "mbox"
-format to make it easy for "grep" and other e-mail power commands.
+Each e-mail stored on this server is plain ASCII without MIME or other
+adornments, which we consider a distraction from the beauty of simple
+and straightforward text.  Your e-mail folder is stored in the old
+"mbox" format to make it easy to use "grep" and other commands beloved
+of e-mail power users.
 
 - example.com
