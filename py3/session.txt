@@ -51,9 +51,10 @@ Subject: Foundations of Python Network Programming
 Date: Tue, 25 Mar 2014 17:14:01 -0400
 Message-ID: <20140325232008.15748.50494@guinness>
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="===============1627694678=="
+Content-Type: multipart/alternative;
+ boundary="===============8211050864078048428=="
 
---===============1627694678==
+--===============8211050864078048428==
 Content-Type: text/html; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
@@ -61,7 +62,7 @@ Content-Transfer-Encoding: 7bit
 <p>This is a <b>test message</b> from Chapter 12.</p>
 <p>- <i>Anonymous</i></p>
 
---===============1627694678==
+--===============8211050864078048428==
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
@@ -70,7 +71,7 @@ Hello,
 This is a MIME message from Chapter 12.
 - Anonymous
 
---===============1627694678==--
+--===============8211050864078048428==--
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 build_mime_email.py attachment.txt
 To: Test Recipient <recipient@example.com>
@@ -79,12 +80,13 @@ Subject: Foundations of Python Network Programming
 Date: Tue, 25 Mar 2014 17:14:01 -0400
 Message-ID: <20140325232008.15748.50494@guinness>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============1911784257=="
+Content-Type: multipart/mixed; boundary="===============0373402508605428821=="
 
---===============1911784257==
-Content-Type: multipart/alternative; boundary="===============1627694678=="
+--===============0373402508605428821==
+Content-Type: multipart/alternative;
+ boundary="===============8211050864078048428=="
 
---===============1627694678==
+--===============8211050864078048428==
 Content-Type: text/html; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
@@ -92,7 +94,7 @@ Content-Transfer-Encoding: 7bit
 <p>This is a <b>test message</b> from Chapter 12.</p>
 <p>- <i>Anonymous</i></p>
 
---===============1627694678==
+--===============8211050864078048428==
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
@@ -101,9 +103,9 @@ Hello,
 This is a MIME message from Chapter 12.
 - Anonymous
 
---===============1627694678==--
+--===============8211050864078048428==--
 
---===============1911784257==
+--===============0373402508605428821==
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment; filename="attachment.txt"
@@ -111,7 +113,7 @@ MIME-Version: 1.0
 
 This is a test
 
---===============1911784257==--
+--===============0373402508605428821==--
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 build_mime_email.py -i
 To: Test Recipient <recipient@example.com>
@@ -120,12 +122,14 @@ Subject: Foundations of Python Network Programming
 Date: Tue, 25 Mar 2014 17:14:01 -0400
 Message-ID: <20140325232008.15748.50494@guinness>
 MIME-Version: 1.0
-Content-Type: multipart/alternative; boundary="===============0903170602=="
+Content-Type: multipart/alternative;
+ boundary="===============2388085504187641652=="
 
---===============0903170602==
-Content-Type: multipart/related; boundary="===============1911784257=="
+--===============2388085504187641652==
+Content-Type: multipart/related;
+ boundary="===============3879088202122200706=="
 
---===============1911784257==
+--===============3879088202122200706==
 Content-Type: text/html; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
@@ -134,7 +138,7 @@ Content-Transfer-Encoding: 7bit
 <p>- <i>Anonymous</i></p><p>This is the smallest possible blue GIF:</p>
 <img src="cid:20140325232008.15748.99346@guinness" height="80" width="80">
 
---===============1911784257==
+--===============3879088202122200706==
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="blue-dot.gif"
@@ -143,9 +147,9 @@ MIME-Version: 1.0
 
 R0lGODlhAQABAJAAAAAA/wAAACwAAAAAAQABAAACAgQBADs=
 
---===============1911784257==--
+--===============3879088202122200706==--
 
---===============0903170602==
+--===============2388085504187641652==
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
@@ -154,7 +158,7 @@ Hello,
 This is a MIME message from Chapter 12.
 - Anonymous
 
---===============0903170602==--
+--===============2388085504187641652==--
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 build_mime_email.py -i attachment.txt attachment.gz
 To: Test Recipient <recipient@example.com>
@@ -163,15 +167,17 @@ Subject: Foundations of Python Network Programming
 Date: Tue, 25 Mar 2014 17:14:01 -0400
 Message-ID: <20140325232008.15748.50494@guinness>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============0086939546=="
+Content-Type: multipart/mixed; boundary="===============4715676943270851834=="
 
---===============0086939546==
-Content-Type: multipart/alternative; boundary="===============0903170602=="
+--===============4715676943270851834==
+Content-Type: multipart/alternative;
+ boundary="===============2388085504187641652=="
 
---===============0903170602==
-Content-Type: multipart/related; boundary="===============1911784257=="
+--===============2388085504187641652==
+Content-Type: multipart/related;
+ boundary="===============3879088202122200706=="
 
---===============1911784257==
+--===============3879088202122200706==
 Content-Type: text/html; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 
@@ -180,7 +186,7 @@ Content-Transfer-Encoding: 7bit
 <p>- <i>Anonymous</i></p><p>This is the smallest possible blue GIF:</p>
 <img src="cid:20140325232008.15748.99346@guinness" height="80" width="80">
 
---===============1911784257==
+--===============3879088202122200706==
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="blue-dot.gif"
@@ -189,9 +195,9 @@ MIME-Version: 1.0
 
 R0lGODlhAQABAJAAAAAA/wAAACwAAAAAAQABAAACAgQBADs=
 
---===============1911784257==--
+--===============3879088202122200706==--
 
---===============0903170602==
+--===============2388085504187641652==
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
@@ -200,9 +206,9 @@ Hello,
 This is a MIME message from Chapter 12.
 - Anonymous
 
---===============0903170602==--
+--===============2388085504187641652==--
 
---===============0086939546==
+--===============4715676943270851834==
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 Content-Disposition: attachment; filename="attachment.txt"
@@ -210,7 +216,7 @@ MIME-Version: 1.0
 
 This is a test
 
---===============0086939546==
+--===============4715676943270851834==
 Content-Type: application/octet-stream
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="attachment.gz"
@@ -218,7 +224,7 @@ MIME-Version: 1.0
 
 H4sIAP3o2D8AAwvJyCxWAKJEhZLU4hIuAIwtwPoPAAAA
 
---===============0086939546==--
+--===============4715676943270851834==--
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 build_mime_email.py | python3 display_email.py
 From: Test Sender <sender@example.com>
