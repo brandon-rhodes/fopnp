@@ -4,5 +4,5 @@
 # services on Ubuntu.
 
 sudo apt-get install dnsmasq dovecot-imapd dovecot-pop3d mininet
-stop dovecot
-mv /etc/dovecot/dovecot.conf /etc/dovecot/dovecot-OFF.conf
+sudo stop dovecot
+sudo mv /etc/dovecot/dovecot.conf /etc/dovecot/dovecot-OFF.conf
