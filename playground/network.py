@@ -139,6 +139,11 @@ def start_smtpd(net):
                     ' >log.smtpd 2>&1 &')
     net['mail'].cleanup_commands.append('kill %?custom_smtpd')
 
+def start_telnet(net):
+    net['example'].cmd('inetd -d -i'
+                       ' >log.telnet 2>&1 &')
+    net['example'].cleanup_commands.append('kill %?inetd')
+
 def start_services(net):
     for host in net.hosts:
         host.cmd('umask 022')
@@ -148,6 +153,7 @@ def start_services(net):
     start_dovecot(net)
     start_httpd(net)
     start_smtpd(net)
+    start_telnet(net)
 
 def main(args):
     topo = RoutedTopo()

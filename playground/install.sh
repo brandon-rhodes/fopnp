@@ -9,7 +9,10 @@ then
     exit 2
 fi
 
-set -e
-apt-get install dnsmasq dovecot-imapd dovecot-pop3d mininet
+apt-get install dnsmasq dovecot-imapd dovecot-pop3d mininet telnetd
+
+/etc/init.d/openbsd-inetd stop
+update-rc.d openbsd-inetd disable
+
 stop dovecot
 mv /etc/dovecot/dovecot.conf /etc/dovecot/dovecot-OFF.conf
