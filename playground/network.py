@@ -71,6 +71,10 @@ def configure_network(net):
     modems = 'modemA', 'modemB'
     gateways = 'isp', 'backbone', 'example'
     servers = 'ftp', 'mail', 'www'
+    all = hosts + modems + gateways + servers
+
+    for host in all:
+        net[host].cmd('umask 022')
 
     for host in hosts:
         net[host].cmd('ip route add default via 192.168.1.1')
