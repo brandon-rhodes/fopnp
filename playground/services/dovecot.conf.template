@@ -1,3 +1,4 @@
+auth_mechanisms = plain apop
 base_dir = PLAYGROUND/var/dovecot
 default_internal_user = USER
 default_login_user = USER

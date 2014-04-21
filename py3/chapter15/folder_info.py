@@ -19,7 +19,7 @@ def main():
         print('Could not log in:', e)
     else:
         select_dict = c.select_folder(foldername, readonly=True)
-        for k, v in list(select_dict.items()):
+        for k, v in sorted(select_dict.items()):
             print('%s: %r' % (k, v))
     finally:
         c.logout()

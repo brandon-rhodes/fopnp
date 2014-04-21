@@ -500,6 +500,11 @@ Warning: Password input may be echoed.
 Password: 
 You have 0 messages totaling 0 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore apopconn.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+You have 0 messages totaling 0 bytes
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 -W ignore mailbox.py mail.example.com brandon
 Warning: Password input may be echoed.
 Password: 
@@ -532,15 +537,15 @@ Listing mailboxes:
 $ echo abc123 | python3 -W ignore folder_info.py mail.example.com brandon INBOX
 Warning: Password input may be echoed.
 Password: 
-FLAGS: ('\\Answered', '\\Flagged', '\\Deleted', '\\Seen', '\\Draft')
-PERMANENTFLAGS: ()
 EXISTS: 3
-UNSEEN: ['1']
-UIDVALIDITY: 1398104326
-UIDNEXT: 4
-RECENT: 3
+FLAGS: ('\\Answered', '\\Flagged', '\\Deleted', '\\Seen', '\\Draft')
 NOMODSEQ: ['']
+PERMANENTFLAGS: ()
 READ-ONLY: ['']
+RECENT: 3
+UIDNEXT: 4
+UIDVALIDITY: 1398106217
+UNSEEN: ['1']
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 -W ignore folder_summary.py mail.example.com brandon INBOX
 Warning: Password input may be echoed.
