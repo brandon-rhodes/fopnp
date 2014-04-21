@@ -20,10 +20,14 @@ def main(pempath):
     t.start()
 
     h443 = BaseHTTPServer.HTTPServer(('0.0.0.0', 443), handler)
-    h443.socket = ssl.wrap_socket(h443.socket, certfile=pempath, server_side=True)
+    h443.socket = ssl.wrap_socket(h443.socket,
+                                  certfile=pempath, server_side=True)
     h443.serve_forever()
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Combined HTTP and HTTPS server')
-    parser.add_argument('pempath', help='path to PEM certificate-plus-key file')
-    main(parser.parse_args().pempath)
+    parser = argparse.ArgumentParser(description='Combined HTTP/HTTPS server')
+    parser.add_argument('pempath', help='path to PEM certificate+key file')
+    args = parser.parse_args()
+    cwd = os.getcwd()
+    os.chdir(this_dir + '/../../py3')  # serve the Python 3 book examples
+    main(os.path.join(cwd, args.pempath))

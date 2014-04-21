@@ -71,10 +71,6 @@ def configure_network(net):
     modems = 'modemA', 'modemB'
     gateways = 'isp', 'backbone', 'example'
     servers = 'ftp', 'mail', 'www'
-    all = hosts + modems + gateways + servers
-
-    for host in all:
-        net[host].cmd('umask 022')
 
     for host in hosts:
         net[host].cmd('ip route add default via 192.168.1.1')
@@ -124,28 +120,26 @@ def start_dns(net):
     for host in net.hosts:
         host.cmd('dnsmasq --interface=lo --no-dhcp-interface=lo'
                  ' --no-daemon --no-resolv --no-hosts'
-                 ' --addn-hosts=/home/brandon/fopnp/playground/services/hosts &')
+                 ' --addn-hosts=../services/hosts &')
         host.cleanup_commands.append('kill %?dnsmasq')
 
 def start_dovecot(net):
-    net['mail'].cmd('cd %s/services' % this_dir)
-    net['mail'].cmd('python3 services/custom_dovecot.py &')
+    net['mail'].cmd('python3 ../services/custom_dovecot.py &')
     net['mail'].cleanup_commands.append('kill %?custom_dovecot')
 
 def start_httpd(net):
-    net['www'].cmd('cd %s/services' % this_dir)
-    net['www'].cmd('python custom_httpd.py ../certs/www.pem >log.httpd 2>&1 &')
-    net['www'].cmd('chmod a+rw log.httpd')
+    net['www'].cmd('python ../services/custom_httpd.py'
+                   ' ../certs/www.pem >log.httpd 2>&1 &')
     net['www'].cleanup_commands.append('kill %?custom_httpd')
 
 def start_smtpd(net):
-    net['mail'].cmd('cd %s/services' % this_dir)
-    net['mail'].cmd('python3 custom_smtpd.py >log.smtpd 2>&1 &')
-    net['mail'].cmd('chmod a+rw log.smtpd')
+    net['mail'].cmd('python3 ../services/custom_smtpd.py >log.smtpd 2>&1 &')
     net['mail'].cleanup_commands.append('kill %?custom_smtpd')
 
 def start_services(net):
     for host in net.hosts:
+        host.cmd('umask 022')
+        host.cmd('cd %s/var' % this_dir)
         host.cleanup_commands = []
     start_dns(net)
     start_dovecot(net)
