@@ -1,0 +1,22 @@
+From admin@mail.example.com Tue Mar 25 17:14:01 2014
+From: Administrator <admin@mail.example.com>
+To: Brandon <brandon@mail.example.com>
+Subject: Welcome to example.com!
+
+We are happy that you have chosen to use example.com's industry-leading
+Internet e-mail service and we hope that you experience is a pleasant
+one.  If you ever need your password reset, simply contact our staff!
+
+- example.com
+
+From admin@mail.example.com Mon Apr 21 12:08:01 2014
+From: Administrator <admin@mail.example.com>
+To: Brandon <brandon@mail.example.com>
+Subject: Introduction to e-mail
+
+Each e-mail stored on this server is a plain text document without MIME
+or other adornments, which we consider a distraction from the beauty of
+simple and straightforward verbage.  It is stored in the old "mbox"
+format to make it easy for "grep" and other e-mail power commands.
+
+- example.com
