@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+# SMTP server.
 
 import asyncore
 import smtpd

@@ -124,16 +124,18 @@ def start_dns(net):
         host.cleanup_commands.append('kill %?dnsmasq')
 
 def start_dovecot(net):
-    net['mail'].cmd('python3 ../services/custom_dovecot.py &')
+    net['mail'].cmd('python3 ../services/custom_dovecot.py'
+                    ' >log.dovecot 2>&1 &')
     net['mail'].cleanup_commands.append('kill %?custom_dovecot')
 
 def start_httpd(net):
-    net['www'].cmd('python ../services/custom_httpd.py'
-                   ' ../certs/www.pem >log.httpd 2>&1 &')
+    net['www'].cmd('python3 ../services/custom_httpd.py ../certs/www.pem'
+                   ' >log.httpd 2>&1 &')
     net['www'].cleanup_commands.append('kill %?custom_httpd')
 
 def start_smtpd(net):
-    net['mail'].cmd('python3 ../services/custom_smtpd.py >log.smtpd 2>&1 &')
+    net['mail'].cmd('python3 ../services/custom_smtpd.py'
+                    ' >log.smtpd 2>&1 &')
     net['mail'].cleanup_commands.append('kill %?custom_smtpd')
 
 def start_services(net):
