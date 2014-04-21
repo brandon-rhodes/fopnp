@@ -184,7 +184,7 @@ if __name__ == '__main__':
         ' Mininet playground')
     parser.add_argument('host', nargs='*', help='hosts for which xterms'
                         ' will be automatically started in "-i" mode'
-                        ' (defaults to "h1" and "h2")')
+                        ' (defaults to "h1")')
     parser.add_argument('-i', action='store_true', help='build network then'
                         ' go interactive, with CLI and xterms')
     parser.add_argument('-p', action='store_true', help='build network then'
@@ -196,7 +196,7 @@ if __name__ == '__main__':
         parser.print_help()
         parser.exit(2)
     if not args.host:
-        args.host = ['h1', 'h2']
+        args.host = ['h1']
     setLogLevel('info')
     try:
         main(args)
