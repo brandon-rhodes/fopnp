@@ -8,23 +8,21 @@ from imapclient import IMAPClient
 
 banner = '-' * 72
 
-
 def main():
-    try:
-        hostname, username = sys.argv[1:]
-    except ValueError:
+    if len(sys.argv) != 3:
         print('usage: %s hostname username' % sys.argv[0])
         sys.exit(2)
 
+    hostname, username = sys.argv[1:]
     c = IMAPClient(hostname, ssl=True)
     try:
         c.login(username, getpass.getpass())
     except c.Error as e:
         print('Could not log in:', e)
-        sys.exit(1)
-
-    explore_account(c)
-
+    else:
+        explore_account(c)
+    finally:
+        c.logout()
 
 def explore_account(c):
     """Display the folders in this IMAP account and let the user choose one."""
@@ -47,7 +45,6 @@ def explore_account(c):
             explore_folder(c, reply)
         else:
             print('Error: no folder named', repr(reply))
-
 
 def explore_folder(c, name):
     """List the messages in folder `name` and let the user choose one."""
@@ -79,7 +76,6 @@ def explore_folder(c, name):
 
     c.close_folder()
 
-
 def explore_message(c, uid):
     """Let the user view various parts of a given message."""
 
@@ -93,6 +89,7 @@ def explore_message(c, uid):
             print(' '.join(flaglist))
         else:
             print('none')
+        print('Structure:')
         display_structure(msgdict[uid]['BODYSTRUCTURE'])
         print()
         reply = input('Message %s - type a part name, or "q" to quit: '
@@ -114,7 +111,6 @@ def explore_message(c, uid):
             else:
                 print('(No such section)')
 
-
 def display_structure(structure, parentparts=[]):
     """Attractively display a given message structure."""
 
@@ -123,36 +119,44 @@ def display_structure(structure, parentparts=[]):
     if parentparts:
         name = '.'.join(parentparts)
     else:
-        print('HEADER')
+        print('  HEADER')
         name = 'TEXT'
 
-    # Print this part's designation and its MIME type.
+    # Print a simple, non-multipart MIME part.  Include its disposition,
+    # if available.
 
-    is_multipart = isinstance(structure[0], list)
-    if is_multipart:
-        parttype = 'multipart/%s' % structure[1].lower()
-    else:
+    is_multipart = not isinstance(structure[0], str)
+
+    if not is_multipart:
         parttype = ('%s/%s' % structure[:2]).lower()
-    print('%-9s' % name, parttype, end=' ')
-
-    # For a multipart part, print all of its subordinate parts; for
-    # other parts, print their disposition (if available).
-
-    if is_multipart:
-        print()
-        subparts = structure[0]
-        for i in range(len(subparts)):
-            display_structure(subparts[i], parentparts + [ str(i + 1) ])
-    else:
+        print('  %-9s' % name, parttype, end=' ')
         if structure[6]:
             print('size=%s' % structure[6], end=' ')
-        if structure[8]:
-            disposition, namevalues = structure[8]
-            print(disposition, end=' ')
-            for i in range(0, len(namevalues), 2):
-                print('%s=%r' % namevalues[i:i+2])
+        if structure[9]:
+            print('disposition=%s' % structure[9][0],
+                  ' '.join('{}={}'.format(k, v) for k, v in structure[9][1:]),
+                  end=' ')
         print()
+        return
 
+    # Fix how IMAPClient sometimes represents a multipart as a tuple
+    # (subpart1, subpart2, ..., subpartn, x, y, z, ...) instead of its
+    # usual ([subpart1, subpart2, ..., subpartn], x, y, z, ...).
+
+    if isinstance(structure[0], tuple):
+        i = 1
+        while isinstance(structure[i], tuple):
+            i += 1
+        structure = (list(structure[:i]),) + structure[i:]
+
+    # For a multipart part, print all of its subordinate parts.
+
+    parttype = 'multipart/%s' % structure[1].lower()
+    print('  %-9s' % name, parttype, end=' ')
+    print()
+    subparts = structure[0]
+    for i in range(len(subparts)):
+        display_structure(subparts[i], parentparts + [ str(i + 1) ])
 
 if __name__ == '__main__':
     main()

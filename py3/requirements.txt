@@ -1,3 +1,4 @@
+imapclient
 jsonrpclib-pelix
 pygeocoder
 requests

@@ -426,13 +426,14 @@ $ cat $PLAYGROUND/services/sample-mbox > $PLAYGROUND/var/mail/brandon
 $ echo abc123 | python3 -W ignore popconn.py mail.example.com brandon
 Warning: Password input may be echoed.
 Password: 
-You have 2 messages totaling 797 bytes
+You have 3 messages totaling 1969 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 -W ignore mailbox.py mail.example.com brandon
 Warning: Password input may be echoed.
 Password: 
 Message 1 has 354 bytes
-Message 2 has 443 bytes
+Message 2 has 442 bytes
+Message 3 has 1173 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ (echo abc123; yes) | python3 -W ignore download-and-delete.py mail.example.com brandon
 Warning: Password input may be echoed.
@@ -454,7 +455,7 @@ one.  If you ever need your password reset, simply contact our staff!
 
 Delete this message [ny]?
 Deleted.
-Message 2 (size is 443 bytes):
+Message 2 (size is 442 bytes):
 
 From: Administrator <admin@mail.example.com>
 To: Brandon <brandon@mail.example.com>
@@ -462,13 +463,33 @@ Subject: Introduction to e-mail
 
 Read this message [ny]?
 ------------------------------------------------------------------------
-Each e-mail stored on this server is plain ASCII without MIME or other
+Administrator e-mails are sent as plain ASCII without MIME or other
 adornments, which we consider a distraction from the beauty of simple
 and straightforward text.  Your e-mail folder is stored in the old
 "mbox" format to make it easy to use "grep" and other commands beloved
 of e-mail power users.
 
 - example.com
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 3 (size is 1173 bytes):
+
+From: Test Sender <sender@example.com>
+To: Test Recipient <recipient@example.com>
+Subject: Foundations of Python Network Programming
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+This is a MIME message from Chapter 12.
+- Anonymous
+
+------------------------------------------------------------------------
+This is a test
+
 ------------------------------------------------------------------------
 
 Delete this message [ny]?
@@ -484,3 +505,333 @@ Warning: Password input may be echoed.
 Password: 
 No messages
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ cd ..
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ cd chapter15
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ cat $PLAYGROUND/services/sample-mbox > $PLAYGROUND/var/mail/brandon
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ rm -rf $PLAYGROUND/var/folders/.imap/INBOX
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore open_imaplib.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+Capabilities: ('IMAP4REV1', 'LITERAL+', 'SASL-IR', 'LOGIN-REFERRALS', 'ID', 'ENABLE', 'IDLE', 'AUTH=PLAIN')
+Listing mailboxes 
+Status: 'OK'
+Data:
+b'(\\HasNoChildren) "/" "INBOX"'
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore open_imap.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+Capabilities: ('IMAP4REV1', 'LITERAL+', 'SASL-IR', 'LOGIN-REFERRALS', 'ID', 'ENABLE', 'IDLE', 'SORT', 'SORT=DISPLAY', 'THREAD=REFERENCES', 'THREAD=REFS', 'MULTIAPPEND', 'UNSELECT', 'CHILDREN', 'NAMESPACE', 'UIDPLUS', 'LIST-EXTENDED', 'I18NLEVEL=1', 'CONDSTORE', 'QRESYNC', 'ESEARCH', 'ESORT', 'SEARCHRES', 'WITHIN', 'CONTEXT=SEARCH', 'LIST-STATUS', 'SPECIAL-USE')
+Listing mailboxes:
+  \HasNoChildren                / INBOX
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore folder_info.py mail.example.com brandon INBOX
+Warning: Password input may be echoed.
+Password: 
+FLAGS: ('\\Answered', '\\Flagged', '\\Deleted', '\\Seen', '\\Draft')
+PERMANENTFLAGS: ()
+EXISTS: 3
+UNSEEN: ['1']
+UIDVALIDITY: 1398104326
+UIDNEXT: 4
+RECENT: 3
+NOMODSEQ: ['']
+READ-ONLY: ['']
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo abc123 | python3 -W ignore folder_summary.py mail.example.com brandon INBOX
+Warning: Password input may be echoed.
+Password: 
+1 Administrator <admin@mail.example.com>
+   We are happy that you have chosen to use example.com's indus ...
+2 Administrator <admin@mail.example.com>
+   Administrator e-mails are sent as plain ASCII without MIME o ...
+3 Test Sender <sender@example.com>
+  Parts: multipart/alternative text/plain
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ (echo abc123; echo INBOX; echo 1; echo HEADER; echo TEXT; echo q; echo 2; echo HEADER; echo TEXT; echo q; echo 3; echo HEADER; echo TEXT; echo 1; echo 1.1; echo 1.2; echo 2; echo q; echo q; echo q) | python3 -W ignore simple_client.py mail.example.com brandon
+Warning: Password input may be echoed.
+Password: 
+
+INBOX                          \HasNoChildren
+
+Type a folder name, or "q" to quit: 
+     1   2014-03-25 17:14:01     354 bytes  \Recent
+       From: Administrator <admin@mail.example.com>
+       Subject: Welcome to example.com!
+       
+     2   2014-04-21 12:08:01     442 bytes  \Recent
+       From: Administrator <admin@mail.example.com>
+       Subject: Introduction to e-mail
+       
+     3   2014-04-21 13:41:01    1173 bytes  \Recent
+       From: Test Sender <sender@example.com>
+       Subject: Foundations of Python Network Programming
+       
+Folder INBOX - type a message UID, or "q" to quit: 
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      text/plain size=232 
+
+Message 1 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+From: Administrator <admin@mail.example.com>
+To: Brandon <brandon@mail.example.com>
+Subject: Welcome to example.com!
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      text/plain size=232 
+
+Message 1 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+We are happy that you have chosen to use example.com's industry-leading
+Internet e-mail service and we hope that you experience is a pleasant
+one.  If you ever need your password reset, simply contact our staff!
+
+- example.com
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      text/plain size=232 
+
+Message 1 - type a part name, or "q" to quit: 
+
+     1   2014-03-25 17:14:01     354 bytes  \Recent
+       From: Administrator <admin@mail.example.com>
+       Subject: Welcome to example.com!
+       
+     2   2014-04-21 12:08:01     442 bytes  \Recent
+       From: Administrator <admin@mail.example.com>
+       Subject: Introduction to e-mail
+       
+     3   2014-04-21 13:41:01    1173 bytes  \Recent
+       From: Test Sender <sender@example.com>
+       Subject: Foundations of Python Network Programming
+       
+Folder INBOX - type a message UID, or "q" to quit: 
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      text/plain size=321 
+
+Message 2 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+From: Administrator <admin@mail.example.com>
+To: Brandon <brandon@mail.example.com>
+Subject: Introduction to e-mail
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      text/plain size=321 
+
+Message 2 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+Administrator e-mails are sent as plain ASCII without MIME or other
+adornments, which we consider a distraction from the beauty of simple
+and straightforward text.  Your e-mail folder is stored in the old
+"mbox" format to make it easy to use "grep" and other commands beloved
+of e-mail power users.
+
+- example.com
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      text/plain size=321 
+
+Message 2 - type a part name, or "q" to quit: 
+
+     1   2014-03-25 17:14:01     354 bytes  \Recent
+       From: Administrator <admin@mail.example.com>
+       Subject: Welcome to example.com!
+       
+     2   2014-04-21 12:08:01     442 bytes  \Recent
+       From: Administrator <admin@mail.example.com>
+       Subject: Introduction to e-mail
+       
+     3   2014-04-21 13:41:01    1173 bytes  \Recent
+       From: Test Sender <sender@example.com>
+       Subject: Foundations of Python Network Programming
+       
+Folder INBOX - type a message UID, or "q" to quit: 
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      multipart/mixed 
+  1         multipart/alternative 
+  1.1       text/html size=97 
+  1.2       text/plain size=62 
+  2         text/plain size=16 disposition=attachment filename=attachment.txt 
+
+Message 3 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+To: Test Recipient <recipient@example.com>
+From: Test Sender <sender@example.com>
+Subject: Foundations of Python Network Programming
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.50494@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0373402508605428821=="
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      multipart/mixed 
+  1         multipart/alternative 
+  1.1       text/html size=97 
+  1.2       text/plain size=62 
+  2         text/plain size=16 disposition=attachment filename=attachment.txt 
+
+Message 3 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+--===============0373402508605428821==
+Content-Type: multipart/alternative;
+ boundary="===============8211050864078048428=="
+
+--===============8211050864078048428==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>- <i>Anonymous</i></p>
+
+--===============8211050864078048428==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+This is a MIME message from Chapter 12.
+- Anonymous
+
+--===============8211050864078048428==--
+
+--===============0373402508605428821==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="attachment.txt"
+MIME-Version: 1.0
+
+This is a test
+
+--===============0373402508605428821==--
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      multipart/mixed 
+  1         multipart/alternative 
+  1.1       text/html size=97 
+  1.2       text/plain size=62 
+  2         text/plain size=16 disposition=attachment filename=attachment.txt 
+
+Message 3 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+--===============8211050864078048428==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>- <i>Anonymous</i></p>
+
+--===============8211050864078048428==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+This is a MIME message from Chapter 12.
+- Anonymous
+
+--===============8211050864078048428==--
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      multipart/mixed 
+  1         multipart/alternative 
+  1.1       text/html size=97 
+  1.2       text/plain size=62 
+  2         text/plain size=16 disposition=attachment filename=attachment.txt 
+
+Message 3 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>- <i>Anonymous</i></p>
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      multipart/mixed 
+  1         multipart/alternative 
+  1.1       text/html size=97 
+  1.2       text/plain size=62 
+  2         text/plain size=16 disposition=attachment filename=attachment.txt 
+
+Message 3 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+Hello,
+This is a MIME message from Chapter 12.
+- Anonymous
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      multipart/mixed 
+  1         multipart/alternative 
+  1.1       text/html size=97 
+  1.2       text/plain size=62 
+  2         text/plain size=16 disposition=attachment filename=attachment.txt 
+
+Message 3 - type a part name, or "q" to quit: 
+------------------------------------------------------------------------
+This is a test
+------------------------------------------------------------------------
+
+Flags: \Recent
+Structure:
+  HEADER
+  TEXT      multipart/mixed 
+  1         multipart/alternative 
+  1.1       text/html size=97 
+  1.2       text/plain size=62 
+  2         text/plain size=16 disposition=attachment filename=attachment.txt 
+
+Message 3 - type a part name, or "q" to quit: 
+
+     1   2014-03-25 17:14:01     354 bytes  \Recent
+       From: Administrator <admin@mail.example.com>
+       Subject: Welcome to example.com!
+       
+     2   2014-04-21 12:08:01     442 bytes  \Recent
+       From: Administrator <admin@mail.example.com>
+       Subject: Introduction to e-mail
+       
+     3   2014-04-21 13:41:01    1173 bytes  \Recent
+       From: Test Sender <sender@example.com>
+       Subject: Foundations of Python Network Programming
+       
+Folder INBOX - type a message UID, or "q" to quit: 
+INBOX                          \HasNoChildren
+
+Type a folder name, or "q" to quit:                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

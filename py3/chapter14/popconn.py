@@ -6,15 +6,15 @@ import getpass, poplib, sys
 
 def main():
     if len(sys.argv) != 3:
-        print('usage: %s hostname user' % sys.argv[0])
+        print('usage: %s hostname username' % sys.argv[0])
         exit(2)
 
-    hostname, user = sys.argv[1:]
+    hostname, username = sys.argv[1:]
     passwd = getpass.getpass()
 
     p = poplib.POP3_SSL(hostname)  # or "POP3" if SSL is not supported
     try:
-        p.user(user)
+        p.user(username)
         p.pass_(passwd)
     except poplib.error_proto as e:
         print("Login failed:", e)

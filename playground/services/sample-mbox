@@ -14,10 +14,52 @@ From: Administrator <admin@mail.example.com>
 To: Brandon <brandon@mail.example.com>
 Subject: Introduction to e-mail
 
-Each e-mail stored on this server is plain ASCII without MIME or other
+Administrator e-mails are sent as plain ASCII without MIME or other
 adornments, which we consider a distraction from the beauty of simple
 and straightforward text.  Your e-mail folder is stored in the old
 "mbox" format to make it easy to use "grep" and other commands beloved
 of e-mail power users.
 
 - example.com
+
+From sender@example.com Mon Apr 21 13:41:01 2014
+To: Test Recipient <recipient@example.com>
+From: Test Sender <sender@example.com>
+Subject: Foundations of Python Network Programming
+Date: Tue, 25 Mar 2014 17:14:01 -0400
+Message-ID: <20140325232008.15748.50494@guinness>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="===============0373402508605428821=="
+
+--===============0373402508605428821==
+Content-Type: multipart/alternative;
+ boundary="===============8211050864078048428=="
+
+--===============8211050864078048428==
+Content-Type: text/html; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+
+<p>Hello,</p>
+<p>This is a <b>test message</b> from Chapter 12.</p>
+<p>- <i>Anonymous</i></p>
+
+--===============8211050864078048428==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+MIME-Version: 1.0
+
+Hello,
+This is a MIME message from Chapter 12.
+- Anonymous
+
+--===============8211050864078048428==--
+
+--===============0373402508605428821==
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 7bit
+Content-Disposition: attachment; filename="attachment.txt"
+MIME-Version: 1.0
+
+This is a test
+
+--===============0373402508605428821==--

@@ -37,8 +37,10 @@ def main():
             break
 
     shell_input = ''.join(commands).encode('ascii')
+    vsite = '/home/brandon/.v/fopnp-py3/lib/python3.4/site-packages'
+    pythonpath = '../monkeys:' + vsite
     env = {'LANG': 'en_US.UTF-8', 'PS1': banner + '\n' + prompt,
-           'PATH': os.environ['PATH'], 'PYTHONPATH': '../monkeys',
+           'PATH': os.environ['PATH'], 'PYTHONPATH': pythonpath,
            'PYTHONDONTWRITEBYTECODE': '1'}
     p = Popen([
         '/bin/sh',
