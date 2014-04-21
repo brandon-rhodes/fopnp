@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 #
-# Re-run session.txt and optionally update it inline.
+# Re-run session.txt and replace its contents with fresh output.  You
+# probably want to run this from inside of the project's playground, or
+# most of the commands in session.txt will return errors about bad IP
+# addresses or hostnames.
 
 import os
 import re
@@ -25,7 +28,7 @@ def main():
 
     commands = []
     while True:
-        command = line[2:]
+        command = line[len(prompt):]
         commands.append(command)
         for line in lines:
             if line.startswith(prompt):
@@ -34,7 +37,7 @@ def main():
             break
 
     shell_input = ''.join(commands).encode('ascii')
-    env = {'LANG': 'en_US.UTF-8', 'PS1': banner + '\n' + '$ ',
+    env = {'LANG': 'en_US.UTF-8', 'PS1': banner + '\n' + prompt,
            'PATH': os.environ['PATH'], 'PYTHONPATH': '../monkeys',
            'PYTHONDONTWRITEBYTECODE': '1'}
     p = Popen([
