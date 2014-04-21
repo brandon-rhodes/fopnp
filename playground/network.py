@@ -124,8 +124,9 @@ def start_dns(net):
         host.cleanup_commands.append('kill %?dnsmasq')
 
 def start_dovecot(net):
+    net['mail'].cmd('touch dovecot.log')  # using our liberal umask
     net['mail'].cmd('python3 ../services/custom_dovecot.py'
-                    ' >log.dovecot 2>&1 &')
+                    ' >log.dovecot.startup 2>&1 &')
     net['mail'].cleanup_commands.append('kill %?custom_dovecot')
 
 def start_httpd(net):

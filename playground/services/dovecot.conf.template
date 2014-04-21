@@ -2,7 +2,7 @@ base_dir = PLAYGROUND/var/dovecot
 default_internal_user = USER
 default_login_user = USER
 disable_plaintext_auth = no
-log_path = PLAYGROUND/var/dovecot.log
+log_path = PLAYGROUND/var/log.dovecot
 mail_location = mbox:PLAYGROUND/var/folders:INBOX=PLAYGROUND/var/mail/%u
 passdb {
   driver = passwd-file
