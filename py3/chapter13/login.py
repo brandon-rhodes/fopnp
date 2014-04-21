@@ -42,7 +42,7 @@ def main():
         sys.exit(1)
     else:
         s = '' if len(toaddrs) == 1 else 's'
-        print("Message sent to {} recipient".format(len(toaddrs), s))
+        print("Message sent to {} recipient{}".format(len(toaddrs), s))
         connection.quit()
 
 if __name__ == '__main__':
