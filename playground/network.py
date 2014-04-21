@@ -1,4 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/python2
+#
+# Note the shebang line above: this script is hard-wired to use Python 2
+# in Ubuntu's native /usr/bin/ because that is the interpreter which is
+# guaranteed access to the `mininet` library after `install.sh` has run.
 
 import argparse
 import os
