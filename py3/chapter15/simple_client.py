@@ -139,16 +139,6 @@ def display_structure(structure, parentparts=[]):
         print()
         return
 
-    # Fix how IMAPClient sometimes represents a multipart as a tuple
-    # (subpart1, subpart2, ..., subpartn, x, y, z, ...) instead of its
-    # usual ([subpart1, subpart2, ..., subpartn], x, y, z, ...).
-
-    if isinstance(structure[0], tuple):
-        i = 1
-        while isinstance(structure[i], tuple):
-            i += 1
-        structure = (list(structure[:i]),) + structure[i:]
-
     # For a multipart part, print all of its subordinate parts.
 
     parttype = 'multipart/%s' % structure[1].lower()
