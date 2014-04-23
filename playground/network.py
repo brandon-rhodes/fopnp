@@ -140,7 +140,7 @@ def start_smtpd(net):
     net['mail'].cleanup_commands.append('kill %?custom_smtpd')
 
 def start_telnet(net):
-    net['example'].cmd('inetd -d -i'
+    net['example'].cmd('inetd -d -i ../services/inetd.conf'
                        ' >log.telnet 2>&1 &')
     net['example'].cleanup_commands.append('kill %?inetd')
 

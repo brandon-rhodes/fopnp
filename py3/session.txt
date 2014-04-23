@@ -544,7 +544,7 @@ PERMANENTFLAGS: ()
 READ-ONLY: ['']
 RECENT: 3
 UIDNEXT: 4
-UIDVALIDITY: 1398106217
+UIDVALIDITY: 1398275052
 UNSEEN: ['1']
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 -W ignore folder_summary.py mail.example.com brandon INBOX
@@ -840,3 +840,15 @@ Folder INBOX - type a message UID, or "q" to quit:
 INBOX                          \HasNoChildren
 
 Type a folder name, or "q" to quit:                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ cd ..
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ cd chapter16
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo wrong | python3 -W ignore telnet_login.py example.com brandon
+Warning: Password input may be echoed.
+Password: 
+Username and password failed - giving up
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo TODO: once I have telnet working with a fake password, do login again
+TODO: once I have telnet working with a fake password, do login again
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

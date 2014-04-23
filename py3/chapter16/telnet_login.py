@@ -3,18 +3,27 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter16/telnet_login.py
 # Connect to localhost, watch for a login prompt, and try logging in
 
-import telnetlib
+import getpass, sys, telnetlib
 
-t = telnetlib.Telnet('localhost')
-# t.set_debuglevel(1)        # uncomment this for debugging messages
+def main(hostname, username, password):
+    t = telnetlib.Telnet(hostname)
+    # t.set_debuglevel(1)        # uncomment to get debug messages
+    t.read_until(b'login:')
+    t.write(username.encode('utf-8'))
+    t.write(b'\r')
+    t.read_until(b'assword:')    # first letter might be 'p' or 'P'
+    t.write(password.encode('utf-8'))
+    t.write(b'\r')
+    n, match, previous_text = t.expect([br'Login incorrect', br'\$'], 10)
+    if n == 0:
+        print('Username and password failed - giving up')
+    else:
+        t.write(b'exec uptime\r')
+        print(t.read_all().decode('utf-8'))  # read til socket closes
 
-t.read_until(b'login:')
-t.write(b'brandon\n')
-t.read_until(b'assword:')     # let "P" be capitalized or not
-t.write(b'mypass\n')
-n, match, previous_text = t.expect([br'Login incorrect', br'\$'], 10)
-if n == 0:
-    print(b'Username and password failed - giving up')
-else:
-    t.write(b'exec uptime\n')
-    print(t.read_all().decode('ascii'))  # read until connection closes
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print('usage: telnet_login.py <hostname> <username>', file=sys.stderr)
+        sys.exit(2)
+    password = getpass.getpass('Password: ')
+    main(sys.argv[1], sys.argv[2], password)
