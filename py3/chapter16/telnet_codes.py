@@ -3,6 +3,7 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter16/telnet_codes.py
 # How your code might look if you intercept Telnet options yourself
 
+import getpass, sys
 from telnetlib import Telnet, IAC, DO, DONT, WILL, WONT, SB, SE, TTYPE
 
 def process_option(tsocket, command, option):
@@ -17,17 +18,24 @@ def process_option(tsocket, command, option):
         print('Do not', ord(option))
         tsocket.sendall(IAC + DONT + option)
 
-t = Telnet('localhost')
-# t.set_debuglevel(1)        # uncomment this for debugging messages
+def main(hostname, username, password):
+    t = Telnet(hostname)
+    # t.set_debuglevel(1)        # uncomment to get debug messages
+    t.set_option_negotiation_callback(process_option)
+    t.read_until(b'login:', 10)
+    t.write(username.encode('utf-8') + b'\r')
+    t.read_until(b'assword:', 10)    # first letter might be 'p' or 'P'
+    t.write(password.encode('utf-8') + b'\r')
+    n, match, previous_text = t.expect([br'Login incorrect', br'\$'], 10)
+    if n == 0:
+        print("Username and password failed - giving up")
+    else:
+        t.write(b'exec echo My terminal type is $TERM\n')
+        print(t.read_all().decode('ascii'))
 
-t.set_option_negotiation_callback(process_option)
-t.read_until(b'login:', 5)
-t.write(b'brandon\n')
-t.read_until(b'assword:', 5)  # so P can be capitalized or not
-t.write(b'mypass\n')
-n, match, previous_text = t.expect([br'Login incorrect', br'\$'], 10)
-if n == 0:
-    print("Username and password failed - giving up")
-else:
-    t.write(b'exec echo My terminal type is $TERM\n')
-    print(t.read_all().decode('ascii'))
+if __name__ == '__main__':
+    if len(sys.argv) != 3:
+        print('usage: telnet_login.py <hostname> <username>', file=sys.stderr)
+        sys.exit(2)
+    password = getpass.getpass('Password: ')
+    main(sys.argv[1], sys.argv[2], password)

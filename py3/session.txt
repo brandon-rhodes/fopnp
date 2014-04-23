@@ -544,7 +544,7 @@ PERMANENTFLAGS: ()
 READ-ONLY: ['']
 RECENT: 3
 UIDNEXT: 4
-UIDVALIDITY: 1398275052
+UIDVALIDITY: 1398276020
 UNSEEN: ['1']
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 -W ignore folder_summary.py mail.example.com brandon INBOX
@@ -851,4 +851,20 @@ Username and password failed - giving up
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo TODO: once I have telnet working with a fake password, do login again
 TODO: once I have telnet working with a fake password, do login again
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+$ echo wrong | python3 -W ignore telnet_codes.py example.com brandon
+Warning: Password input may be echoed.
+Password: 
+Sending terminal type "mypython"
+Will not 32
+Will not 35
+Will not 39
+Do not 3
+Will not 1
+Will not 31
+Do not 5
+Will not 33
+Do not 3
+Do not 1
+Username and password failed - giving up
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
