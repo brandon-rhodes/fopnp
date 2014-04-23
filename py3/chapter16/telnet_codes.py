@@ -3,7 +3,7 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter16/telnet_codes.py
 # How your code might look if you intercept Telnet options yourself
 
-import getpass, sys
+import argparse, getpass
 from telnetlib import Telnet, IAC, DO, DONT, WILL, WONT, SB, SE, TTYPE
 
 def process_option(tsocket, command, option):
@@ -34,8 +34,9 @@ def main(hostname, username, password):
         print(t.read_all().decode('ascii'))
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print('usage: telnet_login.py <hostname> <username>', file=sys.stderr)
-        sys.exit(2)
+    parser = argparse.ArgumentParser(description='Use Telnet to log in')
+    parser.add_argument('hostname', help='Remote host to telnet to')
+    parser.add_argument('username', help='Remote username')
+    args = parser.parse_args()
     password = getpass.getpass('Password: ')
-    main(sys.argv[1], sys.argv[2], password)
+    main(args.hostname, args.username, password)

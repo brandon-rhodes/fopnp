@@ -3,7 +3,7 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter16/telnet_login.py
 # Connect to localhost, watch for a login prompt, and try logging in
 
-import getpass, sys, telnetlib
+import argparse, getpass, telnetlib
 
 def main(hostname, username, password):
     t = telnetlib.Telnet(hostname)
@@ -19,11 +19,12 @@ def main(hostname, username, password):
         print('Username and password failed - giving up')
     else:
         t.write(b'exec uptime\r')
-        print(t.read_all().decode('utf-8'))  # read til socket closes
+        print(t.read_all().decode('utf-8'))  # read until socket closes
 
 if __name__ == '__main__':
-    if len(sys.argv) != 3:
-        print('usage: telnet_login.py <hostname> <username>', file=sys.stderr)
-        sys.exit(2)
+    parser = argparse.ArgumentParser(description='Use Telnet to log in')
+    parser.add_argument('hostname', help='Remote host to telnet to')
+    parser.add_argument('username', help='Remote username')
+    args = parser.parse_args()
     password = getpass.getpass('Password: ')
-    main(sys.argv[1], sys.argv[2], password)
+    main(args.hostname, args.username, password)
