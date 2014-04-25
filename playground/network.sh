@@ -16,18 +16,21 @@ trap 'exit' SIGINT SIGTERM
 trap 'stop_containers' EXIT
 
 start () {
-    #trap '[ -n "$(jobs -pr)" ] && kill $(jobs -pr)' EXIT
     name="$1"
-    c=$(docker run --name=$name --hostname=$name -d fopnp/base sleep 9999)
+    networking=${2:-true}
+    c=$(docker run --name=$name --hostname=$name --networking=$networking -d \
+        fopnp/base sleep 9999)
     containers="$containers $c"
     eval "$name=$(docker inspect -f '{{.State.Pid}}' $c)"
 }
 
 echo hi
-start foo
+sudo brctl addbr playhome
+start foo false
 start bar
 echo foo pid is $foo and bar pid is $bar
 read
+sudo brctl delbr playhome
 echo done
 
 #PID=2343
