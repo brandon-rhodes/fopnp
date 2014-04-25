@@ -32,9 +32,10 @@ setup () {
 
     echo PID is $pid
     sudo ln -s /proc/$pid/ns/net /var/run/netns/$pid
-    sudo ip link add foo0 type veth peer name bar0
-    sudo ip link set bar0 netns $pid
-    sudo ip netns exec $pid ip link set dev bar0 name eth0
+    sudo ip link add $container-eth0 type veth peer name $container-peer
+    sudo ip link set $container-peer netns $pid
+    sudo ip netns exec $pid ip link set dev $container-peer name eth0
+    sudo brctl addif playhome $container-eth0
     sudo rm /var/run/netns/$pid
 }
 
