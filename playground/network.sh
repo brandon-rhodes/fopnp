@@ -27,7 +27,7 @@ start () {
 echo hi
 sudo brctl addbr playhome
 start foo false
-start bar
+start bar false
 echo foo pid is $foo and bar pid is $bar
 read
 sudo brctl delbr playhome
