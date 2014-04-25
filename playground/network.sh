@@ -32,15 +32,14 @@ start_host () {
     name="$1"
     shift
     c=$(docker run --name=$name --hostname=$name --networking=false -d \
-        fopnp/base sleep 9999)
+        fopnp/base /etc/init.d/ssh start -D)
     containers="$containers $c"
     pid=$(docker inspect -f '{{.State.Pid}}' $c)
-    echo $name pid=$pid
+    echo $name pid is $pid
     sudo ln -s /proc/$pid/ns/net /var/run/netns/$pid
     n=0
     for interface in "$@"
     do
-        echo on host $name trying to turn $interface into eth$n
         sudo ip link set $interface netns $pid
         sudo ip netns exec $pid ip link set dev $interface name eth$n
         sudo ip netns exec $pid ip link set eth$n up
@@ -64,7 +63,6 @@ start_host playisp ispA
 
 sudo brctl addif playhome modemA-eth1
 
-echo trying with $playmodemA
 sudo ip netns exec $playmodemA ip addr add 10.25.1.65/32 dev eth0
 sudo ip netns exec $playmodemA ip addr add 192.168.1.1/24 dev eth1
 
