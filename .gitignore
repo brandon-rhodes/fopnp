@@ -1,4 +1,5 @@
 diagrams/*.png
 diagrams/*.svg
 *.old
-playground/var/
+playground/base/id_rsa
+playground/base/id_rsa.pub
