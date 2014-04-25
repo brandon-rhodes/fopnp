@@ -5,4 +5,4 @@
 # exists in the networking playground will append additional commands to
 # this startup script using RUN commands in their Dockerfiles.
 
-trap "exec /bin/bash" EXIT
+/etc/init.d/ssh start
