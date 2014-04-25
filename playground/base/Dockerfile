@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 RUN apt-get update
-RUN apt-get install -y curl mtr nmap openssh-server tcpdump
+RUN apt-get install -y bind9-host curl mtr nmap openssh-server tcpdump
 ADD id_rsa     /root/.ssh/id_rsa
 ADD id_rsa.pub /root/.ssh/id_rsa.pub
 ADD id_rsa.pub /root/.ssh/authorized_keys
