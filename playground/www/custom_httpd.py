@@ -18,8 +18,9 @@ def main(pempath):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Combined HTTP/HTTPS server')
     parser.add_argument('pempath', help='path to PEM certificate+key file')
+    parser.add_argument('directory', help='directory to serve as a web site')
     args = parser.parse_args()
     pempath = os.path.join(os.getcwd(), args.pempath)
-    this_dir = os.path.dirname(os.path.abspath(__file__))
-    os.chdir(this_dir + '/../../py3')  # serve the Python 3 book examples
+    directory = os.path.join(os.getcwd(), args.directory)
+    os.chdir(directory)
     main(pempath)
