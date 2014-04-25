@@ -2,9 +2,16 @@
 
 set -e
 
-stop_containers () {
+stop_everything () {
+    for b in $bridges
+    do
+        sudo ip link set dev $b down
+        sudo brctl delbr $b
+    done
     for c in $containers
     do
+        pid=$(docker inspect -f '{{.State.Pid}}' $c)
+        sudo rm -f /var/run/netns/$pid
         echo -n 'Stopping '
         docker stop --time=0 $c
         echo -n 'Removing '
@@ -13,30 +20,52 @@ stop_containers () {
 }
 
 trap 'exit' SIGINT SIGTERM
-trap 'stop_containers' EXIT
+trap 'stop_everything' EXIT
 
-start () {
-    name="$1"
-    networking=${2:-true}
-    c=$(docker run --name=$name --hostname=$name --networking=$networking -d \
-        fopnp/base sleep 9999)
-    containers="$containers $c"
-    eval "$name=$(docker inspect -f '{{.State.Pid}}' $c)"
+start_bridge () {
+    sudo brctl addbr $1 || true
+    bridges="$bridges $1"
+    sudo ip link set dev $1 up
 }
 
-echo hi
-sudo brctl addbr playhome
-start foo false
-start bar false
-echo foo pid is $foo and bar pid is $bar
-read
-sudo brctl delbr playhome
-echo done
+start_host () {
+    name="$1"
+    shift
+    c=$(docker run --name=$name --hostname=$name --networking=false -d \
+        fopnp/base sleep 9999)
+    containers="$containers $c"
+    pid=$(docker inspect -f '{{.State.Pid}}' $c)
+    echo $name pid=$pid
+    sudo ln -s /proc/$pid/ns/net /var/run/netns/$pid
+    n=0
+    for interface in "$@"
+    do
+        echo on host $name trying to turn $interface into eth$n
+        sudo ip link set $interface netns $pid
+        sudo ip netns exec $pid ip link set dev $interface name eth$n
+        sudo ip netns exec $pid ip link set eth$n up
+        n=$(( $n + 1 ))
+    done
+    eval "$name=$pid"
+}
 
-#PID=2343
-#ip link set dev eth0 name not_eth0
-#docker inspect -f '{{.State.Pid}}' foo
-#for bridge in br_home br_home2 br_isp br_backbone
-#ln -s /proc/1316/ns/net /var/run/netns/1316
-#docker run --networking=false --name=foo --hostname=foo -ti --rm fopnp/base /bin/bash
-#docker inspect -f '{{.NetworkSettings.IPAddress}}' foo
+sudo mkdir -p /var/run/netns
+
+start_bridge playhome
+start_bridge playhome2
+start_bridge examplecom
+
+sudo ip link add modemA type veth peer name ispA
+sudo ip link add modemA-peer type veth peer name modemA-eth1
+#sudo ip link add modemB type veth peer name ispB
+
+start_host playmodemA modemA modemA-peer
+start_host playisp ispA
+
+sudo brctl addif playhome modemA-eth1
+
+echo trying with $playmodemA
+sudo ip netns exec $playmodemA ip addr add 10.25.1.65/32 dev eth0
+sudo ip netns exec $playmodemA ip addr add 192.168.1.1/24 dev eth1
+
+read
