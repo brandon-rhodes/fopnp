@@ -6,10 +6,10 @@ and verified as the scripts are updated and corrected.
                                    ~
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo $PATH
-/home/brandon/usr/3.4/bin:/bin:/usr/bin
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ which python3
-/home/brandon/usr/3.4/bin/python3
+/usr/bin/python3
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 --version
 Python 3.4.0
@@ -17,7 +17,7 @@ Python 3.4.0
 $ PLAYGROUND=$(dirname $PWD)/playground
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ [ -d $PLAYGROUND ]; echo $?
-0
+1
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter12
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -26,7 +26,7 @@ To: recipient@example.com
 From: Test Sender <sender@example.com>
 Subject: Test Message, Chapter 12
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325232008.15748.50494@guinness>
+Message-ID: <20140325232008.15748.50494@h9>
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 7bit
 MIME-Version: 1.0
@@ -54,7 +54,7 @@ To: Test Recipient <recipient@example.com>
 From: Test Sender <sender@example.com>
 Subject: Foundations of Python Network Programming
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325232008.15748.50494@guinness>
+Message-ID: <20140325232008.15748.50494@h9>
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
  boundary="===============8211050864078048428=="
@@ -83,7 +83,7 @@ To: Test Recipient <recipient@example.com>
 From: Test Sender <sender@example.com>
 Subject: Foundations of Python Network Programming
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325232008.15748.50494@guinness>
+Message-ID: <20140325232008.15748.50494@h9>
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="===============0373402508605428821=="
 
@@ -125,7 +125,7 @@ To: Test Recipient <recipient@example.com>
 From: Test Sender <sender@example.com>
 Subject: Foundations of Python Network Programming
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325232008.15748.50494@guinness>
+Message-ID: <20140325232008.15748.50494@h9>
 MIME-Version: 1.0
 Content-Type: multipart/alternative;
  boundary="===============2388085504187641652=="
@@ -141,13 +141,13 @@ Content-Transfer-Encoding: 7bit
 <p>Hello,</p>
 <p>This is a <b>test message</b> from Chapter 12.</p>
 <p>- <i>Anonymous</i></p><p>This is the smallest possible blue GIF:</p>
-<img src="cid:20140325232008.15748.99346@guinness" height="80" width="80">
+<img src="cid:20140325232008.15748.99346@h9" height="80" width="80">
 
 --===============3879088202122200706==
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="blue-dot.gif"
-Content-ID: <20140325232008.15748.99346@guinness>
+Content-ID: <20140325232008.15748.99346@h9>
 MIME-Version: 1.0
 
 R0lGODlhAQABAJAAAAAA/wAAACwAAAAAAQABAAACAgQBADs=
@@ -170,7 +170,7 @@ To: Test Recipient <recipient@example.com>
 From: Test Sender <sender@example.com>
 Subject: Foundations of Python Network Programming
 Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325232008.15748.50494@guinness>
+Message-ID: <20140325232008.15748.50494@h9>
 MIME-Version: 1.0
 Content-Type: multipart/mixed; boundary="===============4715676943270851834=="
 
@@ -189,13 +189,13 @@ Content-Transfer-Encoding: 7bit
 <p>Hello,</p>
 <p>This is a <b>test message</b> from Chapter 12.</p>
 <p>- <i>Anonymous</i></p><p>This is the smallest possible blue GIF:</p>
-<img src="cid:20140325232008.15748.99346@guinness" height="80" width="80">
+<img src="cid:20140325232008.15748.99346@h9" height="80" width="80">
 
 --===============3879088202122200706==
 Content-Type: image/gif
 Content-Transfer-Encoding: base64
 Content-Disposition: attachment; filename="blue-dot.gif"
-Content-ID: <20140325232008.15748.99346@guinness>
+Content-ID: <20140325232008.15748.99346@h9>
 MIME-Version: 1.0
 
 R0lGODlhAQABAJAAAAAA/wAAACwAAAAAAQABAAACAgQBADs=
@@ -295,7 +295,7 @@ $ python3 build_mime_email.py attachment.txt | python3 display_structure.py
 $ python3 build_mime_email.py -i | python3 display_structure.py
  type=multipart/alternative
 .0 type=multipart/related
-.0.0 type=text/html str len=215
+.0.0 type=text/html str len=209
 .0.1 type=image/gif bytes len=35 attachment filename='blue-dot.gif'
 .1 type=text/plain str len=59
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -303,7 +303,7 @@ $ python3 build_mime_email.py -i attachment.txt attachment.gz | python3 display_
  type=multipart/mixed
 .0 type=multipart/alternative
 .0.0 type=multipart/related
-.0.0.0 type=text/html str len=215
+.0.0.0 type=text/html str len=209
 .0.0.1 type=image/gif bytes len=35 attachment filename='blue-dot.gif'
 .0.1 type=text/plain str len=59
 .1 type=text/plain str len=15 attachment filename='attachment.txt'
@@ -353,50 +353,56 @@ $ cd chapter13
 $ python3 simple.py
 usage: simple.py server fromaddr toaddr [toaddr...]
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python3 simple.py mail.example.com sender@example.com recipient@example.com
+$ python3 simple.py mail.example.com sender@example.com brandon@example.com
 Message sent to 1 recipient
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 debug.py
 usage: debug.py server fromaddr toaddr [toaddr...]
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python3 debug.py unknown.example.com sender@example.com recipient@example.com
+$ python3 debug.py unknown.example.com sender@example.com brandon@example.com
 Your message may not have been sent!
 [Errno -2] Name or service not known
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python3 debug.py mail.example.com sender@example.com recipient@example.com
-send: 'ehlo [127.0.1.1]\r\n'
-reply: b'250-guinness\r\n'
-reply: b'250-SIZE 33554432\r\n'
-reply: b'250 HELP\r\n'
-reply: retcode (250); Msg: b'guinness\nSIZE 33554432\nHELP'
-send: 'mail FROM:<sender@example.com> size=212\r\n'
-reply: b'250 OK\r\n'
-reply: retcode (250); Msg: b'OK'
-send: 'rcpt TO:<recipient@example.com>\r\n'
-reply: b'250 OK\r\n'
-reply: retcode (250); Msg: b'OK'
+$ python3 debug.py mail.example.com sender@example.com brandon@example.com
+send: 'ehlo [127.0.0.1]\r\n'
+reply: b'250-mail.example.com\r\n'
+reply: b'250-PIPELINING\r\n'
+reply: b'250-SIZE 10240000\r\n'
+reply: b'250-VRFY\r\n'
+reply: b'250-ETRN\r\n'
+reply: b'250-STARTTLS\r\n'
+reply: b'250-ENHANCEDSTATUSCODES\r\n'
+reply: b'250-8BITMIME\r\n'
+reply: b'250 DSN\r\n'
+reply: retcode (250); Msg: b'mail.example.com\nPIPELINING\nSIZE 10240000\nVRFY\nETRN\nSTARTTLS\nENHANCEDSTATUSCODES\n8BITMIME\nDSN'
+send: 'mail FROM:<sender@example.com> size=210\r\n'
+reply: b'250 2.1.0 Ok\r\n'
+reply: retcode (250); Msg: b'2.1.0 Ok'
+send: 'rcpt TO:<brandon@example.com>\r\n'
+reply: b'250 2.1.5 Ok\r\n'
+reply: retcode (250); Msg: b'2.1.5 Ok'
 send: 'data\r\n'
 reply: b'354 End data with <CR><LF>.<CR><LF>\r\n'
 reply: retcode (354); Msg: b'End data with <CR><LF>.<CR><LF>'
 data: (354, b'End data with <CR><LF>.<CR><LF>')
-send: b'To: recipient@example.com\r\nFrom: sender@example.com\r\nSubject: Test Message from simple.py\r\n\r\nHello,\r\n\r\nThis is a test message sent to you from the debug.py program\r\nin Foundations of Python Network Programming.\r\n.\r\n'
-reply: b'250 OK\r\n'
-reply: retcode (250); Msg: b'OK'
-data: (250, b'OK')
+send: b'To: brandon@example.com\r\nFrom: sender@example.com\r\nSubject: Test Message from simple.py\r\n\r\nHello,\r\n\r\nThis is a test message sent to you from the debug.py program\r\nin Foundations of Python Network Programming.\r\n.\r\n'
+reply: b'250 2.0.0 Ok: queued as A5542291\r\n'
+reply: retcode (250); Msg: b'2.0.0 Ok: queued as A5542291'
+data: (250, b'2.0.0 Ok: queued as A5542291')
 send: 'quit\r\n'
-reply: b'221 Bye\r\n'
-reply: retcode (221); Msg: b'Bye'
+reply: b'221 2.0.0 Bye\r\n'
+reply: retcode (221); Msg: b'2.0.0 Bye'
 Message sent to 1 recipient
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 ehlo.py
 usage: ehlo.py server fromaddr toaddr [toaddr...]
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python3 ehlo.py unknown.example.com sender@example.com recipient@example.com
+$ python3 ehlo.py unknown.example.com sender@example.com brandon@example.com
 Your message may not have been sent!
 [Errno -2] Name or service not known
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ python3 ehlo.py mail.example.com sender@example.com recipient@example.com
-Maximum message size is 33554432
+$ python3 ehlo.py mail.example.com sender@example.com brandon@example.com
+Maximum message size is 10240000
 Message sent to 1 recipient
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo TODO: attempt authenticated SMTP to mail.example.com
@@ -409,35 +415,24 @@ $ cd ..
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter14
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ cat < /dev/null > $PLAYGROUND/var/mail/brandon
+$ echo abc123 | python3 popconn.py mail.example.com brandon
+You have 12 messages totaling 6361 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore popconn.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
-You have 0 messages totaling 0 bytes
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore mailbox.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
-No messages
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ cat $PLAYGROUND/services/sample-mbox > $PLAYGROUND/var/mail/brandon
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore popconn.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
-You have 3 messages totaling 1969 bytes
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore mailbox.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
+$ echo abc123 | python3 mailbox.py mail.example.com brandon
 Message 1 has 354 bytes
 Message 2 has 442 bytes
 Message 3 has 1173 bytes
+Message 4 has 489 bytes
+Message 5 has 488 bytes
+Message 6 has 487 bytes
+Message 7 has 489 bytes
+Message 8 has 488 bytes
+Message 9 has 487 bytes
+Message 10 has 489 bytes
+Message 11 has 488 bytes
+Message 12 has 487 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ (echo abc123; yes) | python3 -W ignore download-and-delete.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
+$ (echo abc123; yes) | python3 download-and-delete.py mail.example.com brandon
 Message 1 (size is 354 bytes):
 
 From: Administrator <admin@mail.example.com>
@@ -494,90 +489,284 @@ This is a test
 
 Delete this message [ny]?
 Deleted.
+Message 4 (size is 489 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the simple.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 5 (size is 488 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the debug.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 6 (size is 487 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the ehlo.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 7 (size is 489 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the simple.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 8 (size is 488 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the debug.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 9 (size is 487 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the ehlo.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 10 (size is 489 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the simple.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 11 (size is 488 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the debug.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
+Message 12 (size is 487 bytes):
+
+From: sender@example.com
+To: brandon@example.com
+Subject: Test Message from simple.py
+
+Read this message [ny]?
+------------------------------------------------------------------------
+Hello,
+
+This is a test message sent to you from the ehlo.py program
+in Foundations of Python Network Programming.
+------------------------------------------------------------------------
+
+Delete this message [ny]?
+Deleted.
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore popconn.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
-You have 0 messages totaling 0 bytes
+$ echo abc123 | python3 popconn.py mail.example.com brandon
+You have 12 messages totaling 6361 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore apopconn.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
-You have 0 messages totaling 0 bytes
+$ echo abc123 | python3 apopconn.py mail.example.com brandon
+Login failed: -ERR APOP not supported by server
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore mailbox.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
-No messages
+$ echo abc123 | python3 mailbox.py mail.example.com brandon
+Message 1 has 354 bytes
+Message 2 has 442 bytes
+Message 3 has 1173 bytes
+Message 4 has 489 bytes
+Message 5 has 488 bytes
+Message 6 has 487 bytes
+Message 7 has 489 bytes
+Message 8 has 488 bytes
+Message 9 has 487 bytes
+Message 10 has 489 bytes
+Message 11 has 488 bytes
+Message 12 has 487 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd ..
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter15
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cat $PLAYGROUND/services/sample-mbox > $PLAYGROUND/var/mail/brandon
+/bin/sh: 54: cannot create //playground/var/mail/brandon: Directory nonexistent
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ rm -rf $PLAYGROUND/var/folders/.imap/INBOX
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore open_imaplib.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
+$ echo abc123 | python3 open_imaplib.py mail.example.com brandon
 Capabilities: ('IMAP4REV1', 'LITERAL+', 'SASL-IR', 'LOGIN-REFERRALS', 'ID', 'ENABLE', 'IDLE', 'AUTH=PLAIN')
 Listing mailboxes 
 Status: 'OK'
 Data:
-b'(\\HasNoChildren) "/" "INBOX"'
+b'(\\HasNoChildren) "/" INBOX'
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore open_imap.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
-Capabilities: ('IMAP4REV1', 'LITERAL+', 'SASL-IR', 'LOGIN-REFERRALS', 'ID', 'ENABLE', 'IDLE', 'SORT', 'SORT=DISPLAY', 'THREAD=REFERENCES', 'THREAD=REFS', 'MULTIAPPEND', 'UNSELECT', 'CHILDREN', 'NAMESPACE', 'UIDPLUS', 'LIST-EXTENDED', 'I18NLEVEL=1', 'CONDSTORE', 'QRESYNC', 'ESEARCH', 'ESORT', 'SEARCHRES', 'WITHIN', 'CONTEXT=SEARCH', 'LIST-STATUS', 'SPECIAL-USE')
+$ echo abc123 | python3 open_imap.py mail.example.com brandon
+Capabilities: ('IMAP4REV1', 'LITERAL+', 'SASL-IR', 'LOGIN-REFERRALS', 'ID', 'ENABLE', 'IDLE', 'SORT', 'SORT=DISPLAY', 'THREAD=REFERENCES', 'THREAD=REFS', 'THREAD=ORDEREDSUBJECT', 'MULTIAPPEND', 'URL-PARTIAL', 'CATENATE', 'UNSELECT', 'CHILDREN', 'NAMESPACE', 'UIDPLUS', 'LIST-EXTENDED', 'I18NLEVEL=1', 'CONDSTORE', 'QRESYNC', 'ESEARCH', 'ESORT', 'SEARCHRES', 'WITHIN', 'CONTEXT=SEARCH', 'LIST-STATUS', 'SPECIAL-USE', 'BINARY', 'MOVE')
 Listing mailboxes:
   \HasNoChildren                / INBOX
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore folder_info.py mail.example.com brandon INBOX
-Warning: Password input may be echoed.
-Password: 
-EXISTS: 3
+$ echo abc123 | python3 folder_info.py mail.example.com brandon INBOX
+EXISTS: 12
 FLAGS: ('\\Answered', '\\Flagged', '\\Deleted', '\\Seen', '\\Draft')
 NOMODSEQ: ['']
 PERMANENTFLAGS: ()
 READ-ONLY: ['']
-RECENT: 3
-UIDNEXT: 4
-UIDVALIDITY: 1398276020
+RECENT: 0
+UIDNEXT: 13
+UIDVALIDITY: 1398530698
 UNSEEN: ['1']
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo abc123 | python3 -W ignore folder_summary.py mail.example.com brandon INBOX
-Warning: Password input may be echoed.
-Password: 
+$ echo abc123 | python3 folder_summary.py mail.example.com brandon INBOX
 1 Administrator <admin@mail.example.com>
    We are happy that you have chosen to use example.com's indus ...
 2 Administrator <admin@mail.example.com>
    Administrator e-mails are sent as plain ASCII without MIME o ...
 3 Test Sender <sender@example.com>
   Parts: multipart/alternative text/plain
+4 sender@example.com
+   Hello, This is a test message sent to you from the simple ...
+5 sender@example.com
+   Hello, This is a test message sent to you from the debug. ...
+6 sender@example.com
+   Hello, This is a test message sent to you from the ehlo.p ...
+7 sender@example.com
+   Hello, This is a test message sent to you from the simple ...
+8 sender@example.com
+   Hello, This is a test message sent to you from the debug. ...
+9 sender@example.com
+   Hello, This is a test message sent to you from the ehlo.p ...
+10 sender@example.com
+   Hello, This is a test message sent to you from the simple ...
+11 sender@example.com
+   Hello, This is a test message sent to you from the debug. ...
+12 sender@example.com
+   Hello, This is a test message sent to you from the ehlo.p ...
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ (echo abc123; echo INBOX; echo 1; echo HEADER; echo TEXT; echo q; echo 2; echo HEADER; echo TEXT; echo q; echo 3; echo HEADER; echo TEXT; echo 1; echo 1.1; echo 1.2; echo 2; echo q; echo q; echo q) | python3 -W ignore simple_client.py mail.example.com brandon
-Warning: Password input may be echoed.
-Password: 
+$ (echo abc123; echo INBOX; echo 1; echo HEADER; echo TEXT; echo q; echo 2; echo HEADER; echo TEXT; echo q; echo 3; echo HEADER; echo TEXT; echo 1; echo 1.1; echo 1.2; echo 2; echo q; echo q; echo q) | python3 simple_client.py mail.example.com brandon
 
 INBOX                          \HasNoChildren
 
 Type a folder name, or "q" to quit: 
-     1   2014-03-25 17:14:01     354 bytes  \Recent
+     1   2014-03-25 17:14:01     354 bytes  
        From: Administrator <admin@mail.example.com>
        Subject: Welcome to example.com!
        
-     2   2014-04-21 12:08:01     442 bytes  \Recent
+     2   2014-04-21 12:08:01     442 bytes  
        From: Administrator <admin@mail.example.com>
        Subject: Introduction to e-mail
        
-     3   2014-04-21 13:41:01    1173 bytes  \Recent
+     3   2014-04-21 13:41:01    1173 bytes  
        From: Test Sender <sender@example.com>
        Subject: Foundations of Python Network Programming
        
+     4   2014-04-26 16:44:57     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     5   2014-04-26 16:44:58     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     6   2014-04-26 16:44:58     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     7   2014-04-26 16:48:36     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     8   2014-04-26 16:48:36     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     9   2014-04-26 16:48:36     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    10   2014-04-26 16:49:50     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    11   2014-04-26 16:49:50     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    12   2014-04-26 16:49:51     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
 Folder INBOX - type a message UID, or "q" to quit: 
-Flags: \Recent
+Flags: none
 Structure:
   HEADER
   TEXT      text/plain size=232 
@@ -589,7 +778,7 @@ To: Brandon <brandon@mail.example.com>
 Subject: Welcome to example.com!
 ------------------------------------------------------------------------
 
-Flags: \Recent
+Flags: none
 Structure:
   HEADER
   TEXT      text/plain size=232 
@@ -603,27 +792,63 @@ one.  If you ever need your password reset, simply contact our staff!
 - example.com
 ------------------------------------------------------------------------
 
-Flags: \Recent
+Flags: none
 Structure:
   HEADER
   TEXT      text/plain size=232 
 
 Message 1 - type a part name, or "q" to quit: 
 
-     1   2014-03-25 17:14:01     354 bytes  \Recent
+     1   2014-03-25 17:14:01     354 bytes  
        From: Administrator <admin@mail.example.com>
        Subject: Welcome to example.com!
        
-     2   2014-04-21 12:08:01     442 bytes  \Recent
+     2   2014-04-21 12:08:01     442 bytes  
        From: Administrator <admin@mail.example.com>
        Subject: Introduction to e-mail
        
-     3   2014-04-21 13:41:01    1173 bytes  \Recent
+     3   2014-04-21 13:41:01    1173 bytes  
        From: Test Sender <sender@example.com>
        Subject: Foundations of Python Network Programming
        
+     4   2014-04-26 16:44:57     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     5   2014-04-26 16:44:58     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     6   2014-04-26 16:44:58     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     7   2014-04-26 16:48:36     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     8   2014-04-26 16:48:36     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     9   2014-04-26 16:48:36     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    10   2014-04-26 16:49:50     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    11   2014-04-26 16:49:50     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    12   2014-04-26 16:49:51     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
 Folder INBOX - type a message UID, or "q" to quit: 
-Flags: \Recent
+Flags: none
 Structure:
   HEADER
   TEXT      text/plain size=321 
@@ -635,7 +860,7 @@ To: Brandon <brandon@mail.example.com>
 Subject: Introduction to e-mail
 ------------------------------------------------------------------------
 
-Flags: \Recent
+Flags: none
 Structure:
   HEADER
   TEXT      text/plain size=321 
@@ -651,211 +876,97 @@ of e-mail power users.
 - example.com
 ------------------------------------------------------------------------
 
-Flags: \Recent
+Flags: none
 Structure:
   HEADER
   TEXT      text/plain size=321 
 
 Message 2 - type a part name, or "q" to quit: 
 
-     1   2014-03-25 17:14:01     354 bytes  \Recent
+     1   2014-03-25 17:14:01     354 bytes  
        From: Administrator <admin@mail.example.com>
        Subject: Welcome to example.com!
        
-     2   2014-04-21 12:08:01     442 bytes  \Recent
+     2   2014-04-21 12:08:01     442 bytes  
        From: Administrator <admin@mail.example.com>
        Subject: Introduction to e-mail
        
-     3   2014-04-21 13:41:01    1173 bytes  \Recent
+     3   2014-04-21 13:41:01    1173 bytes  
        From: Test Sender <sender@example.com>
        Subject: Foundations of Python Network Programming
        
-Folder INBOX - type a message UID, or "q" to quit: 
-Flags: \Recent
-Structure:
-  HEADER
-  TEXT      multipart/mixed 
-  1         multipart/alternative 
-  1.1       text/html size=97 
-  1.2       text/plain size=62 
-  2         text/plain size=16 disposition=attachment filename=attachment.txt 
-
-Message 3 - type a part name, or "q" to quit: 
-------------------------------------------------------------------------
-To: Test Recipient <recipient@example.com>
-From: Test Sender <sender@example.com>
-Subject: Foundations of Python Network Programming
-Date: Tue, 25 Mar 2014 17:14:01 -0400
-Message-ID: <20140325232008.15748.50494@guinness>
-MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="===============0373402508605428821=="
-------------------------------------------------------------------------
-
-Flags: \Recent
-Structure:
-  HEADER
-  TEXT      multipart/mixed 
-  1         multipart/alternative 
-  1.1       text/html size=97 
-  1.2       text/plain size=62 
-  2         text/plain size=16 disposition=attachment filename=attachment.txt 
-
-Message 3 - type a part name, or "q" to quit: 
-------------------------------------------------------------------------
---===============0373402508605428821==
-Content-Type: multipart/alternative;
- boundary="===============8211050864078048428=="
-
---===============8211050864078048428==
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-
-<p>Hello,</p>
-<p>This is a <b>test message</b> from Chapter 12.</p>
-<p>- <i>Anonymous</i></p>
-
---===============8211050864078048428==
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-MIME-Version: 1.0
-
-Hello,
-This is a MIME message from Chapter 12.
-- Anonymous
-
---===============8211050864078048428==--
-
---===============0373402508605428821==
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-Content-Disposition: attachment; filename="attachment.txt"
-MIME-Version: 1.0
-
-This is a test
-
---===============0373402508605428821==--
-------------------------------------------------------------------------
-
-Flags: \Recent
-Structure:
-  HEADER
-  TEXT      multipart/mixed 
-  1         multipart/alternative 
-  1.1       text/html size=97 
-  1.2       text/plain size=62 
-  2         text/plain size=16 disposition=attachment filename=attachment.txt 
-
-Message 3 - type a part name, or "q" to quit: 
-------------------------------------------------------------------------
---===============8211050864078048428==
-Content-Type: text/html; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-
-<p>Hello,</p>
-<p>This is a <b>test message</b> from Chapter 12.</p>
-<p>- <i>Anonymous</i></p>
-
---===============8211050864078048428==
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 7bit
-MIME-Version: 1.0
-
-Hello,
-This is a MIME message from Chapter 12.
-- Anonymous
-
---===============8211050864078048428==--
-------------------------------------------------------------------------
-
-Flags: \Recent
-Structure:
-  HEADER
-  TEXT      multipart/mixed 
-  1         multipart/alternative 
-  1.1       text/html size=97 
-  1.2       text/plain size=62 
-  2         text/plain size=16 disposition=attachment filename=attachment.txt 
-
-Message 3 - type a part name, or "q" to quit: 
-------------------------------------------------------------------------
-<p>Hello,</p>
-<p>This is a <b>test message</b> from Chapter 12.</p>
-<p>- <i>Anonymous</i></p>
-------------------------------------------------------------------------
-
-Flags: \Recent
-Structure:
-  HEADER
-  TEXT      multipart/mixed 
-  1         multipart/alternative 
-  1.1       text/html size=97 
-  1.2       text/plain size=62 
-  2         text/plain size=16 disposition=attachment filename=attachment.txt 
-
-Message 3 - type a part name, or "q" to quit: 
-------------------------------------------------------------------------
-Hello,
-This is a MIME message from Chapter 12.
-- Anonymous
-------------------------------------------------------------------------
-
-Flags: \Recent
-Structure:
-  HEADER
-  TEXT      multipart/mixed 
-  1         multipart/alternative 
-  1.1       text/html size=97 
-  1.2       text/plain size=62 
-  2         text/plain size=16 disposition=attachment filename=attachment.txt 
-
-Message 3 - type a part name, or "q" to quit: 
-------------------------------------------------------------------------
-This is a test
-------------------------------------------------------------------------
-
-Flags: \Recent
-Structure:
-  HEADER
-  TEXT      multipart/mixed 
-  1         multipart/alternative 
-  1.1       text/html size=97 
-  1.2       text/plain size=62 
-  2         text/plain size=16 disposition=attachment filename=attachment.txt 
-
-Message 3 - type a part name, or "q" to quit: 
-
-     1   2014-03-25 17:14:01     354 bytes  \Recent
-       From: Administrator <admin@mail.example.com>
-       Subject: Welcome to example.com!
+     4   2014-04-26 16:44:57     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
        
-     2   2014-04-21 12:08:01     442 bytes  \Recent
-       From: Administrator <admin@mail.example.com>
-       Subject: Introduction to e-mail
+     5   2014-04-26 16:44:58     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
        
-     3   2014-04-21 13:41:01    1173 bytes  \Recent
-       From: Test Sender <sender@example.com>
-       Subject: Foundations of Python Network Programming
+     6   2014-04-26 16:44:58     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     7   2014-04-26 16:48:36     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     8   2014-04-26 16:48:36     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+     9   2014-04-26 16:48:36     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    10   2014-04-26 16:49:50     489 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    11   2014-04-26 16:49:50     488 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
+       
+    12   2014-04-26 16:49:51     487 bytes  
+       From: sender@example.com
+       Subject: Test Message from simple.py
        
 Folder INBOX - type a message UID, or "q" to quit: 
-INBOX                          \HasNoChildren
-
-Type a folder name, or "q" to quit:                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Flags: none
+Structure:
+  HEADER
+  TEXT      multipart/mixed 
+Traceback (most recent call last):
+  File "simple_client.py", line 152, in <module>
+    main()
+  File "simple_client.py", line 23, in main
+    explore_account(c)
+  File "simple_client.py", line 45, in explore_account
+    explore_folder(c, reply)
+  File "simple_client.py", line 75, in explore_folder
+    explore_message(c, reply)
+  File "simple_client.py", line 93, in explore_message
+    display_structure(msgdict[uid]['BODYSTRUCTURE'])
+  File "simple_client.py", line 149, in display_structure
+    display_structure(subparts[i], parentparts + [ str(i + 1) ])
+  File "simple_client.py", line 144, in display_structure
+    parttype = 'multipart/%s' % structure[1].lower()
+AttributeError: 'tuple' object has no attribute 'lower'
+                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd ..
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter16
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo wrong | python3 -W ignore telnet_login.py example.com brandon
-Warning: Password input may be echoed.
-Password: 
-Username and password failed - giving up
+$ echo wrong | python3 telnet_login.py ftp.example.com brandon
+Password: Username and password failed - giving up
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo TODO: once I have telnet working with a fake password, do login again
-TODO: once I have telnet working with a fake password, do login again
+$ echo abc123 | python3 telnet_login.py ftp.example.com brandon
+Password:  exec uptime
+ 16:49:57 up 13:19,  1 user,  load average: 0.67, 0.56, 0.53
+
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ echo wrong | python3 -W ignore telnet_codes.py example.com brandon
-Warning: Password input may be echoed.
-Password: 
-Sending terminal type "mypython"
+$ echo wrong | python3 telnet_codes.py ftp.example.com brandon
+Password: Sending terminal type "mypython"
 Will not 32
 Will not 35
 Will not 39
