@@ -14,10 +14,10 @@ $ which python3
 $ python3 --version
 Python 3.4.0
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ PLAYGROUND=$(dirname $PWD)/playground
+$ while ! ip a | grep -q eth0; do sleep 0.25; done
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ [ -d $PLAYGROUND ]; echo $?
-1
+$ ssh root@mail.example.com cp /root/var.mail.brandon.backup /var/mail/brandon
+Warning: Permanently added 'mail.example.com,10.130.1.3' (ECDSA) to the list of known hosts.
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter12
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -346,8 +346,6 @@ datetime.datetime(2014, 3, 25, 17, 14, 1, tzinfo=datetime.timezone(datetime.time
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd ..
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ sleep 1
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter13
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ python3 simple.py
@@ -386,9 +384,9 @@ reply: b'354 End data with <CR><LF>.<CR><LF>\r\n'
 reply: retcode (354); Msg: b'End data with <CR><LF>.<CR><LF>'
 data: (354, b'End data with <CR><LF>.<CR><LF>')
 send: b'To: brandon@example.com\r\nFrom: sender@example.com\r\nSubject: Test Message from simple.py\r\n\r\nHello,\r\n\r\nThis is a test message sent to you from the debug.py program\r\nin Foundations of Python Network Programming.\r\n.\r\n'
-reply: b'250 2.0.0 Ok: queued as A5542291\r\n'
-reply: retcode (250); Msg: b'2.0.0 Ok: queued as A5542291'
-data: (250, b'2.0.0 Ok: queued as A5542291')
+reply: b'250 2.0.0 Ok: queued as 7EB362A8\r\n'
+reply: retcode (250); Msg: b'2.0.0 Ok: queued as 7EB362A8'
+data: (250, b'2.0.0 Ok: queued as 7EB362A8')
 send: 'quit\r\n'
 reply: b'221 2.0.0 Bye\r\n'
 reply: retcode (221); Msg: b'2.0.0 Bye'
@@ -416,7 +414,7 @@ $ cd ..
 $ cd chapter14
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 popconn.py mail.example.com brandon
-You have 12 messages totaling 6361 bytes
+You have 6 messages totaling 3433 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 mailbox.py mail.example.com brandon
 Message 1 has 354 bytes
@@ -425,12 +423,6 @@ Message 3 has 1173 bytes
 Message 4 has 489 bytes
 Message 5 has 488 bytes
 Message 6 has 487 bytes
-Message 7 has 489 bytes
-Message 8 has 488 bytes
-Message 9 has 487 bytes
-Message 10 has 489 bytes
-Message 11 has 488 bytes
-Message 12 has 487 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ (echo abc123; yes) | python3 download-and-delete.py mail.example.com brandon
 Message 1 (size is 354 bytes):
@@ -537,105 +529,9 @@ in Foundations of Python Network Programming.
 
 Delete this message [ny]?
 Deleted.
-Message 7 (size is 489 bytes):
-
-From: sender@example.com
-To: brandon@example.com
-Subject: Test Message from simple.py
-
-Read this message [ny]?
-------------------------------------------------------------------------
-Hello,
-
-This is a test message sent to you from the simple.py program
-in Foundations of Python Network Programming.
-------------------------------------------------------------------------
-
-Delete this message [ny]?
-Deleted.
-Message 8 (size is 488 bytes):
-
-From: sender@example.com
-To: brandon@example.com
-Subject: Test Message from simple.py
-
-Read this message [ny]?
-------------------------------------------------------------------------
-Hello,
-
-This is a test message sent to you from the debug.py program
-in Foundations of Python Network Programming.
-------------------------------------------------------------------------
-
-Delete this message [ny]?
-Deleted.
-Message 9 (size is 487 bytes):
-
-From: sender@example.com
-To: brandon@example.com
-Subject: Test Message from simple.py
-
-Read this message [ny]?
-------------------------------------------------------------------------
-Hello,
-
-This is a test message sent to you from the ehlo.py program
-in Foundations of Python Network Programming.
-------------------------------------------------------------------------
-
-Delete this message [ny]?
-Deleted.
-Message 10 (size is 489 bytes):
-
-From: sender@example.com
-To: brandon@example.com
-Subject: Test Message from simple.py
-
-Read this message [ny]?
-------------------------------------------------------------------------
-Hello,
-
-This is a test message sent to you from the simple.py program
-in Foundations of Python Network Programming.
-------------------------------------------------------------------------
-
-Delete this message [ny]?
-Deleted.
-Message 11 (size is 488 bytes):
-
-From: sender@example.com
-To: brandon@example.com
-Subject: Test Message from simple.py
-
-Read this message [ny]?
-------------------------------------------------------------------------
-Hello,
-
-This is a test message sent to you from the debug.py program
-in Foundations of Python Network Programming.
-------------------------------------------------------------------------
-
-Delete this message [ny]?
-Deleted.
-Message 12 (size is 487 bytes):
-
-From: sender@example.com
-To: brandon@example.com
-Subject: Test Message from simple.py
-
-Read this message [ny]?
-------------------------------------------------------------------------
-Hello,
-
-This is a test message sent to you from the ehlo.py program
-in Foundations of Python Network Programming.
-------------------------------------------------------------------------
-
-Delete this message [ny]?
-Deleted.
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 popconn.py mail.example.com brandon
-You have 12 messages totaling 6361 bytes
+You have 6 messages totaling 3433 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 apopconn.py mail.example.com brandon
 Login failed: -ERR APOP not supported by server
@@ -647,21 +543,10 @@ Message 3 has 1173 bytes
 Message 4 has 489 bytes
 Message 5 has 488 bytes
 Message 6 has 487 bytes
-Message 7 has 489 bytes
-Message 8 has 488 bytes
-Message 9 has 487 bytes
-Message 10 has 489 bytes
-Message 11 has 488 bytes
-Message 12 has 487 bytes
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd ..
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ cd chapter15
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ cat $PLAYGROUND/services/sample-mbox > $PLAYGROUND/var/mail/brandon
-/bin/sh: 54: cannot create //playground/var/mail/brandon: Directory nonexistent
-                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-$ rm -rf $PLAYGROUND/var/folders/.imap/INBOX
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 open_imaplib.py mail.example.com brandon
 Capabilities: ('IMAP4REV1', 'LITERAL+', 'SASL-IR', 'LOGIN-REFERRALS', 'ID', 'ENABLE', 'IDLE', 'AUTH=PLAIN')
@@ -676,14 +561,14 @@ Listing mailboxes:
   \HasNoChildren                / INBOX
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 folder_info.py mail.example.com brandon INBOX
-EXISTS: 12
+EXISTS: 6
 FLAGS: ('\\Answered', '\\Flagged', '\\Deleted', '\\Seen', '\\Draft')
 NOMODSEQ: ['']
 PERMANENTFLAGS: ()
 READ-ONLY: ['']
 RECENT: 0
 UIDNEXT: 13
-UIDVALIDITY: 1398530698
+UIDVALIDITY: 1398531769
 UNSEEN: ['1']
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 folder_summary.py mail.example.com brandon INBOX
@@ -693,18 +578,6 @@ $ echo abc123 | python3 folder_summary.py mail.example.com brandon INBOX
    Administrator e-mails are sent as plain ASCII without MIME o ...
 3 Test Sender <sender@example.com>
   Parts: multipart/alternative text/plain
-4 sender@example.com
-   Hello, This is a test message sent to you from the simple ...
-5 sender@example.com
-   Hello, This is a test message sent to you from the debug. ...
-6 sender@example.com
-   Hello, This is a test message sent to you from the ehlo.p ...
-7 sender@example.com
-   Hello, This is a test message sent to you from the simple ...
-8 sender@example.com
-   Hello, This is a test message sent to you from the debug. ...
-9 sender@example.com
-   Hello, This is a test message sent to you from the ehlo.p ...
 10 sender@example.com
    Hello, This is a test message sent to you from the simple ...
 11 sender@example.com
@@ -729,39 +602,15 @@ Type a folder name, or "q" to quit:
        From: Test Sender <sender@example.com>
        Subject: Foundations of Python Network Programming
        
-     4   2014-04-26 16:44:57     489 bytes  
+    10   2014-04-26 17:06:07     489 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
-     5   2014-04-26 16:44:58     488 bytes  
+    11   2014-04-26 17:06:07     488 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
-     6   2014-04-26 16:44:58     487 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     7   2014-04-26 16:48:36     489 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     8   2014-04-26 16:48:36     488 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     9   2014-04-26 16:48:36     487 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    10   2014-04-26 16:49:50     489 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    11   2014-04-26 16:49:50     488 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    12   2014-04-26 16:49:51     487 bytes  
+    12   2014-04-26 17:06:07     487 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
@@ -811,39 +660,15 @@ Message 1 - type a part name, or "q" to quit:
        From: Test Sender <sender@example.com>
        Subject: Foundations of Python Network Programming
        
-     4   2014-04-26 16:44:57     489 bytes  
+    10   2014-04-26 17:06:07     489 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
-     5   2014-04-26 16:44:58     488 bytes  
+    11   2014-04-26 17:06:07     488 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
-     6   2014-04-26 16:44:58     487 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     7   2014-04-26 16:48:36     489 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     8   2014-04-26 16:48:36     488 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     9   2014-04-26 16:48:36     487 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    10   2014-04-26 16:49:50     489 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    11   2014-04-26 16:49:50     488 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    12   2014-04-26 16:49:51     487 bytes  
+    12   2014-04-26 17:06:07     487 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
@@ -895,39 +720,15 @@ Message 2 - type a part name, or "q" to quit:
        From: Test Sender <sender@example.com>
        Subject: Foundations of Python Network Programming
        
-     4   2014-04-26 16:44:57     489 bytes  
+    10   2014-04-26 17:06:07     489 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
-     5   2014-04-26 16:44:58     488 bytes  
+    11   2014-04-26 17:06:07     488 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
-     6   2014-04-26 16:44:58     487 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     7   2014-04-26 16:48:36     489 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     8   2014-04-26 16:48:36     488 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-     9   2014-04-26 16:48:36     487 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    10   2014-04-26 16:49:50     489 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    11   2014-04-26 16:49:50     488 bytes  
-       From: sender@example.com
-       Subject: Test Message from simple.py
-       
-    12   2014-04-26 16:49:51     487 bytes  
+    12   2014-04-26 17:06:07     487 bytes  
        From: sender@example.com
        Subject: Test Message from simple.py
        
@@ -962,7 +763,7 @@ Password: Username and password failed - giving up
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo abc123 | python3 telnet_login.py ftp.example.com brandon
 Password:  exec uptime
- 16:49:57 up 13:19,  1 user,  load average: 0.67, 0.56, 0.53
+ 17:06:14 up 13:36,  1 user,  load average: 0.58, 0.70, 0.58
 
                                         ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 $ echo wrong | python3 telnet_codes.py ftp.example.com brandon
