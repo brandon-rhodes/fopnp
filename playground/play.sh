@@ -37,19 +37,13 @@ setup () {
     sudo ip netns exec $pid ip link set dev $container-peer name eth0
     sudo ip netns exec $pid ip link set dev eth0 up
     sudo ip netns exec $pid ip addr add 192.168.1.11/24 dev eth0
+    sudo ip netns exec $pid ip route add default via 192.168.1.1
     sudo brctl addif playhome $container-eth0
     sudo rm /var/run/netns/$pid
 }
 
-sudo true  # make user type their password before we go into background
+sudo true  # make user type password before "setup" goes into background
 setup &
 exec docker run --name=$container --hostname=$container --networking=false \
+    --dns=10.1.1.1 --dns-search=example.com \
     --privileged=true --rm -ti fopnp/base /bin/bash
-
-# container=$(docker run --name=h1 --hostname=h1 --networking=true -d \
-#     fopnp/base /startup.sh)
-# trap 'exit' SIGINT SIGTERM
-# trap 'echo && docker stop -t=0 $container && docker rm $container' EXIT
-# pid=$(docker inspect -f '{{.State.Pid}}' $container)
-# echo $pid ready
-# ssh

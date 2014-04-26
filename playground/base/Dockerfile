@@ -9,3 +9,4 @@ RUN chmod 600 /root/.ssh/*
 RUN echo 'UserKnownHostsFile /dev/null' >> /etc/ssh/ssh_config
 RUN echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
 ADD startup.sh /startup.sh
+CMD ["/etc/init.d/ssh", "start", "-D"]

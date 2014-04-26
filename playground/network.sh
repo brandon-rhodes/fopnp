@@ -29,10 +29,11 @@ start_bridge () {
 }
 
 start_host () {
-    name="$1"
-    shift
-    c=$(docker run --name=$name --hostname=$name --networking=false -d \
-        fopnp/base /etc/init.d/ssh start -D)
+    image="$1"
+    name="$2"
+    shift 2
+    c=$(docker run --name=$name --hostname=$name --networking=false \
+        --dns=10.1.1.1 --dns-search=example.com -d $image)
     containers="$containers $c"
     pid=$(docker inspect -f '{{.State.Pid}}' $c)
     echo $name pid is $pid
@@ -52,18 +53,36 @@ sudo mkdir -p /var/run/netns
 
 start_bridge playhome
 start_bridge playhome2
-start_bridge examplecom
+start_bridge playcom
 
-sudo ip link add modemA type veth peer name ispA
+sudo ip link add backbone-isp type veth peer name isp-backbone
+sudo ip link add modemA-isp type veth peer name isp-modemA
 sudo ip link add modemA-peer type veth peer name modemA-eth1
 #sudo ip link add modemB type veth peer name ispB
 
-start_host playmodemA modemA modemA-peer
-start_host playisp ispA
+start_host fopnp/dns backbone backbone-isp
+start_host fopnp/base isp isp-backbone isp-modemA
+start_host fopnp/base modemA modemA-isp modemA-peer
 
 sudo brctl addif playhome modemA-eth1
 
-sudo ip netns exec $playmodemA ip addr add 10.25.1.65/32 dev eth0
-sudo ip netns exec $playmodemA ip addr add 192.168.1.1/24 dev eth1
+sudo ip netns exec $backbone ip addr add 10.1.1.1/32 dev eth0
+sudo ip netns exec $backbone ip route add 10.25.1.1/32 dev eth0
+sudo ip netns exec $backbone ip route add 10.25.0.0/16 via 10.25.1.1
 
+sudo ip netns exec $isp ip addr add 10.25.1.1/32 dev eth0
+sudo ip netns exec $isp ip addr add 10.25.1.1/32 dev eth1
+#sudo ip netns exec $isp ip addr add 10.25.1.1/32 dev eth2
+sudo ip netns exec $isp ip route add 10.1.1.1/32 dev eth0
+sudo ip netns exec $isp ip route add 10.25.1.65/32 dev eth1
+#sudo ip netns exec $isp ip route add 10.25.1.66/32 dev eth2
+sudo ip netns exec $isp ip route add default via 10.1.1.1
+
+sudo ip netns exec $modemA ip addr add 10.25.1.65/16 dev eth0
+sudo ip netns exec $modemA ip addr add 192.168.1.1/24 dev eth1
+sudo ip netns exec $modemA ip route add default via 10.25.1.1
+sudo ip netns exec $modemA iptables --table nat \
+    --append POSTROUTING --out-interface eth0 -j MASQUERADE
+
+echo Ready
 read
