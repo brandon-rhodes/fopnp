@@ -2,7 +2,17 @@
 
 set -e
 
-container=${1:-h1}
+if [ "$#" = "0" ]
+then
+    container=h1
+else
+    container=$1
+    shift
+fi
+if [ "$#" = "0" ]
+then
+    set /bin/bash
+fi
 ppid=$$
 
 if [ ! -d /proc/sys/net/ipv4/conf/playhome ]
@@ -56,4 +66,4 @@ sudo true  # make user type password before "setup" goes into background
 setup &
 exec docker run --name=$container --hostname=$container --privileged=true \
      --networking=false --dns=10.1.1.1 --dns-search=example.com \
-     --volume=$py3:/py3 --rm -ti fopnp/base /bin/bash
+     --volume=$py3:/py3 --rm -ti fopnp/base "$@"
