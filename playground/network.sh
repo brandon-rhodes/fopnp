@@ -2,16 +2,22 @@
 
 set -e
 
+if [ $(id -u) != "0" ]
+then
+    echo 'Error: network.sh must be run as root; try "sudo network.sh"' >&2
+    exit 1
+fi
+
 stop_everything () {
     for b in $bridges
     do
-        sudo ip link set dev $b down
-        sudo brctl delbr $b
+        ip link set dev $b down
+        brctl delbr $b
     done
     for c in $containers
     do
         pid=$(docker inspect -f '{{.State.Pid}}' $c)
-        sudo rm -f /var/run/netns/$pid
+        rm -f /var/run/netns/$pid
         echo -n 'Stopping '
         docker stop --time=0 $c
         echo -n 'Removing '
@@ -23,9 +29,9 @@ trap 'exit' SIGINT SIGTERM
 trap 'stop_everything' EXIT
 
 start_bridge () {
-    sudo brctl addbr $1 || true
+    brctl addbr $1 || true
     bridges="$bridges $1"
-    sudo ip link set dev $1 up
+    ip link set dev $1 up
 }
 
 start_host () {
@@ -37,19 +43,19 @@ start_host () {
     containers="$containers $c"
     pid=$(docker inspect -f '{{.State.Pid}}' $c)
     echo $name pid is $pid
-    sudo ln -s /proc/$pid/ns/net /var/run/netns/$pid
+    ln -s /proc/$pid/ns/net /var/run/netns/$pid
     for specification in "$@"
     do
         old=${specification/*=/}
         new=${specification/=*/}
-        sudo ip link set $old netns $pid
-        sudo ip netns exec $pid ip link set dev $old name $new
-        sudo ip netns exec $pid ip link set $new up
+        ip link set $old netns $pid
+        ip netns exec $pid ip link set dev $old name $new
+        ip netns exec $pid ip link set $new up
     done
     eval "$name=$pid"
 }
 
-sudo mkdir -p /var/run/netns
+mkdir -p /var/run/netns
 
 # Start up three bridges.  Each bridge serves as a synthetic Ethernet
 # network, where students can play with ARP and broadcast and everything
@@ -69,28 +75,28 @@ start_bridge playcom
 # over the wall into the container and keep the other peer here in the
 # main network namespace where we can add it to the bridge.
 
-sudo ip link add backbone-isp type veth peer name isp-backbone
+ip link add backbone-isp type veth peer name isp-backbone
 
-sudo ip link add modemA-isp type veth peer name isp-modemA
-sudo ip link add modemB-isp type veth peer name isp-modemB
-sudo ip link add modemA-eth1 type veth peer name modemA-peer
-sudo ip link add modemB-eth1 type veth peer name modemB-peer
+ip link add modemA-isp type veth peer name isp-modemA
+ip link add modemB-isp type veth peer name isp-modemB
+ip link add modemA-eth1 type veth peer name modemA-peer
+ip link add modemB-eth1 type veth peer name modemB-peer
 
-sudo ip link add backbone-dotcom type veth peer name dotcom-backbone
-sudo ip link add dotcom-eth1 type veth peer name dotcom-peer
-sudo ip link add ftp-eth0 type veth peer name ftp-peer
-sudo ip link add mail-eth0 type veth peer name mail-peer
-sudo ip link add www-eth0 type veth peer name www-peer
+ip link add backbone-dotcom type veth peer name dotcom-backbone
+ip link add dotcom-eth1 type veth peer name dotcom-peer
+ip link add ftp-eth0 type veth peer name ftp-peer
+ip link add mail-eth0 type veth peer name mail-peer
+ip link add www-eth0 type veth peer name www-peer
 
 # Take all of the interfaces that are destined to stay out here, outside
 # of any particular container, and connect them to bridges.
 
-sudo brctl addif playhome modemA-eth1
-sudo brctl addif playhome2 modemB-eth1
-sudo brctl addif playcom dotcom-eth1
-sudo brctl addif playcom ftp-eth0
-sudo brctl addif playcom mail-eth0
-sudo brctl addif playcom www-eth0
+brctl addif playhome modemA-eth1
+brctl addif playhome2 modemB-eth1
+brctl addif playcom dotcom-eth1
+brctl addif playcom ftp-eth0
+brctl addif playcom mail-eth0
+brctl addif playcom www-eth0
 
 # Take all of the other interfaces and throw them over the wall into
 # particular containers as we start them running with Docker.
@@ -110,45 +116,44 @@ start_host fopnp/base www eth0=www-peer
 # addresses, routes, and (if necessary) IP table rules until everyone
 # can talk to everyone else.
 
-sudo ip netns exec $backbone ip addr add 10.1.1.1/32 dev eth0
-sudo ip netns exec $backbone ip route add 10.25.1.1/32 dev eth0
-sudo ip netns exec $backbone ip route add 10.25.0.0/16 via 10.25.1.1
+ip netns exec $backbone ip addr add 10.1.1.1/32 dev eth0
+ip netns exec $backbone ip route add 10.25.1.1/32 dev eth0
+ip netns exec $backbone ip route add 10.25.0.0/16 via 10.25.1.1
 
-sudo ip netns exec $isp ip addr add 10.25.1.1/32 dev eth0
-sudo ip netns exec $isp ip addr add 10.25.1.1/32 dev eth1
-sudo ip netns exec $isp ip addr add 10.25.1.1/32 dev eth2
-sudo ip netns exec $isp ip route add 10.1.1.1/32 dev eth0
-sudo ip netns exec $isp ip route add 10.25.1.65/32 dev eth1
-sudo ip netns exec $isp ip route add 10.25.1.66/32 dev eth2
-sudo ip netns exec $isp ip route add default via 10.1.1.1
+ip netns exec $isp ip addr add 10.25.1.1/32 dev eth0
+ip netns exec $isp ip addr add 10.25.1.1/32 dev eth1
+ip netns exec $isp ip addr add 10.25.1.1/32 dev eth2
+ip netns exec $isp ip route add 10.1.1.1/32 dev eth0
+ip netns exec $isp ip route add 10.25.1.65/32 dev eth1
+ip netns exec $isp ip route add 10.25.1.66/32 dev eth2
+ip netns exec $isp ip route add default via 10.1.1.1
 
 for modem in $modemA $modemB
 do
-    sudo ip netns exec $modem ip addr add 10.25.1.65/16 dev eth0
-    sudo ip netns exec $modem ip addr add 192.168.1.1/24 dev eth1
-    sudo ip netns exec $modem ip route add default via 10.25.1.1
-    sudo ip netns exec $modem iptables --table nat \
+    ip netns exec $modem ip addr add 10.25.1.65/16 dev eth0
+    ip netns exec $modem ip addr add 192.168.1.1/24 dev eth1
+    ip netns exec $modem ip route add default via 10.25.1.1
+    ip netns exec $modem iptables --table nat \
         --append POSTROUTING --out-interface eth0 -j MASQUERADE
 done
 
-sudo ip netns exec $backbone ip addr add 10.1.1.1/32 dev eth1
-sudo ip netns exec $backbone ip route add 10.130.1.1/32 dev eth1
-sudo ip netns exec $backbone ip route add 10.130.1.0/24 via 10.130.1.1
+ip netns exec $backbone ip addr add 10.1.1.1/32 dev eth1
+ip netns exec $backbone ip route add 10.130.1.1/32 dev eth1
+ip netns exec $backbone ip route add 10.130.1.0/24 via 10.130.1.1
 
-sudo ip netns exec $examplecom ip addr add 10.130.1.1/32 dev eth0
-sudo ip netns exec $examplecom ip route add 10.1.1.1/32 dev eth0
-sudo ip netns exec $examplecom ip route add default via 10.1.1.1
-sudo ip netns exec $examplecom ip addr add 10.130.1.1/24 dev eth1
+ip netns exec $examplecom ip addr add 10.130.1.1/32 dev eth0
+ip netns exec $examplecom ip route add 10.1.1.1/32 dev eth0
+ip netns exec $examplecom ip route add default via 10.1.1.1
+ip netns exec $examplecom ip addr add 10.130.1.1/24 dev eth1
 
-sudo ip netns exec $ftp ip addr add 10.130.1.2/24 dev eth0
-sudo ip netns exec $ftp ip route add default via 10.130.1.1
+ip netns exec $ftp ip addr add 10.130.1.2/24 dev eth0
+ip netns exec $ftp ip route add default via 10.130.1.1
 
-sudo ip netns exec $mail ip addr add 10.130.1.3/24 dev eth0
-sudo ip netns exec $mail ip route add default via 10.130.1.1
+ip netns exec $mail ip addr add 10.130.1.3/24 dev eth0
+ip netns exec $mail ip route add default via 10.130.1.1
 
-sudo ip netns exec $www ip addr add 10.130.1.4/24 dev eth0
-sudo ip netns exec $www ip route add default via 10.130.1.1
-
+ip netns exec $www ip addr add 10.130.1.4/24 dev eth0
+ip netns exec $www ip route add default via 10.130.1.1
 
 echo Ready
 read
