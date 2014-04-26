@@ -34,9 +34,15 @@ else:
 
 # ADDED FOR FOUNDATIONS OF NETWORK PROGRAMMING session.txt REPRODUCABILITY:
 
+# Stabilize the random number generator so that various UUID functions
+# always return the same value.
+
 import random
 random.seed(0)
 del random
+
+# Set the current time so that messages built with the "email" library
+# have a stable "Date:" field.
 
 import time as time_module
 def time():
@@ -44,9 +50,19 @@ def time():
 time_module.time = time
 del time
 
+# Stabilize the current process PID so that "Message-ID:" fields stay
+# the same.
+
 import os
 def getpid():
     return 15748
 os.getpid = getpid
 del getpid
 del os
+
+# Accept passwords from standard input instead of looking for the
+# controlling terminal.
+
+import getpass
+getpass.getpass = input
+del getpass
