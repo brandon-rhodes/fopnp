@@ -8,5 +8,7 @@ ADD id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 600 /root/.ssh/*
 RUN echo 'UserKnownHostsFile /dev/null' >> /etc/ssh/ssh_config
 RUN echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
+ADD ca.crt /usr/local/share/ca-certificates/ca.crt
+RUN update-ca-certificates
 ADD startup.sh /startup.sh
 CMD ["/etc/init.d/ssh", "start", "-D"]
