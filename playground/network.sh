@@ -36,9 +36,10 @@ start_bridge () {
 
 start_host () {
     image="$1"
-    name="$2"
+    hostname="$2"
+    name=${hostname/.*/}
     shift 2
-    c=$(docker run --name=$name --hostname=$name --networking=false \
+    c=$(docker run --name=$name --hostname=$hostname --networking=false \
         --dns=10.1.1.1 --dns-search=example.com -d $image)
     containers="$containers $c"
     pid=$(docker inspect -f '{{.State.Pid}}' $c)
@@ -105,10 +106,10 @@ start_host fopnp/dns backbone eth0=backbone-isp eth1=backbone-dotcom
 start_host fopnp/base isp eth0=isp-backbone eth1=isp-modemA eth2=isp-modemB
 start_host fopnp/base modemA eth0=modemA-isp eth1=modemA-peer
 start_host fopnp/base modemB eth0=modemB-isp eth1=modemB-peer
-start_host fopnp/base examplecom eth0=dotcom-backbone eth1=dotcom-peer
-start_host fopnp/ftp ftp eth0=ftp-peer
-start_host fopnp/mail mail eth0=mail-peer
-start_host fopnp/www www eth0=www-peer
+start_host fopnp/base example.com eth0=dotcom-backbone eth1=dotcom-peer
+start_host fopnp/ftp ftp.example.com eth0=ftp-peer
+start_host fopnp/mail mail.example.com eth0=mail-peer
+start_host fopnp/www www.example.com eth0=www-peer
 
 # Okay!  We now have running containers with network interfaces
 # successfully installed inside, but none of them know how to talk to
@@ -141,10 +142,10 @@ ip netns exec $backbone ip addr add 10.1.1.1/32 dev eth1
 ip netns exec $backbone ip route add 10.130.1.1/32 dev eth1
 ip netns exec $backbone ip route add 10.130.1.0/24 via 10.130.1.1
 
-ip netns exec $examplecom ip addr add 10.130.1.1/32 dev eth0
-ip netns exec $examplecom ip route add 10.1.1.1/32 dev eth0
-ip netns exec $examplecom ip route add default via 10.1.1.1
-ip netns exec $examplecom ip addr add 10.130.1.1/24 dev eth1
+ip netns exec $example ip addr add 10.130.1.1/32 dev eth0
+ip netns exec $example ip route add 10.1.1.1/32 dev eth0
+ip netns exec $example ip route add default via 10.1.1.1
+ip netns exec $example ip addr add 10.130.1.1/24 dev eth1
 
 ip netns exec $ftp ip addr add 10.130.1.2/24 dev eth0
 ip netns exec $ftp ip route add default via 10.130.1.1
