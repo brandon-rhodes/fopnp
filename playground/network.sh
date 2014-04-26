@@ -107,7 +107,7 @@ start_host fopnp/base modemA eth0=modemA-isp eth1=modemA-peer
 start_host fopnp/base modemB eth0=modemB-isp eth1=modemB-peer
 start_host fopnp/base examplecom eth0=dotcom-backbone eth1=dotcom-peer
 start_host fopnp/ftp ftp eth0=ftp-peer
-start_host fopnp/base mail eth0=mail-peer
+start_host fopnp/mail mail eth0=mail-peer
 start_host fopnp/www www eth0=www-peer
 
 # Okay!  We now have running containers with network interfaces

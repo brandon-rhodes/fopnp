@@ -3,3 +3,4 @@ diagrams/*.svg
 *.old
 playground/base/id_rsa
 playground/base/id_rsa.pub
+playground/base/requirements.txt

@@ -51,8 +51,9 @@ setup () {
     sudo rm /var/run/netns/$pid
 }
 
+py3=$(readlink -f ../py3)
 sudo true  # make user type password before "setup" goes into background
 setup &
-exec docker run --name=$container --hostname=$container --networking=false \
-    --dns=10.1.1.1 --dns-search=example.com \
-    --privileged=true --rm -ti fopnp/base /bin/bash
+exec docker run --name=$container --hostname=$container --privileged=true \
+     --networking=false --dns=10.1.1.1 --dns-search=example.com \
+     --volume=$py3:/py3 --rm -ti fopnp/base /bin/bash
