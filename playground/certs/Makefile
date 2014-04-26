@@ -4,9 +4,16 @@
 
 BITS=3072
 
-all: ../base/ca.crt client.crt ftp.crt ../mail/service.pem ../www/service.pem
+all: ../base/ca.crt client.crt ../ftp/ftp.crt ../ftp/ftp.key \
+     ../mail/service.pem ../www/service.pem
 
 ../base/ca.crt: ca.crt
+	cp $< $@
+
+../ftp/ftp.crt: ftp.crt
+	cp $< $@
+
+../ftp/ftp.key: ftp.key
 	cp $< $@
 
 ../mail/service.pem: mail.pem

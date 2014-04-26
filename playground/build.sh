@@ -10,4 +10,5 @@ fi
 
 docker build -t fopnp/base base
 docker build -t fopnp/dns dns
+docker build -t fopnp/ftp ftp
 docker build -t fopnp/www www

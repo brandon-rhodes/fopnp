@@ -106,9 +106,9 @@ start_host fopnp/base isp eth0=isp-backbone eth1=isp-modemA eth2=isp-modemB
 start_host fopnp/base modemA eth0=modemA-isp eth1=modemA-peer
 start_host fopnp/base modemB eth0=modemB-isp eth1=modemB-peer
 start_host fopnp/base examplecom eth0=dotcom-backbone eth1=dotcom-peer
-start_host fopnp/base ftp eth0=ftp-peer
+start_host fopnp/ftp ftp eth0=ftp-peer
 start_host fopnp/base mail eth0=mail-peer
-start_host fopnp/base www eth0=www-peer
+start_host fopnp/www www eth0=www-peer
 
 # Okay!  We now have running containers with network interfaces
 # successfully installed inside, but none of them know how to talk to
@@ -155,5 +155,5 @@ ip netns exec $mail ip route add default via 10.130.1.1
 ip netns exec $www ip addr add 10.130.1.4/24 dev eth0
 ip netns exec $www ip route add default via 10.130.1.1
 
-echo Ready
+echo 'Ready - press Enter or Ctrl-C to shut down the playground network'
 read
