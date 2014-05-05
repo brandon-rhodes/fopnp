@@ -1,57 +1,69 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter05/blocks.py
-# Sending data one block at a time.
+# Sending data over a stream but delimited as length-prefixed blocks.
 
-import socket, struct, sys
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+import socket, struct
+from argparse import ArgumentParser
 
-HOST = sys.argv.pop() if len(sys.argv) == 3 else '127.0.0.1'
-PORT = 1060
-format = struct.Struct('!I')  # for messages up to 2**32 - 1 in length
+header_struct = struct.Struct('!I')  # messages up to 2**32 - 1 in length
 
 def recvall(sock, length):
-    data = b''
-    while len(data) < length:
-        more = sock.recv(length - len(data))
-        if not more:
-            raise EOFError('socket closed %d bytes into a %d-byte message'
-                           % (len(data), length))
-        data += more
-    return data
+    blocks = []
+    while length:
+        block = sock.recv(length)
+        if not block:
+            raise EOFError('socket closed with %d bytes left'
+                           ' in this block'.format(length))
+        length -= len(block)
+        blocks.append(block)
+    return b''.join(blocks)
 
-def get(sock):
-    lendata = recvall(sock, format.size)
-    (length,) = format.unpack(lendata)
-    return recvall(sock, length)
+def get_block(sock):
+    data = recvall(sock, header_struct.size)
+    (block_length,) = header_struct.unpack(data)
+    return recvall(sock, block_length)
 
-def put(sock, message):
-    sock.send(format.pack(len(message)) + message)
+def put_block(sock, message):
+    block_length = len(message)
+    sock.send(header_struct.pack(block_length))
+    sock.send(message)
 
-if sys.argv[1:] == ['server']:
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.bind((HOST, PORT))
-    s.listen(1)
-    print('Listening at', s.getsockname())
-    sc, sockname = s.accept()
+def server(address):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind(address)
+    sock.listen(1)
+    print('Run this script in another window with "-c" to connect')
+    print('Listening at', sock.getsockname())
+    sc, sockname = sock.accept()
     print('Accepted connection from', sockname)
     sc.shutdown(socket.SHUT_WR)
     while True:
-        message = get(sc)
-        if not message:
+        block = get_block(sc)
+        if not block:
             break
-        print('Message says:', repr(message))
+        print('Block says:', repr(block))
     sc.close()
-    s.close()
+    sock.close()
 
-elif sys.argv[1:] == ['client']:
-    s.connect((HOST, PORT))
-    s.shutdown(socket.SHUT_RD)
-    put(s, b'Beautiful is better than ugly.')
-    put(s, b'Explicit is better than implicit.')
-    put(s, b'Simple is better than complex.')
-    put(s, b'')
-    s.close()
+def client(address):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(address)
+    sock.shutdown(socket.SHUT_RD)
+    put_block(sock, b'Beautiful is better than ugly.')
+    put_block(sock, b'Explicit is better than implicit.')
+    put_block(sock, b'Simple is better than complex.')
+    put_block(sock, b'')
+    sock.close()
 
-else:
-    print('usage: streamer.py server|client [host]', file=sys.stderr)
+if __name__ == '__main__':
+    parser = ArgumentParser(description='Transmit & receive blocks over TCP')
+    parser.add_argument('hostname', nargs='?', default='127.0.0.1',
+                        help='IP address or hostname (default: %(default)s)')
+    parser.add_argument('-c', action='store_true', help='run as the client')
+    parser.add_argument('-p', type=int, metavar='port', default=1060,
+                        help='TCP port number (default: %(default)s)')
+    args = parser.parse_args()
+    function = client if args.c else server
+    function((args.hostname, args.p))
