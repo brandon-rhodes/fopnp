@@ -89,8 +89,9 @@ ip link add ftp-eth0 type veth peer name ftp-peer
 ip link add mail-eth0 type veth peer name mail-peer
 ip link add www-eth0 type veth peer name www-peer
 
-# Take all of the interfaces that are destined to stay out here, outside
-# of any particular container, and connect them to bridges.
+# Take all of the interfaces that are destined to stay out here -
+# outside of any particular container - and connect them to bridges and
+# then bring them up.
 
 brctl addif playhome modemA-eth1
 brctl addif playhome2 modemB-eth1
@@ -98,6 +99,13 @@ brctl addif playcom dotcom-eth1
 brctl addif playcom ftp-eth0
 brctl addif playcom mail-eth0
 brctl addif playcom www-eth0
+
+ip link set dev modemA-eth1 up
+ip link set dev modemB-eth1 up
+ip link set dev dotcom-eth1 up
+ip link set dev ftp-eth0 up
+ip link set dev mail-eth0 up
+ip link set dev www-eth0 up
 
 # Take all of the other interfaces and throw them over the wall into
 # particular containers as we start them running with Docker.
