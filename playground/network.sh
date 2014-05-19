@@ -9,6 +9,7 @@ then
 fi
 
 stop_everything () {
+    set +e
     for b in $bridges
     do
         ip link set dev $b down
