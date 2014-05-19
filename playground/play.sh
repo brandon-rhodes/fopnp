@@ -50,6 +50,7 @@ setup () {
 
     # The container now exists, so we can configure its networking.
 
+    sudo rm -f /var/run/netns/$pid
     sudo ln -s /proc/$pid/ns/net /var/run/netns/$pid
     sudo ip link add $container-eth0 type veth peer name $container-peer
     sudo ip link set $container-peer netns $pid
