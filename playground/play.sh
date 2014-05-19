@@ -17,7 +17,7 @@ ppid=$$
 
 if [ ! -d /proc/sys/net/ipv4/conf/playhome ]
 then
-    echo 'Error: 'network.sh' is not yet up and running' >&2
+    echo 'Error: "network.sh" is not yet up and running' >&2
     exit 1
 fi
 
@@ -58,6 +58,7 @@ setup () {
     sudo ip netns exec $pid ip addr add 192.168.1.1$n/24 dev eth0
     sudo ip netns exec $pid ip route add default via 192.168.1.1
     sudo brctl addif playhome $container-eth0
+    sudo ip link set dev $container-eth0 up
     sudo rm /var/run/netns/$pid
 }
 
