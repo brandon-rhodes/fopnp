@@ -39,7 +39,7 @@ start_host () {
     hostname="$2"
     name=${hostname/.*/}
     shift 2
-    c=$(docker run --name=$name --hostname=$hostname --networking=false \
+    c=$(docker run --name=$name --hostname=$hostname --net=none \
         --dns=10.1.1.1 --dns-search=example.com -d $image)
     containers="$containers $c"
     pid=$(docker inspect -f '{{.State.Pid}}' $c)
