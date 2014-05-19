@@ -17,5 +17,10 @@ RUN useradd -d /home/brandon -m -p '$6$sHTmsDVi$Spmhni61IjBGDsQBS/rYj1k4Do3u2HlI
 ADD requirements.txt /root/requirements.txt
 RUN pip3 install -r /root/requirements.txt
 
+# Allow login to playground servers via SSH by preventing the errors:
+#     Cannot open /proc/self/loginuid: Read-only file system
+#     set_loginuid failed
+RUN sed -i /loginuid/s/^/#/ /etc/pam.d/sshd
+
 ADD startup.sh /startup.sh
 CMD ["/etc/init.d/ssh", "start", "-D"]
