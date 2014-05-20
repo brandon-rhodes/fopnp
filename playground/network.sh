@@ -29,7 +29,19 @@ stop_everything () {
 trap 'exit' SIGINT SIGTERM
 trap 'stop_everything' EXIT
 
+create_interface_pair () {
+    if ip link show $1 >/dev/null 2>&1
+    then
+        ip link del $1
+    fi
+    ip link add $1 type veth peer name $2
+}
+
 start_bridge () {
+    if ip link show $container-peer >/dev/null 2>&1
+    then
+        brctl delbr $1
+    fi
     brctl addbr $1 || true
     bridges="$bridges $1"
     ip link set dev $1 up
@@ -77,18 +89,18 @@ start_bridge playcom
 # over the wall into the container and keep the other peer here in the
 # main network namespace where we can add it to the bridge.
 
-ip link add backbone-isp type veth peer name isp-backbone
+create_interface_pair backbone-isp isp-backbone
 
-ip link add modemA-isp type veth peer name isp-modemA
-ip link add modemB-isp type veth peer name isp-modemB
-ip link add modemA-eth1 type veth peer name modemA-peer
-ip link add modemB-eth1 type veth peer name modemB-peer
+create_interface_pair modemA-isp isp-modemA
+create_interface_pair modemB-isp isp-modemB
+create_interface_pair modemA-eth1 modemA-peer
+create_interface_pair modemB-eth1 modemB-peer
 
-ip link add backbone-dotcom type veth peer name dotcom-backbone
-ip link add dotcom-eth1 type veth peer name dotcom-peer
-ip link add ftp-eth0 type veth peer name ftp-peer
-ip link add mail-eth0 type veth peer name mail-peer
-ip link add www-eth0 type veth peer name www-peer
+create_interface_pair backbone-dotcom dotcom-backbone
+create_interface_pair dotcom-eth1 dotcom-peer
+create_interface_pair ftp-eth0 ftp-peer
+create_interface_pair mail-eth0 mail-peer
+create_interface_pair www-eth0 www-peer
 
 # Take all of the interfaces that are destined to stay out here -
 # outside of any particular container - and connect them to bridges and
