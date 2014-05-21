@@ -1,6 +1,7 @@
 imapclient
 jsonrpclib-pelix
 paramiko
+dnspython3
 pygeocoder
 requests
 rpyc
