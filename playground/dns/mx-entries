@@ -1,0 +1,6 @@
+# /etc/dnsmasq.d/mx-entries
+
+mx-host=example.com,mail.example.com,10
+mx-host=www.example.com,smtp.example.com,10
+
+cname=smtp.example.com,mail.example.com
