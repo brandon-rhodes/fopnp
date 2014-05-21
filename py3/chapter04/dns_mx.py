@@ -3,53 +3,49 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter04/dns_mx.py
 # Looking up a mail domain - the part of an email address after the `@`
 
-import sys, DNS
+import argparse, dns.resolver
 
-if len(sys.argv) != 2:
-    print('usage: dns_basic.py <hostname>', file=sys.stderr)
-    sys.exit(2)
-
-def resolve_hostname(hostname, indent=0):
-    """Print an A or AAAA record for `hostname`; follow CNAMEs if necessary."""
-    indent = indent + 4
-    istr = ' ' * indent
-    request = DNS.Request()
-    reply = request.req(name=sys.argv[1], qtype=DNS.Type.A)
-    if reply.answers:
-        for answer in reply.answers:
-            print(istr, 'Hostname', hostname, '= A', answer['data'])
+def resolve_hostname(hostname, indent=''):
+    "Print an A or AAAA record for `hostname`; follow CNAMEs if necessary."
+    indent = indent + '    '
+    answer = dns.resolver.query(hostname, 'A')
+    if answer.rrset is not None:
+        for record in answer:
+            print(indent, hostname, 'has A address', record.address)
         return
-    reply = request.req(name=sys.argv[1], qtype=DNS.Type.AAAA)
-    if reply.answers:
-        for answer in reply.answers:
-            print(istr, 'Hostname', hostname, '= AAAA', answer['data'])
+    answer = dns.resolver.query(hostname, 'AAAA')
+    if answer.rrset is not None:
+        for record in answer:
+            print(indent, hostname, 'has AAAA address', record.address)
         return
-    reply = request.req(name=sys.argv[1], qtype=DNS.Type.CNAME)
-    if reply.answers:
-        cname = reply.answers[0]['data']
-        print(istr, 'Hostname', hostname, 'is an alias for', cname)
+    answer = dns.resolver.query(hostname, 'CNAME')
+    if answer.rrset is not None:
+        record = answer[0]
+        cname = record.address
+        print(indent, hostname, 'is a CNAME alias for', cname) #?
         resolve_hostname(cname, indent)
         return
-    print(istr, 'ERROR: no records for', hostname)
+    print(indent, 'ERROR: no A, AAAA, or CNAME records for', hostname)
 
 def resolve_email_domain(domain):
-    """Print mail server IP addresses for an email address @ `domain`."""
-    request = DNS.Request()
-    reply = request.req(name=sys.argv[1], qtype=DNS.Type.MX)
-    if reply.answers:
-        print('The domain %r has explicit MX records!' % (domain,))
-        print('Try the servers in this order:')
-        datalist = [ answer['data'] for answer in reply.answers ]
-        datalist.sort()  # lower-priority integers go first
-        for data in datalist:
-            priority = data[0]
-            hostname = data[1]
-            print('Priority:', priority, '  Hostname:', hostname)
-            resolve_hostname(hostname)
+    "For an email address `name@domain` find its mail server IP addresses."
+    try:
+        answer = dns.resolver.query(domain, 'MX', raise_on_no_answer=False)
+    except dns.resolver.NXDOMAIN:
+        print('Error: No such domain', domain)
+        return
+    if answer.rrset is not None:
+        records = sorted(answer, key=lambda record: record.preference)
+        for record in records:
+            name = record.exchange.to_text(omit_final_dot=True)
+            print('Priority', record.preference)
+            resolve_hostname(name)
     else:
-        print('Drat, this domain has no explicit MX records')
-        print('We will have to try resolving it as an A, AAAA, or CNAME')
+        print('This domain has no explicit MX records')
+        print('Attempting to resolve it as an A, AAAA, or CNAME')
         resolve_hostname(domain)
 
-DNS.DiscoverNameServers()
-resolve_email_domain(sys.argv[1])
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Find mailserver IP address')
+    parser.add_argument('domain', help='domain that you want to send mail to')
+    resolve_email_domain(parser.parse_args().domain)
