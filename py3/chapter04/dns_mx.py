@@ -36,6 +36,7 @@ def resolve_email_domain(domain):
         return
     if answer.rrset is not None:
         records = sorted(answer, key=lambda record: record.preference)
+        print('This domain has', len(records), 'MX records')
         for record in records:
             name = record.exchange.to_text(omit_final_dot=True)
             print('Priority', record.preference)
