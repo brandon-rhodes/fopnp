@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter02/big_sender.py
-# Send a big UDP datagram to our server.
+# Send a big UDP datagram to learn the MTU of the network path.
 
 import IN, argparse, socket
 
