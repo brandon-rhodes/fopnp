@@ -8,19 +8,19 @@ import argparse, socket
 BUFSIZE = 65535
 
 def server(interface, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.bind((interface, port))
-    print('Listening for datagrams at {}'.format(s.getsockname()))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind((interface, port))
+    print('Listening for datagrams at {}'.format(sock.getsockname()))
     while True:
-        data, address = s.recvfrom(BUFSIZE)
+        data, address = sock.recvfrom(BUFSIZE)
         text = data.decode('ascii')
         print('The client at {} says: {!r}'.format(address, text))
 
 def client(network, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
     text = 'Broadcast datagram!'
-    s.sendto(text.encode('ascii'), (network, port))
+    sock.sendto(text.encode('ascii'), (network, port))
 
 if __name__ == '__main__':
     choices = {'client': client, 'server': server}

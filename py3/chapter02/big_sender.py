@@ -6,15 +6,15 @@
 import IN, argparse, socket
 
 def send_big_datagram(host, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.setsockopt(socket.IPPROTO_IP, IN.IP_MTU_DISCOVER, IN.IP_PMTUDISC_DO)
-    s.connect((host, port))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.setsockopt(socket.IPPROTO_IP, IN.IP_MTU_DISCOVER, IN.IP_PMTUDISC_DO)
+    sock.connect((host, port))
     try:
-        s.send(b'#' * 65000)
+        sock.send(b'#' * 65000)
     except socket.error:
         print('Alas, the datagram did not make it')
         option = getattr(IN, 'IP_MTU', 14)  # constant from <linux/in.h>
-        max_mtu = s.getsockopt(socket.IPPROTO_IP, option)
+        max_mtu = sock.getsockopt(socket.IPPROTO_IP, option)
         print('Actual MTU: {}'.format(max_mtu))
     else:
         print('The big datagram was sent!')

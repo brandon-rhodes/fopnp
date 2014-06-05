@@ -8,34 +8,34 @@ import argparse, random, socket, sys
 MAX_BYTES = 65535
 
 def server(interface, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.bind((interface, port))
-    print('Listening at', s.getsockname())
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind((interface, port))
+    print('Listening at', sock.getsockname())
     while True:
-        data, address = s.recvfrom(MAX_BYTES)
+        data, address = sock.recvfrom(MAX_BYTES)
         if random.random() < 0.5:
             print('Pretending to drop packet from {}'.format(address))
             continue
         text = data.decode('ascii')
         print('The client at {} says {!r}'.format(address, text))
         message = 'Your data was {} bytes long'.format(len(data))
-        s.sendto(message.encode('ascii'), address)
+        sock.sendto(message.encode('ascii'), address)
 
 def client(hostname, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     hostname = sys.argv[2]
-    s.connect((hostname, port))
-    print('Client socket name is {}'.format(s.getsockname()))
+    sock.connect((hostname, port))
+    print('Client socket name is {}'.format(sock.getsockname()))
 
     delay = 0.1  # seconds
     text = 'This is another message'
     data = text.encode('ascii')
     while True:
-        s.send(data)
+        sock.send(data)
         print('Waiting up to {} seconds for a reply'.format(delay))
-        s.settimeout(delay)
+        sock.settimeout(delay)
         try:
-            data = s.recv(MAX_BYTES)
+            data = sock.recv(MAX_BYTES)
         except socket.timeout:
             delay *= 2  # wait even longer for the next request
             if delay > 2.0:
