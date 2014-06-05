@@ -10,11 +10,10 @@ def send_big_datagram(host, port):
     sock.setsockopt(socket.IPPROTO_IP, IN.IP_MTU_DISCOVER, IN.IP_PMTUDISC_DO)
     sock.connect((host, port))
     try:
-        sock.send(b'#' * 65000)
+        sock.send(b'#' * 999999)
     except socket.error:
         print('Alas, the datagram did not make it')
-        option = getattr(IN, 'IP_MTU', 14)  # constant from <linux/in.h>
-        max_mtu = sock.getsockopt(socket.IPPROTO_IP, option)
+        max_mtu = sock.getsockopt(socket.IPPROTO_IP, IN.IP_MTU)
         print('Actual MTU: {}'.format(max_mtu))
     else:
         print('The big datagram was sent!')
