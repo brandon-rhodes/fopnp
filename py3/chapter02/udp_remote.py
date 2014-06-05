@@ -36,10 +36,10 @@ def client(hostname, port):
         sock.settimeout(delay)
         try:
             data = sock.recv(MAX_BYTES)
-        except socket.timeout:
+        except socket.timeout as exc:
             delay *= 2  # wait even longer for the next request
             if delay > 2.0:
-                raise RuntimeError('I think the server is down')
+                raise RuntimeError('I think the server is down') from exc
         else:
             break   # we are done, and can stop looping
 
