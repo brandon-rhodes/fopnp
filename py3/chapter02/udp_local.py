@@ -22,7 +22,7 @@ def server(port):
 
 def client(port):
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    text = 'This message was generated at {}'.format(datetime.now())
+    text = 'The time is {}'.format(datetime.now())
     data = text.encode('ascii')
     s.sendto(data, ('127.0.0.1', port))
     print('The OS assigned me the address {}'.format(s.getsockname()))
