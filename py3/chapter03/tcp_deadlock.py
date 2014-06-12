@@ -6,13 +6,13 @@
 import argparse, socket, sys
 
 def server(host, port, bytecount):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.bind((host, port))
-    s.listen(1)
-    print('Listening at', s.getsockname())
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind((host, port))
+    sock.listen(1)
+    print('Listening at', sock.getsockname())
     while True:
-        sc, sockname = s.accept()
+        sc, sockname = sock.accept()
         print('Processing up to 1024 bytes at a time from', sockname)
         n = 0
         while True:
@@ -29,28 +29,28 @@ def server(host, port, bytecount):
         print('  Socket closed')
 
 def client(host, port, bytecount):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     bytecount = (bytecount + 15) // 16 * 16  # round up to a multiple of 16
     message = b'capitalize this!'  # 16-byte message to repeat over and over
 
     print('Sending', bytecount, 'bytes of data, in chunks of 16 bytes')
-    s.connect((host, port))
+    sock.connect((host, port))
 
     sent = 0
     while sent < bytecount:
-        s.sendall(message)
+        sock.sendall(message)
         sent += len(message)
         print('\r  %d bytes sent' % (sent,), end=' ')
         sys.stdout.flush()
 
     print()
-    s.shutdown(socket.SHUT_WR)
+    sock.shutdown(socket.SHUT_WR)
 
     print('Receiving all the data the server sends back')
 
     received = 0
     while True:
-        data = s.recv(42)
+        data = sock.recv(42)
         if not received:
             print('  The first data received says', repr(data))
         if not data:
@@ -59,7 +59,7 @@ def client(host, port, bytecount):
         print('\r  %d bytes received' % (received,), end=' ')
 
     print()
-    s.close()
+    sock.close()
 
 if __name__ == '__main__':
     choices = {'client': client, 'server': server}

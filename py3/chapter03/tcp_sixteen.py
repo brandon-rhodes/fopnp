@@ -16,13 +16,13 @@ def recvall(sock, length):
     return data
 
 def server(interface, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    s.bind((interface, port))
-    s.listen(1)
-    print('Listening at', s.getsockname())
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    sock.bind((interface, port))
+    sock.listen(1)
+    print('Listening at', sock.getsockname())
     while True:
-        sc, sockname = s.accept()
+        sc, sockname = sock.accept()
         print('We have accepted a connection from', sockname)
         print('  Socket name:', sc.getsockname())
         print('  Socket peer:', sc.getpeername())
@@ -33,13 +33,13 @@ def server(interface, port):
         print('  Reply sent, socket closed')
 
 def client(host, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((host, port))
-    print('Client has been assigned socket name', s.getsockname())
-    s.sendall(b'Hi there, server')
-    reply = recvall(s, 16)
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((host, port))
+    print('Client has been assigned socket name', sock.getsockname())
+    sock.sendall(b'Hi there, server')
+    reply = recvall(sock, 16)
     print('The server said', repr(reply))
-    s.close()
+    sock.close()
 
 if __name__ == '__main__':
     choices = {'client': client, 'server': server}
