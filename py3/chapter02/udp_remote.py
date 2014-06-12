@@ -3,55 +3,57 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter02/udp_remote.py
 # UDP client and server for talking over the network
 
-import random, socket, sys
+import argparse, random, socket, sys
 
 MAX_BYTES = 65535
-PORT = 1060
 
-def server(interface):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.bind((interface, PORT))
-    print('Listening at', s.getsockname())
+def server(interface, port):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    sock.bind((interface, port))
+    print('Listening at', sock.getsockname())
     while True:
-        data, address = s.recvfrom(MAX_BYTES)
+        data, address = sock.recvfrom(MAX_BYTES)
         if random.random() < 0.5:
-            text = data.decode('ascii')
-            print('The client at {} says {!r}'.format(address, text))
-            message = 'Your data was {} bytes long'.format(data)
-            s.sendto(message.encode('ascii'), address)
-        else:
             print('Pretending to drop packet from {}'.format(address))
+            continue
+        text = data.decode('ascii')
+        print('The client at {} says {!r}'.format(address, text))
+        message = 'Your data was {} bytes long'.format(len(data))
+        sock.sendto(message.encode('ascii'), address)
 
-def client(hostname):
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+def client(hostname, port):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     hostname = sys.argv[2]
-    s.connect((hostname, PORT))
-    print('Client socket name is {}'.format(s.getsockname()))
+    sock.connect((hostname, port))
+    print('Client socket name is {}'.format(sock.getsockname()))
 
-    delay = 0.1
+    delay = 0.1  # seconds
+    text = 'This is another message'
+    data = text.encode('ascii')
     while True:
-        s.send(b'This is another message')
+        sock.send(data)
         print('Waiting up to {} seconds for a reply'.format(delay))
-        s.settimeout(delay)
+        sock.settimeout(delay)
         try:
-            data = s.recv(MAX_BYTES)
-        except socket.timeout:
+            data = sock.recv(MAX_BYTES)
+        except socket.timeout as exc:
             delay *= 2  # wait even longer for the next request
             if delay > 2.0:
-                raise RuntimeError('I think the server is down')
+                raise RuntimeError('I think the server is down') from exc
         else:
             break   # we are done, and can stop looping
 
-    print('The server says {!r}'.format(data))
+    print('The server says {!r}'.format(data.decode('ascii')))
 
 if __name__ == '__main__':
-    if 2 <= len(sys.argv) <= 3 and sys.argv[1] == 'server':
-        interface = (sys.argv[2] if len(sys.argv) > 2 else '')
-        server(interface)
-    elif len(sys.argv) == 3 and sys.argv[1] == 'client':
-        hostname = sys.argv[2]
-        client(hostname)
-    else:
-        print('usage: udp_remote.py server [<interface>]', file=sys.stderr)
-        print('   or: udp_remote.py client <host>', file=sys.stderr)
-        sys.exit(2)
+    choices = {'client': client, 'server': server}
+    parser = argparse.ArgumentParser(description='Send and receive UDP,'
+                                     ' pretending packets are often dropped')
+    parser.add_argument('role', choices=choices, help='which role to take')
+    parser.add_argument('host', help='interface the server listens at;'
+                        ' host the client sends to')
+    parser.add_argument('-p', metavar='PORT', type=int, default=1060,
+                        help='UDP port (default 1060)')
+    args = parser.parse_args()
+    function = choices[args.role]
+    function(args.host, args.p)
