@@ -21,8 +21,10 @@ def main(hostname, username, filenames):
 
     sftp = client.open_sftp()
     for filename in filenames:
+        if filename.endswith('.copy'):
+            continue
         callback = functools.partial(print_status, filename)
-        sftp.get(filename, filename, callback=callback)
+        sftp.get(filename, filename + '.copy', callback=callback)
     client.close()
 
 if __name__ == '__main__':
