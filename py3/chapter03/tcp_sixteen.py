@@ -22,6 +22,7 @@ def server(interface, port):
     sock.listen(1)
     print('Listening at', sock.getsockname())
     while True:
+        print('Waiting to accept a new connection')
         sc, sockname = sock.accept()
         print('We have accepted a connection from', sockname)
         print('  Socket name:', sc.getsockname())
