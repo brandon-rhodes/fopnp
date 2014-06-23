@@ -16,7 +16,7 @@ def server(host, port, bytecount):
         print('Processing up to 1024 bytes at a time from', sockname)
         n = 0
         while True:
-            data = sc.recv(bytecount)
+            data = sc.recv(1024)
             if not data:
                 break
             output = data.decode('ascii').upper().encode('ascii')
@@ -68,8 +68,7 @@ if __name__ == '__main__':
     parser.add_argument('host', help='interface the server listens at;'
                         ' host the client sends to')
     parser.add_argument('bytecount', type=int, nargs='?', default=16,
-                        help='number of bytes for client to send, or for'
-                        ' server to recv() at once (default 16)')
+                        help='number of bytes for client to send (default 16)')
     parser.add_argument('-p', metavar='PORT', type=int, default=1060,
                         help='TCP port (default 1060)')
     args = parser.parse_args()
