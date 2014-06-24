@@ -8,22 +8,10 @@ import ctypes
 from ctypes import POINTER, Structure, c_char_p, c_ulong, c_void_p, cast
 from pprint import pprint
 
-class PySSLSocket(Structure):
-    "Python object that wraps an SSL socket (see Python's Modules/_ssl.c)."
-    _fields_ = [
-        ('ob_refcnt', c_ulong),
-        ('ob_type', c_void_p),
-        ('Socket', c_void_p),
-        ('ssl', c_void_p),
-        # plus several more
-        ]
-
-def client(hostname, port):
+def client(hostname, port, debug=False):
     #ctypes.cdll.LoadLibrary(ssl._ssl.__file__)
-    lib = ctypes.CDLL(ssl._ssl.__file__)
     # print(ssl.__file__)
     # print(ssl._ssl.__file__)
-    print(lib.SSL_get_version)
     # print('VERSION:', lib.SSL_version())
 
     raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -41,15 +29,12 @@ def client(hostname, port):
     context = sock.context
     print(context.check_hostname)
     print(context.cert_store_stats())
-    print(context.get_ca_certs()[1])  # TODO: full list?
+    #print(context.get_ca_certs()[1])  # TODO: full list?
 
     # Does the certificate that the server proffered *really* match the
     # hostname to which we are trying to connect?  We need to check.
 
     #print(sock.compression())
-    print(dir(sock))
-    print(sock.proto)
-    print('V:', sock.ssl_version)
     pprint(sock.getpeercert())
 
     try:
@@ -60,30 +45,11 @@ def client(hostname, port):
 
     print('Cipher:', sock.cipher())
 
-    print(dir(sock))
-    sock_struct = cast(id(sock._sslobj), POINTER(PySSLSocket)).contents
-    # b = sock
-    # c = sock
-    print('refcnt:', sock_struct.ob_refcnt)
-    print('type:', sock_struct.ob_type)
-    print('Socket:', sock_struct.Socket)
-    print('ssl:', sock_struct.ssl)
-
-    lib.SSL_get_version.restype = c_char_p
-
-    version = lib.SSL_version(sock_struct.ssl)
-    print('VERSION A:', version, bin(version)[2:])
-    print('VERSION B:', lib.SSL_get_version(sock_struct.ssl).decode('ascii'))
-
-    for symbol in dir(ssl):
-        if symbol.startswith('PROTOCOL_'):
-            value = getattr(ssl, symbol)
-            print(symbol, value, bin(value)[2:])
-
-    for symbol in dir(ssl):
-        if symbol.endswith('_VERSION'):
-            value = getattr(ssl, symbol)
-            print(symbol, value) #, bin(value)[2:])
+    try:
+        print('PROTOCOL VERSION:', repr(SSL_get_version(sock)))
+    except Exception:
+        if debug:
+            raise
 
     # From here on, our `sock` works like a normal socket.  We can,
     # for example, make an impromptu HTTP call.
@@ -93,10 +59,26 @@ def client(hostname, port):
     sock.close()
     print('The document https://%s/ is %d bytes long' % (hostname, len(result)))
 
+class PySSLSocket(Structure):
+    """The first few fields of a PySSLSocket (see Python's Modules/_ssl.c)."""
+    _fields_ = [('ob_refcnt', c_ulong), ('ob_type', c_void_p),
+                ('Socket', c_void_p), ('ssl', c_void_p)]
+
+def SSL_get_version(ssl_sock):
+    """Reach behind the scenes for a socket's TLS protocol version."""
+    lib = ctypes.CDLL(ssl._ssl.__file__)
+    lib.SSL_get_version.restype = ctypes.c_char_p
+    address = id(ssl_sock._sslobj)
+    struct = cast(address, POINTER(PySSLSocket)).contents
+    version_bytestring = lib.SSL_get_version(struct.ssl)
+    return version_bytestring.decode('ascii')
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Protect a socket with TLS')
     parser.add_argument('host', help='remote host to which to connect')
     parser.add_argument('-p', metavar='PORT', type=int, default=443,
                         help='TCP port (default 443)')
+    parser.add_argument('-d', action='store_true', default=False,
+                        help='debug mode: do not hide "ctypes" exceptions')
     args = parser.parse_args()
-    client(args.host, args.p)
+    client(args.host, args.p, args.d)
