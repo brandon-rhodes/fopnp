@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter06/tls_example.py
-# Building an encrypted TLS connection
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter06/test_client.py
+# Attempt a TLS connection and, if successful, report its properties
 
 import argparse, socket, ssl, textwrap
 import ctypes
