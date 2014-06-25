@@ -104,10 +104,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Protect a socket with TLS')
     parser.add_argument('host', help='hostname or IP address')
     parser.add_argument('port', type=int, help='TCP port number')
-    parser.add_argument('-a', metavar='ca_cert_path', default=None,
+    parser.add_argument('-a', metavar='cafile', default=None,
                         help='authority: path to CA certificate PEM file')
-    parser.add_argument('-c', metavar='cert_path', default=None,
+    parser.add_argument('-c', metavar='certfile', default=None,
                         help='certificate: PEM file path with our identity')
+    parser.add_argument('-C', metavar='ciphers', default=None,
+                        help='list of ciphers formatted for OpenSSL')
     parser.add_argument('-p', metavar='PROTOCOL', default='SSLv23',
                         help='protocol version (default: "SSLv23")')
     parser.add_argument('-s', action='store_true', default=False,
@@ -135,6 +137,8 @@ if __name__ == '__main__':
         context.load_verify_locations(args.a)
     if args.c is not None:
         context.load_cert_chain(args.c)
+    if args.C is not None:
+        context.set_ciphers(args.C)
 
     print()
     ssl_sock = open_tls(context, address, args.s)
