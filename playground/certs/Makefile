@@ -4,7 +4,7 @@
 
 BITS=3072
 
-all: ../base/ca.crt client.crt ../ftp/ftp.crt ../ftp/ftp.key \
+all: ../base/ca.crt ca.pem client.crt ../ftp/ftp.crt ../ftp/ftp.key \
      ../mail/service.pem ../www/service.pem
 
 ../base/ca.crt: ca.crt
@@ -32,6 +32,9 @@ client.crt ftp.crt mail.crt www.crt: %.crt: ca.cnf ca.key ca.crt %.csr
 
 client.csr ftp.csr mail.csr www.csr: %.csr: %.key %.cnf
 	openssl req -new -key $*.key -config $*.cnf -out $*.csr
+
+ca.pem: ca.crt ca.key
+	cat $^ > $@
 
 ca.crt: ca.cnf ca.key
 	openssl req -new -x509 -days 36500 -config ca.cnf \
