@@ -8,22 +8,23 @@ import ctypes
 from pprint import pprint
 
 def server(interface, port, debug=False):
-    print('Binding to interface {!r} and port {}'.format(interface, port))
-    print()
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-    sock.bind((interface, port))
-    sock.listen(1)
-    context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
-    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
-    #context = ssl.SSLContext(ssl.PROTOCOL_SSLv3 | ssl.PROTOCOL_TLSv1)
 
+    context = ssl.create_default_context(purpose=ssl.Purpose.CLIENT_AUTH)
+    #context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    context = ssl.SSLContext(ssl.PROTOCOL_SSLv3)
     context.load_cert_chain('../../playground/certs/www.pem')
 
-    raw_client_sock, address = sock.accept()
+    print('Binding to interface {!r} and port {}'.format(interface, port))
+    print()
+    raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    raw_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+    raw_sock.bind((interface, port))
+    raw_sock.listen(1)
+
+    raw_client_sock, address = raw_sock.accept()
     ssl_sock = context.wrap_socket(raw_client_sock, server_side=True)
 
-    say('Received connection from', address)
+    say('Received connection from address', address)
 
     cert = ssl_sock.getpeercert()
     say('Client certificate', cert or 'none')
@@ -41,7 +42,7 @@ def server(interface, port, debug=False):
 
     say('Cipher chosen for this connection', cipher)
     say('Cipher defined in TLS version', version)
-    say('Cipher key has this many bits', bits)
+    say('Cipher key length in bits', bits)
     say('Compression algorithm in use', compression or 'none')
     print()
 

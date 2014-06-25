@@ -8,23 +8,29 @@ import ctypes
 from pprint import pprint
 
 def open_ssl_connection(hostname, port, ca_path=None, debug=False):
-    say('Server we want to talk to', hostname)
-    raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    raw_sock.connect((hostname, port))
-    context = ssl.create_default_context()
+
+    context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
     context.check_hostname = False
     if ca_path is not None:
         context.load_verify_locations(ca_path)
+
+    say('Server we want to talk to', hostname)
+    raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    raw_sock.connect((hostname, port))
+    #context.load_cert_chain('../../playground/certs/www.pem')
     ssl_sock = context.wrap_socket(raw_sock)
 
     cert = ssl_sock.getpeercert()
-    names = [name for names in cert['subject'] for (kind, name) in names
-             if kind == 'commonName']
+    subject = cert.get('subject', [])
+    names = [name for names in subject for (key, name) in names
+             if key == 'commonName']
     if 'subjectAltName' in cert:
-        names.extend(name for s, name in cert['subjectAltName'] if s == 'DNS')
+        names.extend(name for (key, name) in cert['subjectAltName']
+                     if key == 'DNS')
 
-    say('Name(s) on its server certificate', *names)
-    say('Whether name(s) match the hostname', test(cert, hostname))
+    say('Name(s) on its server certificate', *names or ['no certificate'])
+    if names:
+        say('Whether name(s) match the hostname', test(cert, hostname))
     for category, count in sorted(context.cert_store_stats().items()):
         say('Certificates loaded of type {}'.format(category), count)
 
@@ -52,7 +58,7 @@ def say(title, *words):
                         break_long_words=False, break_on_hyphens=False))
 
 def test(cert, hostname):
-    """Convert the result of match_hostname() (an exception) to a string."""
+    """Call match_hostname() and turn any exception into a string."""
     try:
         ssl.match_hostname(cert, hostname)
     except ssl.CertificateError as e:
