@@ -35,7 +35,7 @@ def server(host, port, certfile, cafile=None):
         data = ssl_sock.recv(1024)
         if not data:
             break
-        print(data)
+        print(repr(data))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Safe TLS client and server')
