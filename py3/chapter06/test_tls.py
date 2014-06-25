@@ -1,22 +1,17 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter06/test_client.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter06/test_tls.py
 # Attempt a TLS connection and, if successful, report its properties
 
-import argparse, socket, ssl, textwrap
+import argparse, socket, ssl, sys, textwrap
 import ctypes
 from pprint import pprint
 
-def open_ssl_connection(hostname, port, ca_path=None, debug=False):
+def open_tls(address, server=False, ca_path=None, debug=False):
 
-    context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
-    context.check_hostname = False
-    if ca_path is not None:
-        context.load_verify_locations(ca_path)
-
-    say('Server we want to talk to', hostname)
+    say('Address we want to talk to', address)
     raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    raw_sock.connect((hostname, port))
+    raw_sock.connect(address)
     #context.load_cert_chain('../../playground/certs/www.pem')
     ssl_sock = context.wrap_socket(raw_sock)
 
@@ -82,20 +77,48 @@ def SSL_get_version(ssl_sock):
     version_bytestring = lib.SSL_get_version(struct.ssl)
     return version_bytestring.decode('ascii')
 
+def lookup(prefix, name):
+    if not name.startswith(prefix):
+        name = prefix + name
+    try:
+        return getattr(ssl, name)
+    except AttributeError:
+        matching_names = (s for s in dir(ssl) if s.startswith(prefix))
+        message = 'Error: {!r} is not one of the available names:\n {}'.format(
+            name, ' '.join(sorted(matching_names)))
+        print(fill(message), file=sys.stderr)
+        sys.exit(2)
+
+def fill(text):
+    return textwrap.fill(text, subsequent_indent='    ',
+                         break_long_words=False, break_on_hyphens=False)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Protect a socket with TLS')
-    parser.add_argument('host', help='remote host to which to connect')
+    parser.add_argument('host', help='hostname or IP address')
+    parser.add_argument('port', type=int, help='TCP port number')
     parser.add_argument('-c', metavar='ca_cert', default=None,
                         help='specify CA certificate instead of default')
     parser.add_argument('-d', action='store_true', default=False,
                         help='debug mode: do not hide "ctypes" exceptions')
-    parser.add_argument('-p', metavar='PORT', type=int, default=443,
-                        help='TCP port (default 443)')
+    parser.add_argument('-p', metavar='PROTOCOL', default='SSLv23',
+                        help='protocol version (default: SSLv23)')
+    parser.add_argument('-s', action='store_true', default=False,
+                        help='run as the server instead of the client')
     parser.add_argument('-v', action='store_true', default=False,
                         help='verbose: print out certificate information')
     args = parser.parse_args()
+
+    address = (args.host, args.port)
+    protocol = lookup('PROTOCOL_', args.p)
+
+    context = ssl.SSLContext(protocol)
+    context.check_hostname = False
+    if args.c is not None:
+        context.load_verify_locations(args.c)
+
     print()
-    cert = open_ssl_connection(args.host, args.p, args.c, args.d)
+    cert = open_tls(address, args.s, args.c, args.d)
     print()
     if args.v:
         pprint(cert)
