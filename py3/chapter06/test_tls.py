@@ -7,27 +7,39 @@ import argparse, socket, ssl, sys, textwrap
 import ctypes
 from pprint import pprint
 
-def open_tls(address, server=False, ca_path=None, debug=False):
-
-    say('Address we want to talk to', address)
+def open_tls(context, address, server=False):
     raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    raw_sock.connect(address)
-    #context.load_cert_chain('../../playground/certs/www.pem')
-    ssl_sock = context.wrap_socket(raw_sock)
+    if server:
+        raw_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+        raw_sock.bind(address)
+        raw_sock.listen(1)
+        say('Interface where we are listening', address)
+        raw_client_sock, address = raw_sock.accept()
+        say('Client has connected from address', address)
+        return context.wrap_socket(raw_client_sock, server_side=True)
+    else:
+        say('Address we want to talk to', address)
+        raw_sock.connect(address)
+        return context.wrap_socket(raw_sock)
 
+def describe(ssl_sock, hostname, server=False, debug=False):
     cert = ssl_sock.getpeercert()
-    subject = cert.get('subject', [])
-    names = [name for names in subject for (key, name) in names
-             if key == 'commonName']
-    if 'subjectAltName' in cert:
-        names.extend(name for (key, name) in cert['subjectAltName']
-                     if key == 'DNS')
+    if cert is None:
+        say('Peer certificate', 'none')
+    else:
+        say('Peer certificate', 'provided')
+        subject = cert.get('subject', [])
+        names = [name for names in subject for (key, name) in names
+                 if key == 'commonName']
+        if 'subjectAltName' in cert:
+            names.extend(name for (key, name) in cert['subjectAltName']
+                         if key == 'DNS')
 
-    say('Name(s) on its server certificate', *names or ['no certificate'])
-    if names:
-        say('Whether name(s) match the hostname', test(cert, hostname))
-    for category, count in sorted(context.cert_store_stats().items()):
-        say('Certificates loaded of type {}'.format(category), count)
+        say('Name(s) on peer certificate', *names or ['none'])
+        if (not server) and names:
+            say('Whether name(s) match the hostname', test(cert, hostname))
+        for category, count in sorted(context.cert_store_stats().items()):
+            say('Certificates loaded of type {}'.format(category), count)
 
     try:
         protocol_version = SSL_get_version(ssl_sock)
@@ -46,11 +58,6 @@ def open_tls(address, server=False, ca_path=None, debug=False):
     say('Compression algorithm in use', compression or 'none')
 
     return cert
-
-def say(title, *words):
-    text = title.ljust(36, '.') + ' ' + ' '.join(str(w) for w in words)
-    print(textwrap.fill(text, subsequent_indent=' ' * 8,
-                        break_long_words=False, break_on_hyphens=False))
 
 def test(cert, hostname):
     """Call match_hostname() and turn any exception into a string."""
@@ -89,6 +96,9 @@ def lookup(prefix, name):
         print(fill(message), file=sys.stderr)
         sys.exit(2)
 
+def say(title, *words):
+    print(fill(title.ljust(36, '.') + ' ' + ' '.join(str(w) for w in words)))
+
 def fill(text):
     return textwrap.fill(text, subsequent_indent='    ',
                          break_long_words=False, break_on_hyphens=False)
@@ -97,16 +107,18 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Protect a socket with TLS')
     parser.add_argument('host', help='hostname or IP address')
     parser.add_argument('port', type=int, help='TCP port number')
-    parser.add_argument('-c', metavar='ca_cert', default=None,
-                        help='specify CA certificate instead of default')
-    parser.add_argument('-d', action='store_true', default=False,
-                        help='debug mode: do not hide "ctypes" exceptions')
+    parser.add_argument('-a', metavar='ca_cert_path', default=None,
+                        help='path to PEM file containing CA certificate')
+    parser.add_argument('-c', metavar='cert_path', default=None,
+                        help='path to PEM file containing our certificate')
     parser.add_argument('-p', metavar='PROTOCOL', default='SSLv23',
                         help='protocol version (default: SSLv23)')
     parser.add_argument('-s', action='store_true', default=False,
                         help='run as the server instead of the client')
+    parser.add_argument('-d', action='store_true', default=False,
+                        help='debug mode: do not hide "ctypes" exceptions')
     parser.add_argument('-v', action='store_true', default=False,
-                        help='verbose: print out certificate information')
+                        help='verbose: print out remote certificate')
     args = parser.parse_args()
 
     address = (args.host, args.port)
@@ -114,11 +126,15 @@ if __name__ == '__main__':
 
     context = ssl.SSLContext(protocol)
     context.check_hostname = False
+    context.verify_mode = ssl.CERT_OPTIONAL if args.s else ssl.CERT_REQUIRED
+    if args.a is not None:
+        context.load_verify_locations(args.a)
     if args.c is not None:
-        context.load_verify_locations(args.c)
+        context.load_cert_chain(args.c)
 
     print()
-    cert = open_tls(address, args.s, args.c, args.d)
+    ssl_sock = open_tls(context, address, args.s)
+    cert = describe(ssl_sock, args.host, args.s, args.d)
     print()
     if args.v:
         pprint(cert)
