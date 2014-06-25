@@ -7,12 +7,14 @@ import argparse, socket, ssl, textwrap
 import ctypes
 from pprint import pprint
 
-def open_ssl_connection(hostname, port, debug=False):
+def open_ssl_connection(hostname, port, ca_path=None, debug=False):
     say('Server we want to talk to', hostname)
     raw_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     raw_sock.connect((hostname, port))
     context = ssl.create_default_context()
     context.check_hostname = False
+    if ca_path is not None:
+        context.load_verify_locations(ca_path)
     ssl_sock = context.wrap_socket(raw_sock)
 
     cert = ssl_sock.getpeercert()
@@ -77,15 +79,17 @@ def SSL_get_version(ssl_sock):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Protect a socket with TLS')
     parser.add_argument('host', help='remote host to which to connect')
-    parser.add_argument('-p', metavar='PORT', type=int, default=443,
-                        help='TCP port (default 443)')
-    parser.add_argument('-c', action='store_true', default=False,
-                        help='pretty-print certificate information')
+    parser.add_argument('-c', metavar='ca_cert', default=None,
+                        help='specify CA certificate instead of default')
     parser.add_argument('-d', action='store_true', default=False,
                         help='debug mode: do not hide "ctypes" exceptions')
+    parser.add_argument('-p', metavar='PORT', type=int, default=443,
+                        help='TCP port (default 443)')
+    parser.add_argument('-v', action='store_true', default=False,
+                        help='verbose: print out certificate information')
     args = parser.parse_args()
     print()
-    cert = open_ssl_connection(args.host, args.p, args.d)
+    cert = open_ssl_connection(args.host, args.p, args.c, args.d)
     print()
-    if args.c:
+    if args.v:
         pprint(cert)
