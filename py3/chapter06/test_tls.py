@@ -37,7 +37,13 @@ def describe(ssl_sock, hostname, server=False, debug=False):
 
         say('Name(s) on peer certificate', *names or ['none'])
         if (not server) and names:
-            say('Whether name(s) match the hostname', test(cert, hostname))
+            try:
+                ssl.match_hostname(cert, hostname)
+            except ssl.CertificateError as e:
+                message = str(e)
+            else:
+                message = 'Yes'
+            say('Whether name(s) match the hostname', message)
         for category, count in sorted(context.cert_store_stats().items()):
             say('Certificates loaded of type {}'.format(category), count)
 
@@ -58,15 +64,6 @@ def describe(ssl_sock, hostname, server=False, debug=False):
     say('Compression algorithm in use', compression or 'none')
 
     return cert
-
-def test(cert, hostname):
-    """Call match_hostname() and turn any exception into a string."""
-    try:
-        ssl.match_hostname(cert, hostname)
-    except ssl.CertificateError as e:
-        return str(e)
-    else:
-        return 'Yes'
 
 class PySSLSocket(ctypes.Structure):
     """The first few fields of a PySSLSocket (see Python's Modules/_ssl.c)."""
@@ -108,11 +105,11 @@ if __name__ == '__main__':
     parser.add_argument('host', help='hostname or IP address')
     parser.add_argument('port', type=int, help='TCP port number')
     parser.add_argument('-a', metavar='ca_cert_path', default=None,
-                        help='path to PEM file containing CA certificate')
+                        help='authority: PEM file path with CA certificate')
     parser.add_argument('-c', metavar='cert_path', default=None,
-                        help='path to PEM file containing our certificate')
+                        help='certificate: PEM file path with our identity')
     parser.add_argument('-p', metavar='PROTOCOL', default='SSLv23',
-                        help='protocol version (default: SSLv23)')
+                        help='protocol version (default: "SSLv23")')
     parser.add_argument('-s', action='store_true', default=False,
                         help='run as the server instead of the client')
     parser.add_argument('-d', action='store_true', default=False,
@@ -126,8 +123,15 @@ if __name__ == '__main__':
 
     context = ssl.SSLContext(protocol)
     context.check_hostname = False
-    context.verify_mode = ssl.CERT_OPTIONAL if args.s else ssl.CERT_REQUIRED
-    if args.a is not None:
+    if args.s:
+        context.verify_mode = ssl.CERT_OPTIONAL
+        purpose = ssl.Purpose.CLIENT_AUTH
+    else:
+        context.verify_mode = ssl.CERT_REQUIRED
+        purpose = ssl.Purpose.SERVER_AUTH
+    if args.a is None:
+        context.load_default_certs(purpose)
+    else:
         context.load_verify_locations(args.a)
     if args.c is not None:
         context.load_cert_chain(args.c)
