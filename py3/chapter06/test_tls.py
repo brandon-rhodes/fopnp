@@ -105,7 +105,7 @@ if __name__ == '__main__':
     parser.add_argument('host', help='hostname or IP address')
     parser.add_argument('port', type=int, help='TCP port number')
     parser.add_argument('-a', metavar='ca_cert_path', default=None,
-                        help='authority: PEM file path with CA certificate')
+                        help='authority: path to CA certificate PEM file')
     parser.add_argument('-c', metavar='cert_path', default=None,
                         help='certificate: PEM file path with our identity')
     parser.add_argument('-p', metavar='PROTOCOL', default='SSLv23',
