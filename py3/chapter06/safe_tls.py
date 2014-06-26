@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter06/test_tls.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter06/safe_tls.py
 # Simple TLS client and server using safe configuration defaults
 
 import argparse, socket, ssl
