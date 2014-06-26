@@ -14,8 +14,11 @@ def client(host, port, cafile=None):
     print('Connected to host {!r} and port {}'.format(host, port))
     ssl_sock = context.wrap_socket(raw_sock, server_hostname=host)
 
-    ssl_sock.sendall('Simple is better than complex.'.encode('ascii'))
-    ssl_sock.close()
+    while True:
+        data = ssl_sock.recv(1024)
+        if not data:
+            break
+        print(repr(data))
 
 def server(host, port, certfile, cafile=None):
     purpose = ssl.Purpose.CLIENT_AUTH
@@ -31,11 +34,8 @@ def server(host, port, certfile, cafile=None):
     print('Connection from host {!r} and port {}'.format(*address))
     ssl_sock = context.wrap_socket(raw_sock, server_side=True)
 
-    while True:
-        data = ssl_sock.recv(1024)
-        if not data:
-            break
-        print(repr(data))
+    ssl_sock.sendall('Simple is better than complex.'.encode('ascii'))
+    ssl_sock.close()
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Safe TLS client and server')
