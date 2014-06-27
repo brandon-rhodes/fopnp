@@ -107,13 +107,13 @@ if __name__ == '__main__':
     parser.add_argument('-a', metavar='cafile', default=None,
                         help='authority: path to CA certificate PEM file')
     parser.add_argument('-c', metavar='certfile', default=None,
-                        help='certificate: PEM file path with our identity')
+                        help='path to PEM file with client certificate')
     parser.add_argument('-C', metavar='ciphers', default=None,
                         help='list of ciphers formatted for OpenSSL')
     parser.add_argument('-p', metavar='PROTOCOL', default='SSLv23',
                         help='protocol version (default: "SSLv23")')
-    parser.add_argument('-s', action='store_true', default=False,
-                        help='run as the server instead of the client')
+    parser.add_argument('-s', metavar='certfile', default=None,
+                        help='run as server: path to certificate PEM file')
     parser.add_argument('-d', action='store_true', default=False,
                         help='debug mode: do not hide "ctypes" exceptions')
     parser.add_argument('-v', action='store_true', default=False,
@@ -125,18 +125,21 @@ if __name__ == '__main__':
 
     context = ssl.SSLContext(protocol)
     context.check_hostname = False
-    if args.s:
+    if (args.s is not None) and (args.c is not None):
+        parser.error('you cannot specify both -c and -s')
+    elif args.s is not None:
         context.verify_mode = ssl.CERT_OPTIONAL
         purpose = ssl.Purpose.CLIENT_AUTH
+        context.load_cert_chain(args.s)
     else:
         context.verify_mode = ssl.CERT_REQUIRED
         purpose = ssl.Purpose.SERVER_AUTH
+        if args.c is not None:
+            context.load_cert_chain(args.c)
     if args.a is None:
         context.load_default_certs(purpose)
     else:
         context.load_verify_locations(args.a)
-    if args.c is not None:
-        context.load_cert_chain(args.c)
     if args.C is not None:
         context.set_ciphers(args.C)
 
