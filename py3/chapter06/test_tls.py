@@ -108,8 +108,8 @@ if __name__ == '__main__':
                         help='authority: path to CA certificate PEM file')
     parser.add_argument('-c', metavar='certfile', default=None,
                         help='path to PEM file with client certificate')
-    parser.add_argument('-C', metavar='ciphers', default=None,
-                        help='list of ciphers formatted for OpenSSL')
+    parser.add_argument('-C', metavar='ciphers', default='ALL',
+                        help='list of ciphers, formatted per OpenSSL')
     parser.add_argument('-p', metavar='PROTOCOL', default='SSLv23',
                         help='protocol version (default: "SSLv23")')
     parser.add_argument('-s', metavar='certfile', default=None,
@@ -124,6 +124,7 @@ if __name__ == '__main__':
     protocol = lookup('PROTOCOL_', args.p)
 
     context = ssl.SSLContext(protocol)
+    context.set_ciphers(args.C)
     context.check_hostname = False
     if (args.s is not None) and (args.c is not None):
         parser.error('you cannot specify both -c and -s')
@@ -140,8 +141,6 @@ if __name__ == '__main__':
         context.load_default_certs(purpose)
     else:
         context.load_verify_locations(args.a)
-    if args.C is not None:
-        context.set_ciphers(args.C)
 
     print()
     ssl_sock = open_tls(context, address, args.s)
