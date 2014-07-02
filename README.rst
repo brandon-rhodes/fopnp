@@ -27,23 +27,15 @@ STATUS OF PYTHON 3 EXAMPLES
  01/search3.py - OK
  01/search4.py - OK
 
- 02/big_sender.py - OK
- 02/udp_broadcast.py - OK
- 02/udp_local.py - OK
- 02/udp_remote.py - OK
+ 02/* - OK
 
- 03/tcp_deadlock.py - OK
- 03/tcp_sixteen.py - OK
+ 03/* - OK
 
- 04/dns_basic.py - waiting on port of "pydns" to Python 3
- 04/dns_mx.py - waiting on port of "pydns" to Python 3
- 04/forward_reverse.py - OK
- 04/www_ping.py - OK
+ 04/* - OK
 
- 05/blocks.py - OK
- 05/streamer.py - OK
+ 05/* - OK
 
- 06/sslclient.py - OK
+ 06/* - OK
 
  07/client.py - OK
  07/lancelot.py - OK
@@ -70,57 +62,16 @@ STATUS OF PYTHON 3 EXAMPLES
  11/bottle_app.py - OK
  11/wsgi_app.py - OK
 
- 12/mime_decode.py - OK
- 12/mime_gen_alt.py - OK
- 12/mime_gen_basic.py - OK
- 12/mime_gen_both.py - OK
- 12/mime_headers.py - OK
- 12/mime_parse_headers.py - OK
- 12/mime_structure.py - OK
- 12/trad_gen_newhdrs.py - OK
- 12/trad_gen_simple.py - OK
- 12/trad_parse.py - OK
+ 12/* - OK
 
- 13/debug.py - OK
- 13/ehlo.py - OK
- 13/login.py - OK
- 13/simple.py - OK
- 13/tls.py - OK
+ 13/* - OK
 
- 14/download-and-delete.py - OK
- 14/mailbox.py - OK
- 14/popconn.py - OK
+ 14/* - OK
 
- 15/folder_info.py - OK
- 15/mailbox_summary.py - OK
- 15/open_imap.py - OK
- 15/open_imaplib.py - OK
- 15/simple_client.py - OK
+ 15/* - OK
 
- 16/fabfile.py - waiting on port of "fabric" to Python 3
- 16/sftp.py - waiting on port of "paramiko" to Python 3
- 16/shell.py - OK
- 16/ssh_commands.py - waiting on port of "paramiko" to Python 3
- 16/ssh_simple.py - waiting on port of "paramiko" to Python 3
- 16/ssh_threads.py - waiting on port of "paramiko" to Python 3
- 16/telnet_codes.py - OK
- 16/telnet_login.py - OK
+ 16/* - OK
 
- 17/advbinarydl.py - OK
- 17/advbinaryul.py - OK
- 17/asciidl.py - OK
- 17/binarydl.py - OK
- 17/binaryul.py - OK
- 17/connect.py - OK
- 17/dir.py - OK
- 17/nlst.py - OK
- 17/recursedl.py - OK
+ 17/* - OK
 
- 18/jsonrpc_client.py - OK
- 18/jsonrpc_server.py - OK
- 18/rpyc_client.py - OK
- 18/rpyc_server.py - OK
- 18/xmlrpc_client.py - OK
- 18/xmlrpc_introspect.py - OK
- 18/xmlrpc_multicall.py - OK
- 18/xmlrpc_server.py - OK
+ 18/* - OK
