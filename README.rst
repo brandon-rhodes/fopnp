@@ -17,8 +17,6 @@ updated examples will be posted here.
 STATUS OF PYTHON 3 EXAMPLES
 ---------------------------
 
-(As of November 2012)
-
 ::
 
  01/getname.py - OK
