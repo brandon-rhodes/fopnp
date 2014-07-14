@@ -5,6 +5,10 @@
 
 import IN, argparse, socket
 
+if not hasattr(IN, 'IP_MTU'):
+    raise RuntimeError('cannot perform MTU discovery on this combination'
+                       ' of operating system and Python distribution')
+
 def send_big_datagram(host, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.IPPROTO_IP, IN.IP_MTU_DISCOVER, IN.IP_PMTUDISC_DO)
