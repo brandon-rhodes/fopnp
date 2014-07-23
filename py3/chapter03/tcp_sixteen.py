@@ -10,8 +10,9 @@ def recvall(sock, length):
     while len(data) < length:
         more = sock.recv(length - len(data))
         if not more:
-            raise EOFError('socket closed %d bytes into a %d-byte message'
-                           % (len(data), length))
+            raise EOFError('was expecting %d bytes but only received'
+                           ' %d bytes before the socket closed'
+                           % (length, len(data)))
         data += more
     return data
 
