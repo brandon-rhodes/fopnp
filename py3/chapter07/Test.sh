@@ -1,12 +1,13 @@
 #!/bin/bash
 
-for SERVER in server_*.py
-do
-    echo '===========' $SERVER '==========='
-    python $SERVER localhost &
+function runtest () {
+    echo '===========' "$@" '==========='
+    python "$@" &
     sleep 1
-    python client.py localhost 1060
+    python client.py localhost
     kill %1
     wait %1 2>/dev/null || true
-    kill $(lsof | grep 'TCP.*1060' | awk '{print$2}')
-done
+    #kill $(lsof | grep 'TCP.*1060' | awk '{print$2}')
+}
+
+runtest server_simple.py localhost

@@ -3,25 +3,21 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/client.py
 # Simple Lancelot client that asks three questions then disconnects.
 
-import socket, sys, lancelot
+import argparse, random, socket, zen_example
 
-def client(hostname, port):
-    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    s.connect((hostname, port))
-    s.sendall(lancelot.qa[0][0])
-    answer1 = lancelot.recv_until(s, b'.')  # answers end with '.'
-    s.sendall(lancelot.qa[1][0])
-    answer2 = lancelot.recv_until(s, b'.')
-    s.sendall(lancelot.qa[2][0])
-    answer3 = lancelot.recv_until(s, b'.')
-    s.close()
-    print(answer1)
-    print(answer2)
-    print(answer3)
+def client(address):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(address)
+    for proverb in random.sample(list(zen_example.proverbs), 3):
+        sock.sendall(proverb)
+        print(zen_example.recv_until(sock, b'.'))
+    sock.close()
 
 if __name__ == '__main__':
-    if not 2 <= len(sys.argv) <= 3:
-        print('usage: client.py hostname [port]', file=sys.stderr)
-        sys.exit(2)
-    port = int(sys.argv[2]) if len(sys.argv) > 2 else lancelot.PORT
-    client(sys.argv[1], port)
+    parser = argparse.ArgumentParser(description='Example client')
+    parser.add_argument('host', help='IP or hostname')
+    parser.add_argument('-p', metavar='port', type=int, default=1060,
+                        help='TCP port (default 1060)')
+    args = parser.parse_args()
+    address = (args.host, args.p)
+    client(address)
