@@ -9,6 +9,9 @@ proverbs = {b'Beautiful is better than?': b'Ugly.',
             b'Explicit is better than?': b'Implicit.',
             b'Simple is better than?': b'Complex.'}
 
+def get_answer(proverb):
+    return proverbs.get(proverb, b'Error: unknown proverb.')
+
 def create_server_socket(description):
     """Parse command line and return a listening server socket."""
     parser = argparse.ArgumentParser(description=description)
@@ -38,7 +41,7 @@ def handle_client_conversation(sock):
 def handle_client_request(sock):
     """Receive a single client request on `sock` and send the answer."""
     proverb = recv_until(sock, b'?')
-    answer = proverbs.get(proverb, b'(Unknown).')
+    answer = get_answer(proverb)
     sock.sendall(answer)
 
 def recv_until(sock, suffix):

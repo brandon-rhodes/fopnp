@@ -3,9 +3,9 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/server_async.py
 # Using the ancient "asyncore" framework to write a server.
 
-import asyncore, asynchat, lancelot
+import asyncore, asynchat, zen_example
 
-class LancelotRequestHandler(asynchat.async_chat):
+class ZenRequestHandler(asynchat.async_chat):
 
     def __init__(self, sock):
         asynchat.async_chat.__init__(self, sock)
@@ -16,17 +16,19 @@ class LancelotRequestHandler(asynchat.async_chat):
         self.data += more_data
 
     def found_terminator(self):
-        answer = dict(lancelot.qa)[self.data + b'?']
+        answer = zen_example.get_answer(self.data + b'?')
         self.push(answer)
         self.initiate_send()
         self.data = b''
 
-class LancelotServer(asyncore.dispatcher):
+class ZenServer(asyncore.dispatcher):
+
     def handle_accept(self):
         sock, address = self.accept()
-        LancelotRequestHandler(sock)
+        ZenRequestHandler(sock)
 
-sock = lancelot.setup()
-ls = LancelotServer(sock)
-ls.accepting = True  # since we already called listen()
-asyncore.loop()
+if __name__ == '__main__':
+    listener = zen_example.create_server_socket('legacy async server')
+    server = ZenServer(listener)
+    server.accepting = True  # we already called listen()
+    asyncore.loop()
