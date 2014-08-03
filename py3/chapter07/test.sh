@@ -12,3 +12,4 @@ function runtest () {
 
 runtest server_simple.py localhost
 runtest server_async.py localhost
+runtest server_socketserver.py localhost

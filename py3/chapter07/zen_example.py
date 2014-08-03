@@ -12,19 +12,23 @@ proverbs = {b'Beautiful is better than?': b'Ugly.',
 def get_answer(proverb):
     return proverbs.get(proverb, b'Error: unknown proverb.')
 
-def create_server_socket(description):
-    """Parse command line and return a listening server socket."""
+def parse_command_line(description):
+    """Parse command line and return a socket address."""
     parser = argparse.ArgumentParser(description=description)
     parser.add_argument('host', help='IP or hostname')
     parser.add_argument('-p', metavar='port', type=int, default=1060,
                         help='TCP port (default 1060)')
     args = parser.parse_args()
     address = (args.host, args.p)
+    return address
+
+def create_server_socket(address):
+    """Build and return a listening server socket."""
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     listener.bind(address)
     listener.listen(64)
-    print('Listening at {}:{}'.format(args.host, args.p))
+    print('Listening at {}:{}'.format(*address))
     return listener
 
 def handle_client_conversation(sock):

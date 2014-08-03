@@ -4,15 +4,17 @@
 # Answering Lancelot requests with a SocketServer.
 
 from socketserver import ThreadingMixIn, TCPServer, BaseRequestHandler
-import lancelot, server_simple, socket
+import socket, zen_example
 
-class MyHandler(BaseRequestHandler):
+class ZenHandler(BaseRequestHandler):
     def handle(self):
-        server_simple.handle_client(self.request)
+        zen_example.handle_client_conversation(self.request)
 
-class MyServer(ThreadingMixIn, TCPServer):
+class ZenServer(ThreadingMixIn, TCPServer):
     allow_reuse_address = 1
     # address_family = socket.AF_INET6  # if you need IPv6
 
-server = MyServer(('', lancelot.PORT), MyHandler)
-server.serve_forever()
+if __name__ == '__main__':
+    address = zen_example.parse_command_line('legacy SocketServer server')
+    server = ZenServer(address, ZenHandler)
+    server.serve_forever()

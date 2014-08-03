@@ -11,5 +11,6 @@ def server(listener):
         zen_example.handle_client_conversation(sock)
 
 if __name__ == '__main__':
-    listener = zen_example.create_server_socket('simple server')
+    address = zen_example.parse_command_line('simple server')
+    listener = zen_example.create_server_socket(address)
     server(listener)
