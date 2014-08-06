@@ -3,16 +3,15 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/server_multi.py
 # Using multiple threads or processes to serve several clients in parallel.
 
-import sys, time, lancelot
+import sys, time, zen_example
 from multiprocessing import Process
-from server_simple import server_loop
 from threading import Thread
 
 WORKER_CLASSES = {'thread': Thread, 'process': Process}
 WORKER_MAX = 10
 
-def start_worker(Worker, listen_sock):
-    worker = Worker(target=server_loop, args=(listen_sock,))
+def start_worker(worker_class, listen_sock):
+    worker = worker_class(target=server_loop, args=(listen_sock,))
     worker.daemon = True  # exit when the main process does
     worker.start()
     return worker

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/server_legacy2.py
-# Using the legacy "asyncore" framework to write a server.
+# Use the legacy "asyncore" Standard Library module to write a server.
 
 import asyncore, asynchat, zen_example
 
