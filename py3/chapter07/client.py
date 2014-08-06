@@ -8,8 +8,9 @@ import argparse, random, socket, zen_example
 def client(address):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect(address)
-    for proverb in random.sample(list(zen_example.proverbs), 3):
-        sock.sendall(proverb)
+    aphorisms = list(zen_example.aphorisms)
+    for aphorism in random.sample(aphorisms, 3):
+        sock.sendall(aphorism)
         print(zen_example.recv_until(sock, b'.'))
     sock.close()
 
