@@ -8,7 +8,7 @@ import zen_example
 
 class ZenHandler(BaseRequestHandler):
     def handle(self):
-        zen_example.handle_client_conversation(self.request)
+        zen_example.handle_conversation(self.request)
 
 class ZenServer(ThreadingMixIn, TCPServer):
     allow_reuse_address = 1

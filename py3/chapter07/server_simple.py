@@ -5,12 +5,7 @@
 
 import zen_example
 
-def server(listener):
-    while True:
-        sock, sockname = listener.accept()
-        zen_example.handle_client_conversation(sock)
-
 if __name__ == '__main__':
     address = zen_example.parse_command_line('simple server')
     listener = zen_example.create_server_socket(address)
-    server(listener)
+    zen_example.accept_connections_forever(listener)

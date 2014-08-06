@@ -3,7 +3,7 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/zen_example.py
 # Constants and routines for supporting a certain network conversation.
 
-import argparse, socket
+import argparse, socket, time
 
 aphorisms = {b'Beautiful is better than?': b'Ugly.',
              b'Explicit is better than?': b'Implicit.',
@@ -11,6 +11,7 @@ aphorisms = {b'Beautiful is better than?': b'Ugly.',
 
 def get_answer(aphorism):
     """Return the string response to a particular Zen-of-Python aphorism."""
+    time.sleep(0.0)  # increase to simulate an expensive operation
     return aphorisms.get(aphorism, b'Error: unknown aphorism.')
 
 def parse_command_line(description):
@@ -29,21 +30,29 @@ def create_server_socket(address):
     listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     listener.bind(address)
     listener.listen(64)
-    print('Listening at {}:{}'.format(*address))
+    print('Listening at {}'.format(address))
     return listener
 
-def handle_client_conversation(sock):
+def accept_connections_forever(listener):
+    """Forever answer incoming connections on a listening socket."""
+    while True:
+        sock, address = listener.accept()
+        print('Accepted connection from {}'.format(address))
+        handle_conversation(sock)
+
+def handle_conversation(sock):
     """Converse with a client over `sock` until they are done talking."""
     try:
         while True:
-            handle_client_request(sock)
+            handle_request(sock)
     except EOFError:
-        print('Client has finished and closed socket')
+        print('Client socket to {} has closed'.format(sock.getsockname()))
     except Exception as e:
-        print('Error: {}'.format(e))
+        print('Client {} error: {}'.format(sock.getsockname(), e))
+    finally:
         sock.close()
 
-def handle_client_request(sock):
+def handle_request(sock):
     """Receive a single client request on `sock` and send the answer."""
     aphorism = recv_until(sock, b'?')
     answer = get_answer(aphorism)
@@ -57,6 +66,6 @@ def recv_until(sock, suffix):
     while not message.endswith(suffix):
         data = sock.recv(4096)
         if not data:
-            raise IOError('received truncated data {!r}'.format(data))
+            raise IOError('received {!r} then socket closed'.format(message))
         message += data
     return message
