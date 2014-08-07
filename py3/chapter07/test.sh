@@ -12,5 +12,6 @@ function runtest () {
 
 runtest server_simple.py localhost
 runtest server_threaded.py localhost
+runtest server_async.py localhost
 runtest server_legacy1.py localhost
 runtest server_legacy2.py localhost
