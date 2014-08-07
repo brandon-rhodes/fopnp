@@ -50,11 +50,11 @@ def serve(listener):
         # Incoming data: keep receiving until we see the suffix.
 
         elif event & select.POLLIN:
-            new_data = sock.recv(4096)
-            if not new_data:  # end-of-file
+            more_data = sock.recv(4096)
+            if not more_data:  # end-of-file
                 sock.close()  # next poll() will POLLNVAL, and thus clean up
                 continue
-            data = bytes_received.pop(sock, b'') + new_data
+            data = bytes_received.pop(sock, b'') + more_data
             if data.endswith(b'?'):
                 bytes_to_send[sock] = zen_example.get_answer(data)
                 poll_object.modify(sock, select.POLLOUT)

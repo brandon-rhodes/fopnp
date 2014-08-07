@@ -24,8 +24,8 @@ class ZenServer(asyncio.Protocol):
         if exc:
             print('Client {} error: {}'.format(self.address, exc))
         elif self.data:
-            print('Client {} sent {} but then closed'.format(self.address,
-                                                             self.data))
+            print('Client {} sent {} but then closed'
+                  .format(self.address, self.data))
         else:
             print('Client {} closed socket'.format(self.address))
 
