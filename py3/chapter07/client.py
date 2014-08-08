@@ -3,18 +3,18 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/client.py
 # Simple Lancelot client that asks three questions then disconnects.
 
-import argparse, random, socket, zen_example
+import argparse, random, socket, zen_utils
 
 def client(address, cause_error=False):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.connect(address)
-    aphorisms = list(zen_example.aphorisms)
+    aphorisms = list(zen_utils.aphorisms)
     if cause_error:
         sock.sendall(aphorisms[0][:-1])
         return
     for aphorism in random.sample(aphorisms, 3):
         sock.sendall(aphorism)
-        print(zen_example.recv_until(sock, b'.'))
+        print(zen_utils.recv_until(sock, b'.'))
     sock.close()
 
 if __name__ == '__main__':

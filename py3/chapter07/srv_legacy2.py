@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/server_legacy2.py
-# Use the legacy "asyncore" Standard Library module to write a server.
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/srv_legacy2.py
+# Uses the legacy "asyncore" Standard Library module to write a server.
 
-import asyncore, asynchat, zen_example
+import asyncore, asynchat, zen_utils
 
 class ZenRequestHandler(asynchat.async_chat):
 
@@ -16,7 +16,7 @@ class ZenRequestHandler(asynchat.async_chat):
         self.data += more_data
 
     def found_terminator(self):
-        answer = zen_example.get_answer(self.data + b'?')
+        answer = zen_utils.get_answer(self.data + b'?')
         self.push(answer)
         self.initiate_send()
         self.data = b''
@@ -28,8 +28,8 @@ class ZenServer(asyncore.dispatcher):
         ZenRequestHandler(sock)
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('legacy "asyncore" server')
-    listener = zen_example.create_server_socket(address)
+    address = zen_utils.parse_command_line('legacy "asyncore" server')
+    listener = zen_utils.create_srv_socket(address)
     server = ZenServer(listener)
     server.accepting = True  # we already called listen()
     asyncore.loop()

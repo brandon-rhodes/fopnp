@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/zen_example.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/zen_utils.py
 # Constants and routines for supporting a certain network conversation.
 
 import argparse, socket, time
@@ -24,7 +24,7 @@ def parse_command_line(description):
     address = (args.host, args.p)
     return address
 
-def create_server_socket(address):
+def create_srv_socket(address):
     """Build and return a listening server socket."""
     listener = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/server_poll.py
-# Asynchronous I/O driven by the poll() system call.
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/srv_asyncio2.py
+# Asynchronous I/O inside an "asyncio" coroutine.
 
-import asyncio, zen_example
+import asyncio, zen_utils
 
 @asyncio.coroutine
 def handle_conversation(reader, writer):
@@ -21,11 +21,11 @@ def handle_conversation(reader, writer):
                     print('Client {} closed socket normally'.format(address))
                 return
             data += more_data
-        answer = zen_example.get_answer(data)
+        answer = zen_utils.get_answer(data)
         writer.write(answer)
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('asyncio server using coroutine')
+    address = zen_utils.parse_command_line('asyncio server using coroutine')
     loop = asyncio.get_event_loop()
     coro = asyncio.start_server(handle_conversation, *address)
     server = loop.run_until_complete(coro)

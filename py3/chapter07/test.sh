@@ -10,10 +10,10 @@ function runtest () {
     #kill $(lsof | grep 'TCP.*1060' | awk '{print$2}')
 }
 
-runtest server_simple.py localhost
-runtest server_threaded.py localhost
-runtest server_async.py localhost
-runtest server_legacy1.py localhost
-runtest server_legacy2.py localhost
-runtest server_asyncio1.py localhost
-runtest server_asyncio2.py localhost
+runtest srv_simple.py localhost
+runtest srv_threaded.py localhost
+runtest srv_async.py localhost
+runtest srv_legacy1.py localhost
+runtest srv_legacy2.py localhost
+runtest srv_asyncio1.py localhost
+runtest srv_asyncio2.py localhost

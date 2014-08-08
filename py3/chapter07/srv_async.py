@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/server_poll.py
-# Asynchronous I/O driven by the poll() system call.
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/srv_async.py
+# Asynchronous I/O driven directly by the poll() system call.
 
-import select, zen_example
+import select, zen_utils
 
 def all_events_forever(poll_object):
     while True:
@@ -56,7 +56,7 @@ def serve(listener):
                 continue
             data = bytes_received.pop(sock, b'') + more_data
             if data.endswith(b'?'):
-                bytes_to_send[sock] = zen_example.get_answer(data)
+                bytes_to_send[sock] = zen_utils.get_answer(data)
                 poll_object.modify(sock, select.POLLOUT)
             else:
                 bytes_received[sock] = data
@@ -72,6 +72,6 @@ def serve(listener):
                 poll_object.modify(sock, select.POLLIN)
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('low-level async server')
-    listener = zen_example.create_server_socket(address)
+    address = zen_utils.parse_command_line('low-level async server')
+    listener = zen_utils.create_srv_socket(address)
     serve(listener)
