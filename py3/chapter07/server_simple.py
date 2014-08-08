@@ -6,6 +6,6 @@
 import zen_example
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('simple server')
+    address = zen_example.parse_command_line('simple single-threaded server')
     listener = zen_example.create_server_socket(address)
     zen_example.accept_connections_forever(listener)

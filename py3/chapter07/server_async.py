@@ -72,6 +72,6 @@ def serve(listener):
                 poll_object.modify(sock, select.POLLIN)
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('simple server')
+    address = zen_example.parse_command_line('low-level async server')
     listener = zen_example.create_server_socket(address)
     serve(listener)

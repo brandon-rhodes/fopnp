@@ -15,6 +15,6 @@ class ZenServer(ThreadingMixIn, TCPServer):
     # address_family = socket.AF_INET6  # uncomment if you need IPv6
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('legacy SocketServer server')
+    address = zen_example.parse_command_line('legacy "SocketServer" server')
     server = ZenServer(address, ZenHandler)
     server.serve_forever()

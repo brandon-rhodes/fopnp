@@ -25,7 +25,7 @@ def handle_conversation(reader, writer):
         writer.write(answer)
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('asyncio coroutine server')
+    address = zen_example.parse_command_line('asyncio server using coroutine')
     loop = asyncio.get_event_loop()
     coro = asyncio.start_server(handle_conversation, *address)
     server = loop.run_until_complete(coro)

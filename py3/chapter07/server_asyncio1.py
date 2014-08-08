@@ -30,7 +30,7 @@ class ZenServer(asyncio.Protocol):
             print('Client {} closed socket'.format(self.address))
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('simple server')
+    address = zen_example.parse_command_line('asyncio server using callbacks')
     loop = asyncio.get_event_loop()
     coro = loop.create_server(ZenServer, *address)
     server = loop.run_until_complete(coro)

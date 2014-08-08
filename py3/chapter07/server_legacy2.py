@@ -28,7 +28,7 @@ class ZenServer(asyncore.dispatcher):
         ZenRequestHandler(sock)
 
 if __name__ == '__main__':
-    address = zen_example.parse_command_line('legacy async server')
+    address = zen_example.parse_command_line('legacy "asyncore" server')
     listener = zen_example.create_server_socket(address)
     server = ZenServer(listener)
     server.accepting = True  # we already called listen()
