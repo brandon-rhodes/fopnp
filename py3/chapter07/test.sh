@@ -15,3 +15,5 @@ runtest server_threaded.py localhost
 runtest server_async.py localhost
 runtest server_legacy1.py localhost
 runtest server_legacy2.py localhost
+runtest server_asyncio1.py localhost
+runtest server_asyncio2.py localhost
