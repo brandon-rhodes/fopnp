@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/srv_simple.py
-# Simple server that only serves one client at a time; others have to wait.
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/srv_single.py
+# Single-threaded server that serves one client at a time; others must wait.
 
 import zen_utils
 
