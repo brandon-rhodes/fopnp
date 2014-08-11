@@ -2,7 +2,7 @@
 
 function runtest () {
     echo '===========' "$@" '==========='
-    python "$@" &
+    python3 "$@" &
     sleep 1
     python client.py localhost
     kill %1
