@@ -38,17 +38,17 @@ def accept_connections_forever(listener):
     while True:
         sock, address = listener.accept()
         print('Accepted connection from {}'.format(address))
-        handle_conversation(sock)
+        handle_conversation(sock, address)
 
-def handle_conversation(sock):
+def handle_conversation(sock, address):
     """Converse with a client over `sock` until they are done talking."""
     try:
         while True:
             handle_request(sock)
     except EOFError:
-        print('Client socket to {} has closed'.format(sock.getsockname()))
+        print('Client socket to {} has closed'.format(address))
     except Exception as e:
-        print('Client {} error: {}'.format(sock.getsockname(), e))
+        print('Client {} error: {}'.format(address, e))
     finally:
         sock.close()
 

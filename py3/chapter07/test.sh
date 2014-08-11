@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -e
+
 function runtest () {
     echo '===========' "$@" '==========='
     python3 "$@" &
@@ -10,7 +12,7 @@ function runtest () {
     #kill $(lsof | grep 'TCP.*1060' | awk '{print$2}')
 }
 
-runtest srv_simple.py localhost
+runtest srv_single.py localhost
 runtest srv_threaded.py localhost
 runtest srv_async.py localhost
 runtest srv_legacy1.py localhost
