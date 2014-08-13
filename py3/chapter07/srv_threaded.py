@@ -6,7 +6,7 @@
 import zen_utils
 from threading import Thread
 
-def server(listener, workers=4):
+def start_threads(listener, workers=4):
     t = (listener,)
     for i in range(workers):
         Thread(target=zen_utils.accept_connections_forever, args=t).start()
@@ -14,4 +14,4 @@ def server(listener, workers=4):
 if __name__ == '__main__':
     address = zen_utils.parse_command_line('multi-threaded server')
     listener = zen_utils.create_srv_socket(address)
-    server(listener)
+    start_threads(listener)
