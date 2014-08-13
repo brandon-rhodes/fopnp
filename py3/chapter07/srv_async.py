@@ -42,7 +42,7 @@ def serve(listener):
         elif sock is listener:
             sock, address = sock.accept()
             print('Accepted connection from {}'.format(address))
-            sock.setblocking(False)         # makes this whole scheme work
+            sock.setblocking(False)     # force socket.timeout if we blunder
             sockets[sock.fileno()] = sock
             addresses[sock] = address
             poll_object.register(sock, select.POLLIN)
