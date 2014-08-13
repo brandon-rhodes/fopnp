@@ -3,7 +3,7 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter07/srv_legacy1.py
 # Uses the legacy "socketserver" Standard Library module to write a server.
 
-from socketserver import ThreadingMixIn, TCPServer, BaseRequestHandler
+from socketserver import BaseRequestHandler, TCPServer, ThreadingMixIn
 import zen_utils
 
 class ZenHandler(BaseRequestHandler):
