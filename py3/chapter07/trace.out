@@ -1,0 +1,62 @@
+# Excerpt from timing trace, showing that single-threaded server runtime
+# is dominated by waiting for the client.  Captured with:
+#
+# python3.4 -m trace -tg --ignore-dir=/usr srv_single.py ''
+
+3.02 zen_utils.py(40):         print('Accepted connection from {}'.format(address))
+Accepted connection from ('98.30.180.242', 40893)
+3.02 zen_utils.py(41):         handle_conversation(sock, address)
+ --- modulename: zen_utils, funcname: handle_conversation
+3.02 zen_utils.py(45):     try:
+3.02 zen_utils.py(46):         while True:
+3.02 zen_utils.py(47):             handle_request(sock)
+ --- modulename: zen_utils, funcname: handle_request
+3.02 zen_utils.py(57):     aphorism = recv_until(sock, b'?')
+ --- modulename: zen_utils, funcname: recv_until
+3.03 zen_utils.py(63):     message = sock.recv(4096)
+3.03 zen_utils.py(64):     if not message:
+3.03 zen_utils.py(66):     while not message.endswith(suffix):
+3.03 zen_utils.py(71):     return message
+3.03 zen_utils.py(58):     answer = get_answer(aphorism)
+ --- modulename: zen_utils, funcname: get_answer
+3.03 zen_utils.py(14):     time.sleep(0.0)  # increase to simulate an expensive operation
+3.03 zen_utils.py(15):     return aphorisms.get(aphorism, b'Error: unknown aphorism.')
+3.03 zen_utils.py(59):     sock.sendall(answer)
+3.03 zen_utils.py(47):             handle_request(sock)
+ --- modulename: zen_utils, funcname: handle_request
+3.03 zen_utils.py(57):     aphorism = recv_until(sock, b'?')
+ --- modulename: zen_utils, funcname: recv_until
+3.03 zen_utils.py(63):     message = sock.recv(4096)
+3.08 zen_utils.py(64):     if not message:
+3.08 zen_utils.py(66):     while not message.endswith(suffix):
+3.08 zen_utils.py(71):     return message
+3.08 zen_utils.py(58):     answer = get_answer(aphorism)
+ --- modulename: zen_utils, funcname: get_answer
+3.08 zen_utils.py(14):     time.sleep(0.0)  # increase to simulate an expensive operation
+3.08 zen_utils.py(15):     return aphorisms.get(aphorism, b'Error: unknown aphorism.')
+3.08 zen_utils.py(59):     sock.sendall(answer)
+3.08 zen_utils.py(47):             handle_request(sock)
+ --- modulename: zen_utils, funcname: handle_request
+3.08 zen_utils.py(57):     aphorism = recv_until(sock, b'?')
+ --- modulename: zen_utils, funcname: recv_until
+3.08 zen_utils.py(63):     message = sock.recv(4096)
+3.12 zen_utils.py(64):     if not message:
+3.12 zen_utils.py(66):     while not message.endswith(suffix):
+3.12 zen_utils.py(71):     return message
+3.12 zen_utils.py(58):     answer = get_answer(aphorism)
+ --- modulename: zen_utils, funcname: get_answer
+3.12 zen_utils.py(14):     time.sleep(0.0)  # increase to simulate an expensive operation
+3.12 zen_utils.py(15):     return aphorisms.get(aphorism, b'Error: unknown aphorism.')
+3.12 zen_utils.py(59):     sock.sendall(answer)
+3.12 zen_utils.py(47):             handle_request(sock)
+ --- modulename: zen_utils, funcname: handle_request
+3.12 zen_utils.py(57):     aphorism = recv_until(sock, b'?')
+ --- modulename: zen_utils, funcname: recv_until
+3.12 zen_utils.py(63):     message = sock.recv(4096)
+3.16 zen_utils.py(64):     if not message:
+3.16 zen_utils.py(65):         raise EOFError('socket closed')
+3.16 zen_utils.py(48):     except EOFError:
+3.16 zen_utils.py(49):         print('Client socket to {} has closed'.format(address))
+Client socket to ('98.30.180.242', 40893) has closed
+3.16 zen_utils.py(53):         sock.close()
+3.16 zen_utils.py(39):         sock, address = listener.accept()
