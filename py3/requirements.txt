@@ -3,6 +3,7 @@ jsonrpclib-pelix
 paramiko
 dnspython3
 pygeocoder
+python3-memcached
 pyzmq
 requests
 rpyc
