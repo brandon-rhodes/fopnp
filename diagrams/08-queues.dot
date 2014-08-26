@@ -1,0 +1,14 @@
+digraph Network {
+    #node [shape=rectangle]
+    edge [fontsize=9]
+
+    bitsource -> always_yes [label="PUB\nSUB\n'00'"]
+    bitsource -> judge [label="PUB\nSUB\n'01' '10' '11'"]
+
+    judge -> pythagoras [label="REQ\nREP";dir="both"]
+
+    always_yes -> tally [label="PUSH\nPULL"]
+    judge -> tally [label="PUSH\nPULL"]
+
+    {rank=same; judge pythagoras}
+}
