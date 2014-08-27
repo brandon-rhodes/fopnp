@@ -4,17 +4,18 @@
 # Small application that uses several different message queues
 
 import random, threading, time, zmq
+B = 32  # number of bits of precision in each random integer
 
-def ones_and_zeros(n, d):
+def ones_and_zeros(digits):
     """Express `n` in at least `d` binary digits, with no special prefix."""
-    return bin(n).lstrip('0b').zfill(d)
+    return bin(random.getrandbits(digits)).lstrip('0b').zfill(digits)
 
 def bitsource(zcontext, url):
     """Produce random points in the unit square."""
     zsock = zcontext.socket(zmq.PUB)
     zsock.bind(url)
     while True:
-        zsock.send_string(ones_and_zeros(random.getrandbits(24), 24))
+        zsock.send_string(ones_and_zeros(B * 2))
         time.sleep(0.01)
 
 def always_yes(zcontext, in_url, out_url):
@@ -38,12 +39,13 @@ def judge(zcontext, in_url, pythagoras_url, out_url):
     psock.connect(pythagoras_url)
     osock = zcontext.socket(zmq.PUSH)
     osock.connect(out_url)
+    unit = 2 ** (B * 2)
     while True:
         bits = isock.recv_string()
         n, m = int(bits[::2], 2), int(bits[1::2], 2)
         psock.send_json((n, m))
         sumsquares = psock.recv_json()
-        osock.send_string('Y' if sumsquares < 2 ** 24 else 'N')
+        osock.send_string('Y' if sumsquares < unit else 'N')
 
 def pythagoras(zcontext, url):
     """Return the sum-of-squares of number sequences."""
