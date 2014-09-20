@@ -1,0 +1,94 @@
+
+------------------------------------------------------------------------
+
+Assuming that httpbin is running on port 8000:
+
+------------------------------------------------------------------------
+
+>>> import requests
+
+>>> r = requests.get('http://localhost:8000/status/200')
+>>> r.status_code
+200
+
+>>> r = requests.get('http://localhost:8000/status/301')
+>>> r.status_code
+200
+>>> r.url
+'http://localhost:8000/get'
+
+>>> r = requests.get('http://localhost:8000/status/303')
+>>> r.status_code
+200
+>>> r.url
+'http://localhost:8000/get'
+
+>>> r = requests.get('http://localhost:8000/status/307')
+>>> r.status_code
+200
+>>> r.url
+'http://localhost:8000/get'
+
+>>> r = requests.get('http://localhost:8000/status/400')
+>>> r.status_code
+400
+
+>>> r = requests.get('http://localhost:8000/status/500')
+>>> r.status_code
+500
+
+But:
+
+>>> r = requests.get('http://localhost:8000/status/301', allow_redirects=False)
+>>> r.status_code
+301
+>>> r.url
+'http://localhost:8000/status/301'
+
+>>> r = requests.get('http://localhost:8000/status/303', allow_redirects=False)
+>>> r.status_code
+303
+>>> r.url
+'http://localhost:8000/status/303'
+
+>>> r = requests.get('http://localhost:8000/status/307', allow_redirects=False)
+>>> r.status_code
+307
+>>> r.url
+'http://localhost:8000/status/307'
+
+------------------------------------------------------------------------
+
+>>> from urllib.request import urlopen
+
+>>> r = urlopen('http://localhost:8000/status/200')
+>>> r.status
+200
+
+>>> r = urlopen('http://localhost:8000/status/301')
+>>> r.status
+200
+>>> r.url
+'http://localhost:8000/get'
+
+>>> r = urlopen('http://localhost:8000/status/303')
+>>> r.status
+200
+>>> r.url
+'http://localhost:8000/get'
+
+>>> r = urlopen('http://localhost:8000/status/307')
+>>> r.status
+200
+>>> r.url
+'http://localhost:8000/get'
+
+>>> urlopen('http://localhost:8000/status/400')
+Traceback (most recent call last):
+...
+urllib.error.HTTPError: HTTP Error 400: BAD REQUEST
+
+>>> urlopen('http://localhost:8000/status/500')
+Traceback (most recent call last):
+...
+urllib.error.HTTPError: HTTP Error 500: INTERNAL SERVER ERROR
