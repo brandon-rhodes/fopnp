@@ -16,6 +16,8 @@ Assuming that httpbin is running on port 8000:
 >>> r.raise_for_status()
 >>> (r.status_code, r.url)
 (200, 'http://localhost:8000/get')
+>>> r.history
+[<Response [301]>, <Response [302]>]
 
 >>> r = requests.get('http://localhost:8000/status/303')
 >>> r.raise_for_status()
@@ -60,9 +62,17 @@ But:
 >>> (r.status_code, r.url)
 (307, 'http://localhost:8000/status/307')
 
+>>> r = requests.get('http://google.com/')
+>>> r.url
+'http://www.google.com/'
+>>> r = requests.get('http://www.twitter.com/')
+>>> r.url
+'https://twitter.com/'
+
 ------------------------------------------------------------------------
 
 >>> from urllib.request import urlopen
+>>> import urllib.error
 
 >>> r = urlopen('http://localhost:8000/status/200')
 >>> r.status
@@ -89,3 +99,9 @@ urllib.error.HTTPError: HTTP Error 400: BAD REQUEST
 Traceback (most recent call last):
 ...
 urllib.error.HTTPError: HTTP Error 500: INTERNAL SERVER ERROR
+
+>>> try:
+...     urlopen('http://localhost:8000/status/500')
+... except urllib.error.HTTPError as e:
+...     print(e.status, repr(e.headers['Content-Type']))
+500 'text/html; charset=utf-8'
