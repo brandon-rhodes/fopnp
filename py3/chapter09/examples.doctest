@@ -47,10 +47,8 @@ But:
 
 >>> r = requests.get('http://localhost:8000/status/301', allow_redirects=False)
 >>> r.raise_for_status()
->>> r.status_code
-301
->>> r.url
-'http://localhost:8000/status/301'
+>>> (r.status_code, r.url)
+(301, 'http://localhost:8000/status/301')
 
 >>> r = requests.get('http://localhost:8000/status/303', allow_redirects=False)
 >>> r.raise_for_status()
