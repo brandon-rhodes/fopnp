@@ -7,6 +7,33 @@ Assuming that httpbin is running on port 8000:
 
 >>> import requests
 
+>>> r = requests.get('http://localhost:8000/headers')
+>>> print(r.text)
+{
+  "headers": {
+    "Accept": "*/*",
+    "Accept-Encoding": "gzip, deflate",
+    "Host": "localhost:8000",
+    "User-Agent": "python-requests/2.3.0 CPython/3.4.1 Linux/3.13.0-34-generic"
+  }
+}
+
+>>> from urllib.request import urlopen
+>>> import urllib.error
+
+>>> r = urlopen('http://localhost:8000/headers')
+>>> print(r.read().decode('ascii'))
+{
+  "headers": {
+    "Accept-Encoding": "identity",
+    "Connection": "close",
+    "Host": "localhost:8000",
+    "User-Agent": "Python-urllib/3.4"
+  }
+}
+
+------------------------------------------------------------------------
+
 >>> r = requests.get('http://localhost:8000/status/200')
 >>> r.raise_for_status()
 >>> r.status_code
@@ -105,3 +132,35 @@ urllib.error.HTTPError: HTTP Error 500: INTERNAL SERVER ERROR
 ... except urllib.error.HTTPError as e:
 ...     print(e.status, repr(e.headers['Content-Type']))
 500 'text/html; charset=utf-8'
+
+------------------------------------------------------------------------
+
+>>> requests.get('http://localhost:8000/basic-auth/brandon/atigdngnatwwal')
+<Response [401]>
+
+>>> s = requests.Session()
+>>> s.auth = 'brandon', 'atigdngnatwwal'
+>>> s.get('http://localhost:8000/basic-auth/brandon/atigdngnatwwal')
+<Response [200]>
+
+>>> s = requests.Session()
+>>> s.get('http://localhost:8000/cookies/set?'
+...       'session-id=d41d8cd98f00b204e9800998ecf8427e')
+<Response [200]>
+>>> s.get('http://localhost:8000/cookies')
+<Response [200]>
+
+------------------------------------------------------------------------
+
+>>> import http.client
+>>> h = http.client.HTTPConnection('localhost:8000')
+
+>>> h.request('GET', '/ip')
+>>> r = h.getresponse()
+>>> r.status
+200
+
+>>> h.request('GET', '/user-agent')
+>>> r = h.getresponse()
+>>> r.status
+200
