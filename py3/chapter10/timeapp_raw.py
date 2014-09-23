@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/timeapp_raw.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter10/timeapp_raw.py
 # A simple HTTP service built directly against the low-level WSGI spec.
 
 import time

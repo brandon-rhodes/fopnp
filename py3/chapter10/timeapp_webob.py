@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/timeapp_webob.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter10/timeapp_webob.py
 # A WSGI callable built using webob.
 
 import time, webob
