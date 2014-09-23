@@ -7,3 +7,5 @@ python3-memcached
 pyzmq
 requests
 rpyc
+webob
+werkzeug
