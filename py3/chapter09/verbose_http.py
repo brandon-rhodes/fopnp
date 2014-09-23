@@ -7,18 +7,17 @@ import io, http.client, urllib.request, urllib.error, urllib.parse
 
 class VerboseHTTPResponse(http.client.HTTPResponse):
     def _read_status(self):
-        s = self.fp.read()
-        print('-' * 20, 'Response', '-' * 20)
-        print(s.split(b'\r\n\r\n')[0].decode('ascii'))
-        self.fp = io.BytesIO(s)
+        data = self.fp.read()
+        print(data.decode('ascii'))
+        self.fp = io.BytesIO(data)
         return http.client.HTTPResponse._read_status(self)
 
 class VerboseHTTPConnection(http.client.HTTPConnection):
     response_class = VerboseHTTPResponse
-    def send(self, s):
-        print('-' * 50)
-        print(s.strip().decode('ascii'))
-        http.client.HTTPConnection.send(self, s)
+    def send(self, data):
+        nl = '' if data.endswith(b'\n') else '\n'
+        print(data.decode('ascii'), end=nl)
+        http.client.HTTPConnection.send(self, data)
 
 class VerboseHTTPHandler(urllib.request.HTTPHandler):
     def http_open(self, req):
