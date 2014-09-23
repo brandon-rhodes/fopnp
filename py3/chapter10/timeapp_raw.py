@@ -16,7 +16,7 @@ def app(environ, start_response):
     if environ['REQUEST_METHOD'] != 'GET':
         start_response('501 Not Implemented', headers)
         yield b'501 Not Implemented'
-    elif host not in ('127.0.0.1', 'localhost') or path != '/':
+    elif host != '127.0.0.1' or path != '/':
         start_response('404 Not Found', headers)
         yield b'404 Not Found'
     else:
