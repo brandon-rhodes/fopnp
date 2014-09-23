@@ -1,3 +1,10 @@
+# To use this Gunicorn configuration, which prints HTTP requests and
+# responses to the screen, with the httpbin application, run the
+# following command in this directory after pip installing both
+# "gunicorn" and "httpbin" under Python 3:
+#
+#     gunicorn -c config.py httpbin:app
+
 workers = 1
 worker_class = 'sync'
 
