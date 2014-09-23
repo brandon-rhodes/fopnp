@@ -28,6 +28,8 @@ def main():
         for filename in filenames:
             if not filename.endswith('.py'):
                 continue
+            if filename.startswith('_'):
+                continue
             path = os.path.join(dirpath, filename)
             content = open(path).read()
             url = base + path
