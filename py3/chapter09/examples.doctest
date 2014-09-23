@@ -1,3 +1,8 @@
+Run this file, after pip installing "requests" under Python 3 and
+starting up "httpbin" running on localhost (see "config.py" which is
+also in this directory), with:
+
+$ python3 -m doctest examples.doctest
 
 ------------------------------------------------------------------------
 
