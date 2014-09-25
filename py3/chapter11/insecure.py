@@ -6,7 +6,8 @@ app = Flask(__name__)
 design = ('<html><head><title>{title}</title>'
           '<link rel="stylesheet" type="text/css" href="/static/style.css">'
           '</head><body><h1>{title}</h1>{body}</body>')
-loginform = ('<form method="post"><label>User: <input name="username"></label>'
+loginform = ('<form method="post"><label>User: '
+             '<input name="username" value="{username}"></label>'
              '<label>Password: <input name="password" type="password"></label>'
              '<button type="submit">Log in</button></form>')
 mainpage = ('<p>Your transactions</p><ul>{items}</ul>'
@@ -54,17 +55,18 @@ def pay():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    username = request.form.get('username', '')
+    password = request.form.get('password', '')
     if request.method == 'GET':
         title = 'Welcome'
     elif request.method == 'POST':
-        username = request.form.get('username')
-        password = request.form.get('password')
         if username == 'brandon' and password == 'atigdng':
             response = redirect(url_for('index'))
             response.set_cookie('username', username)
             return response
         title = 'Please try again'
-    return design.format(title=title, body=loginform)
+    form = loginform.format(username=username)
+    return design.format(title=title, body=form)
 
 @app.route('/logout')
 def logout():
