@@ -1,25 +1,11 @@
 
-import bank
 from flask import Flask, make_response, redirect, request, url_for
 from jinja2 import Template
-app = Flask(__name__)
 
-design = ('<html><head><title>{title}</title>'
-          '<link rel="stylesheet" type="text/css" href="/static/style.css">'
-          '</head><body><h1>{title}</h1>{body}</body>')
-loginform = ('<form method="post"><label>User: '
-             '<input name="username" value="{username}"></label>'
-             '<label>Password: <input name="password" type="password"></label>'
-             '<button type="submit">Log in</button></form>')
-message_template = Template('<div class="message">{{ message }}<a href="/">&times;</a></div>')
-mainpage = ('<p>Your transactions</p><ul>{items}</ul>'
-            '<a href="/pay">Make payment</a> | <a href="/logout">Log out</a>')
-paypage = ('<form method="post" action="/pay">'
-           '<label>To account: <input name="account"></label>'
-           '<label>Dollars: <input name="dollars"></label>'
-           '<label>Message: <input name="message"></label>'
-           '<button type="submit">Send money</button>'
-           ' | <a href="/">Cancel</a></form>')
+import bank
+from templates import design_html, login_html, index_html, pay_html
+
+app = Flask(__name__)
 payment = '<li>${p.dollars} to account {p.credit}<br>{p.message}'
 
 def format_payment(username, payment):
@@ -35,11 +21,10 @@ def index():
         return redirect(url_for('login'))
     payments = bank.get_payments_of(bank.open_database(), username)
     lines = [format_payment(username, payment) for payment in payments]
-    body = mainpage.format(items=''.join(lines))
-    if 'message' in request.args:
-        body = message_template.render(message=request.args['message']) + body
+    message = request.args.get('message')
+    body = Template(index_html).render(items=''.join(lines), message=message)
     title = 'Welcome, ' + username
-    return design.format(title=title, body=body)
+    return Template(design_html).render(title=title, body=body)
 
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():
@@ -52,12 +37,11 @@ def pay():
         message = request.form.get('message')
         if account and dollars and dollars.isdigit() and message:
             db = bank.open_database()
-            print('-'*90)
             bank.add_payment(db, username, account, dollars, message)
             db.commit()
             return redirect(url_for('index', message='Payment successful'))
-    body = paypage.format()
-    return design.format(title='Welcome, ' + username, body=body)
+    return Template(design_html).render(title='Welcome, ' + username,
+                                        body=pay_html)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -71,8 +55,8 @@ def login():
             response.set_cookie('username', username)
             return response
         title = 'Please try again'
-    form = loginform.format(username=username)
-    return design.format(title=title, body=form)
+    form = Template(login_html).render(username=username)
+    return Template(design_html).render(title=title, body=form)
 
 @app.route('/logout')
 def logout():
