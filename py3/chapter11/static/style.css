@@ -1,8 +1,18 @@
-body {
+html {
     text-align: center;
 }
-form {
+body {
     display: inline-block;
+}
+ul {
+    text-align: left;
+}
+form {
+    display: block;
+    float: left;
+    clear: both;
+    margin-left: auto;
+    margin-right: auto;
     box-shadow: 10px 10px 5px #aaa;
     border: 1px solid black;
 }
