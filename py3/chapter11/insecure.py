@@ -1,6 +1,6 @@
 
 import bank
-from flask import Flask, redirect, request, url_for
+from flask import Flask, make_response, redirect, request, url_for
 app = Flask(__name__)
 
 design = ('<html><head><title>{title}</title>'
@@ -10,6 +10,7 @@ loginform = ('<form method="post"><label>User: '
              '<input name="username" value="{username}"></label>'
              '<label>Password: <input name="password" type="password"></label>'
              '<button type="submit">Log in</button></form>')
+message_html = '<div class="message">{message}<a href="/">&times;</a></div>'
 mainpage = ('<p>Your transactions</p><ul>{items}</ul>'
             '<a href="/pay">Make payment</a> | <a href="/logout">Log out</a>')
 paypage = ('<form method="post" action="/pay">'
@@ -34,7 +35,10 @@ def index():
     payments = bank.get_payments_of(bank.open_database(), username)
     lines = [format_payment(username, payment) for payment in payments]
     body = mainpage.format(items=''.join(lines))
-    return design.format(title='Welcome, ' + username, body=body)
+    if 'message' in request.args:
+        body = message_html.format(message=request.args['message']) + body
+    title = 'Welcome, ' + username
+    return design.format(title=title, body=body)
 
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():
@@ -49,7 +53,7 @@ def pay():
             db = bank.open_database()
             bank.add_payment(db, username, account, dollars, message)
             db.commit()
-            return redirect(url_for('index'))
+            return redirect(url_for('index', message='Payment successful'))
     body = paypage.format()
     return design.format(title='Welcome, ' + username, body=body)
 

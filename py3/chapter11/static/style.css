@@ -4,6 +4,23 @@ html {
 body {
     display: inline-block;
 }
+.message {
+    position: relative;
+    padding: 1em;
+    color: white;
+    background: green;
+}
+.message a {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    margin-left: 0.5em;
+    padding: 0.3em;
+    color: white;
+    text-decoration: none;
+    font-family: sans-serif;
+    font-weight: bold;
+}
 ul {
     padding: 0px;
     text-align: left;
