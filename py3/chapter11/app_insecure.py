@@ -6,13 +6,6 @@ import bank
 from templates import design_html, login_html, index_html, pay_html
 
 app = Flask(__name__)
-payment = '<li>${p.dollars} to account {p.credit}<br>{p.message}'
-
-def format_payment(username, payment):
-    prep = 'from' if (username == payment.credit) else 'to'
-    other = payment.debit if (username == payment.credit) else payment.credit
-    return ('<li class="{prep}">${p.dollars} {prep} <b>{other}</b> for:'
-            ' <i>{p.message}</i>'.format(prep=prep, other=other, p=payment))
 
 @app.route('/')
 def index():
@@ -20,9 +13,9 @@ def index():
     if not username:
         return redirect(url_for('login'))
     payments = bank.get_payments_of(bank.open_database(), username)
-    lines = [format_payment(username, payment) for payment in payments]
     message = request.args.get('message')
-    body = Template(index_html).render(items=''.join(lines), message=message)
+    body = Template(index_html).render(
+        payments=payments, message=message, username=username)
     title = 'Welcome, ' + username
     return Template(design_html).render(title=title, body=body)
 
