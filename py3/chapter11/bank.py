@@ -29,4 +29,4 @@ def get_payments_of(db, account):
 
 if __name__ == '__main__':
     db = open_database()
-    pprint.pprint(get_payments_of(db, '101'))
+    pprint.pprint(get_payments_of(db, 'brandon'))

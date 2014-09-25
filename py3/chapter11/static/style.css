@@ -5,6 +5,7 @@ body {
     display: inline-block;
 }
 ul {
+    padding: 0px;
     text-align: left;
 }
 li {
@@ -12,10 +13,10 @@ li {
     margin: 2px;
     padding: 2px 4px;
 }
-li.c {
+li.from {
     background-color: lightgreen;
 }
-li.p {
+li.to {
     background-color: pink;
 }
 form {
@@ -24,6 +25,7 @@ form {
     clear: both;
     margin-left: auto;
     margin-right: auto;
+    padding: 1em;
     box-shadow: 10px 10px 5px #aaa;
     border: 1px solid black;
 }

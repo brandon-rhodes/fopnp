@@ -10,21 +10,19 @@ loginform = ('<form method="post"><label>User: <input name="username"></label>'
              '<label>Password: <input name="password" type="password"></label>'
              '<button type="submit">Log in</button></form>')
 mainpage = ('<p>Your transactions</p><ul>{items}</ul>'
-            '<form method="post" action="/pay">'
-            '<label>To account: <input name="account"></label>'
-            '<label>Amount: <input name="amount"></label>'
-            '<button type="submit">Send money</button>'
-            '</form>'
-            '<form method="post" action="/logout">'
-            '<button type="submit">Logout</button></form>')
+            '<a href="/pay">Make payment</a> | <a href="/logout">Log out</a>')
+paypage = ('<form method="post" action="/pay">'
+           '<label>To account: <input name="account"></label>'
+           '<label>Dollars: <input name="dollars"></label>'
+           '<label>Message: <input name="message"></label>'
+           '<button type="submit">Send money</button>')
 payment = '<li>${p.dollars} to account {p.credit}<br>{p.message}'
 
 def format_payment(username, payment):
-    if payment.debit == username:
-        s = '<li class="c">${p.dollars} to <b>{p.credit}</b> for <i>{p.message}</i>'
-    elif payment.credit == username:
-        s = '<li class="p">${p.dollars} from <b>{p.debit}</b> for <i>{p.message}</i>'
-    return s.format(p=payment)
+    prep = 'from' if (username == payment.credit) else 'to'
+    other = payment.debit if (username == payment.credit) else payment.credit
+    return ('<li class="{prep}">${p.dollars} {prep} <b>{other}</b> for:'
+            ' <i>{p.message}</i>'.format(prep=prep, other=other, p=payment))
 
 @app.route('/')
 def index():
@@ -34,6 +32,23 @@ def index():
     payments = bank.get_payments_of(bank.open_database(), username)
     lines = [format_payment(username, payment) for payment in payments]
     body = mainpage.format(items=''.join(lines))
+    return design.format(title='Welcome, ' + username, body=body)
+
+@app.route('/pay', methods=['GET', 'POST'])
+def pay():
+    username = request.cookies.get('username')
+    if not username:
+        return redirect(url_for('login'))
+    if request.method == 'POST':
+        account = request.form.get('account')
+        dollars = request.form.get('dollars')
+        message = request.form.get('message')
+        if account and dollars and dollars.isdigit() and message:
+            db = bank.open_database()
+            bank.add_payment(db, username, account, dollars, message)
+            db.commit()
+            return redirect(url_for('index'))
+    body = paypage.format()
     return design.format(title='Welcome, ' + username, body=body)
 
 @app.route('/login', methods=['GET', 'POST'])
