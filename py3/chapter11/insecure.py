@@ -43,7 +43,9 @@ def index():
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():
     username = request.cookies.get('username')
+    print('-'*90)
     if not username:
+        print('x')
         return redirect(url_for('login'))
     if request.method == 'POST':
         account = request.form.get('account')
@@ -51,6 +53,7 @@ def pay():
         message = request.form.get('message')
         if account and dollars and dollars.isdigit() and message:
             db = bank.open_database()
+            print('-'*90)
             bank.add_payment(db, username, account, dollars, message)
             db.commit()
             return redirect(url_for('index', message='Payment successful'))
