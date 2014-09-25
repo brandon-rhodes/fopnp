@@ -43,9 +43,7 @@ def index():
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():
     username = request.cookies.get('username')
-    print('-'*90)
     if not username:
-        print('x')
         return redirect(url_for('login'))
     if request.method == 'POST':
         account = request.form.get('account')
