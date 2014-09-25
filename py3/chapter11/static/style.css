@@ -7,6 +7,17 @@ body {
 ul {
     text-align: left;
 }
+li {
+    display: block;
+    margin: 2px;
+    padding: 2px 4px;
+}
+li.c {
+    background-color: lightgreen;
+}
+li.p {
+    background-color: pink;
+}
 form {
     display: block;
     float: left;

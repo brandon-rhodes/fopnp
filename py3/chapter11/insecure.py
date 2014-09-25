@@ -9,7 +9,7 @@ design = ('<html><head><title>{title}</title>'
 loginform = ('<form method="post"><label>User: <input name="username"></label>'
              '<label>Password: <input name="password" type="password"></label>'
              '<button type="submit">Log in</button></form>')
-mainpage = ('<p>Your transactions:</p><ul>{items}</ul>'
+mainpage = ('<p>Your transactions</p><ul>{items}</ul>'
             '<form method="post" action="/pay">'
             '<label>To account: <input name="account"></label>'
             '<label>Amount: <input name="amount"></label>'
@@ -19,13 +19,21 @@ mainpage = ('<p>Your transactions:</p><ul>{items}</ul>'
             '<button type="submit">Logout</button></form>')
 payment = '<li>${p.dollars} to account {p.credit}<br>{p.message}'
 
+def format_payment(username, payment):
+    if payment.debit == username:
+        s = '<li class="c">${p.dollars} to <b>{p.credit}</b> for <i>{p.message}</i>'
+    elif payment.credit == username:
+        s = '<li class="p">${p.dollars} from <b>{p.debit}</b> for <i>{p.message}</i>'
+    return s.format(p=payment)
+
 @app.route('/')
 def index():
     username = request.cookies.get('username')
     if not username:
         return redirect(url_for('login'))
-    payments = bank.get_payments_of(bank.open_database(), '101')
-    body = mainpage.format(items=''.join(payment.format(p=p) for p in payments))
+    payments = bank.get_payments_of(bank.open_database(), username)
+    lines = [format_payment(username, payment) for payment in payments]
+    body = mainpage.format(items=''.join(lines))
     return design.format(title='Welcome, ' + username, body=body)
 
 @app.route('/login', methods=['GET', 'POST'])
