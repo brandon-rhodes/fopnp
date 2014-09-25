@@ -15,7 +15,8 @@ paypage = ('<form method="post" action="/pay">'
            '<label>To account: <input name="account"></label>'
            '<label>Dollars: <input name="dollars"></label>'
            '<label>Message: <input name="message"></label>'
-           '<button type="submit">Send money</button>')
+           '<button type="submit">Send money</button>'
+           ' | <a href="/">Cancel</a></form>')
 payment = '<li>${p.dollars} to account {p.credit}<br>{p.message}'
 
 def format_payment(username, payment):
@@ -65,7 +66,7 @@ def login():
         title = 'Please try again'
     return design.format(title=title, body=loginform)
 
-@app.route('/logout', methods=['POST'])
+@app.route('/logout')
 def logout():
     response = redirect(url_for('login'))
     response.set_cookie('username', '')
