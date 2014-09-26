@@ -24,17 +24,22 @@ def pay():
     username = request.cookies.get('username')
     if not username:
         return redirect(url_for('login'))
+    account = request.form.get('account', '').strip()
+    dollars = request.form.get('dollars', '').strip()
+    message = request.form.get('message', '').strip()
     if request.method == 'POST':
-        account = request.form.get('account')
-        dollars = request.form.get('dollars')
-        message = request.form.get('message')
         if account and dollars and dollars.isdigit() and message:
             db = bank.open_database()
             bank.add_payment(db, username, account, dollars, message)
             db.commit()
             return redirect(url_for('index', message='Payment successful'))
-    return Template(design_html).render(title='Welcome, ' + username,
-                                        body=pay_html)
+        complaint = ('Dollars must be an integer' if not dollars.isdigit()
+                     else 'Please fill in all three fields')
+    else:
+        complaint = None
+    b = Template(pay_html).render(complaint=complaint, account=account,
+                                  dollars=dollars, message=message)
+    return Template(design_html).render(title='Welcome, ' + username, body=b)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

@@ -38,9 +38,10 @@ index_html = """\
 
 pay_html = """\
 <form method="post" action="/pay">
-  <label>To account: <input name="account"></label>
-  <label>Dollars: <input name="dollars"></label>
-  <label>Message: <input name="message"></label>
+  {% if complaint %}<span class="complaint">{{ complaint }}</span>{% endif %}
+  <label>To account: <input name="account" value="{{ account }}""></label>
+  <label>Dollars: <input name="dollars" value="{{ dollars }}""></label>
+  <label>Message: <input name="message" value="{{ message }}""></label>
   <button type="submit">Send money</button> | <a href="/">Cancel</a>
 </form>
 """

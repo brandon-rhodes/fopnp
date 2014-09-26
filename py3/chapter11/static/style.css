@@ -21,6 +21,11 @@ body {
     font-family: sans-serif;
     font-weight: bold;
 }
+.complaint {
+    display: block;
+    padding-bottom: 1em;
+    color: red;
+}
 ul {
     padding: 0px;
     text-align: left;
