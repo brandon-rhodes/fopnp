@@ -1,9 +1,9 @@
-imapclient
-jsonrpclib-pelix
-paramiko
 cssselect
 dnspython3
+imapclient
+jsonrpclib-pelix
 lxml
+paramiko
 pygeocoder
 python3-memcached
 pyzmq
