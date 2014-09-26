@@ -1,0 +1,8 @@
+{% extends "design.html" %}
+{% block body %}
+<form method="post">
+  <label>User: <input name="username" value="{{ username }}"></label>
+  <label>Password: <input name="password" type="password"></label>
+  <button type="submit">Log in</button>
+</form>
+{% endblock %}

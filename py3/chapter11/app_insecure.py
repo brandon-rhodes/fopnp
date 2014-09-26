@@ -1,9 +1,6 @@
 
-from flask import Flask, make_response, redirect, request, url_for
-from jinja2 import Template
-
+from flask import Flask, redirect, render_template, request, url_for
 import bank
-from templates import design_html, login_html, index_html, pay_html
 
 app = Flask(__name__)
 
@@ -14,10 +11,8 @@ def index():
         return redirect(url_for('login'))
     payments = bank.get_payments_of(bank.open_database(), username)
     message = request.args.get('message')
-    body = Template(index_html).render(
-        payments=payments, message=message, username=username)
-    title = 'Welcome, ' + username
-    return Template(design_html).render(title=title, body=body)
+    return render_template('index.html', payments=payments, message=message,
+                           username=username, title='Welcome, ' + username)
 
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():
@@ -37,9 +32,9 @@ def pay():
                      else 'Please fill in all three fields')
     else:
         complaint = None
-    b = Template(pay_html).render(complaint=complaint, account=account,
-                                  dollars=dollars, message=message)
-    return Template(design_html).render(title='Welcome, ' + username, body=b)
+    return render_template('pay.html', complaint=complaint, account=account,
+                           dollars=dollars, message=message,
+                           title='Welcome, ' + username)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -53,8 +48,7 @@ def login():
             response.set_cookie('username', username)
             return response
         title = 'Please try again'
-    form = Template(login_html).render(username=username)
-    return Template(design_html).render(title=title, body=form)
+    return render_template('login.html', username=username, title=title)
 
 @app.route('/logout')
 def logout():
