@@ -1,4 +1,5 @@
 {% extends "design.html" %}
+{% block title %}Make a Payment{% endblock %}
 {% block body %}
 <form method="post" action="/pay">
   {% if complaint %}<span class="complaint">{{ complaint }}</span>{% endif %}

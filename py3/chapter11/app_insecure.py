@@ -12,7 +12,7 @@ def index():
     payments = bank.get_payments_of(bank.open_database(), username)
     message = request.args.get('message')
     return render_template('index.html', payments=payments, message=message,
-                           username=username, title='Welcome, ' + username)
+                           username=username)
 
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():
@@ -33,22 +33,18 @@ def pay():
     else:
         complaint = None
     return render_template('pay.html', complaint=complaint, account=account,
-                           dollars=dollars, message=message,
-                           title='Welcome, ' + username)
+                           dollars=dollars, message=message)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     username = request.form.get('username', '')
     password = request.form.get('password', '')
-    if request.method == 'GET':
-        title = 'Welcome'
-    elif request.method == 'POST':
+    if request.method == 'POST':
         if username == 'brandon' and password == 'atigdng':
             response = redirect(url_for('index'))
             response.set_cookie('username', username)
             return response
-        title = 'Please try again'
-    return render_template('login.html', username=username, title=title)
+    return render_template('login.html', username=username)
 
 @app.route('/logout')
 def logout():

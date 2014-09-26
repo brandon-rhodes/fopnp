@@ -1,4 +1,5 @@
 {% extends "design.html" %}
+{% block title %}Welcome, {{ username }}{% endblock %}
 {% block body %}
 {% if message %}
   <div class="message">{{ message }}<a href="/">&times;</a></div>
