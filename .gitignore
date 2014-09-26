@@ -2,6 +2,7 @@ diagrams/*.png
 diagrams/*.svg
 *.old
 *.db
+*.sqlite3
 playground/base/id_rsa
 playground/base/id_rsa.pub
 playground/base/requirements.txt
