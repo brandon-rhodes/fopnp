@@ -6,6 +6,7 @@
   <label>To account: <input name="account" value="{{ account }}"></label>
   <label>Dollars: <input name="dollars" value="{{ dollars }}"></label>
   <label>Message: <input name="message" value="{{ message }}"></label>
+  <input name="csrf_token" type="hidden" value="{{ csrf_token }}">
   <button type="submit">Send money</button> | <a href="/">Cancel</a>
 </form>
 {% endblock %}

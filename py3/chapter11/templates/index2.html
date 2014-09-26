@@ -1,8 +1,11 @@
 {% extends "design.html" %}
 {% block title %}Welcome, {{ username }}{% endblock %}
 {% block body %}
-{% if flash %}
-  <div class="flash_message">{{ flash }}<a href="/">&times;</a></div>
+{% set messages = get_flashed_messages() %}
+{% if messages %}
+  <div class="flash_message">
+    {% for message in messages %}{{ message }}<br>{% endfor %}
+  <a href="/">&times;</a></div>
 {% endif %}
 <p>Your Payments</p>
 <ul>

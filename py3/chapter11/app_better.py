@@ -1,10 +1,9 @@
 
-import bank
-from flask import Flask, redirect, request, url_for
-from jinja2 import Environment, PackageLoader
+import bank, uuid
+from flask import Flask, abort, flash, render_template, redirect, request, session, url_for
 
 app = Flask(__name__)
-get = Environment(loader=PackageLoader(__name__, 'templates')).get_template
+app.secret_key = 'saiGeij8AiS2ahleahMo5dahveixuV3J'
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -12,29 +11,28 @@ def login():
     password = request.form.get('password', '')
     if request.method == 'POST':
         if (username, password) in [('brandon', 'atigdng'), ('sam', 'xyzzy')]:
-            response = redirect(url_for('index'))
-            response.set_cookie('username', username)
-            return response
-    return get('login.html').render(username=username)
+            session['username'] = username
+            session['csrf_token'] = uuid.uuid4().hex
+            return redirect(url_for('index'))
+    return render_template('login.html', username=username)
 
 @app.route('/logout')
 def logout():
-    response = redirect(url_for('login'))
-    response.set_cookie('username', '')
-    return response
+    session.pop('username', None)
+    return redirect(url_for('login'))
 
 @app.route('/')
 def index():
-    username = request.cookies.get('username')
+    username = session.get('username')
     if not username:
         return redirect(url_for('login'))
     payments = bank.get_payments_of(bank.open_database(), username)
-    return get('index.html').render(payments=payments, username=username,
-                                    flash=request.args.get('flash'))
+    return render_template('index2.html', payments=payments, username=username,
+                           message=request.args.get('message'))
 
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():
-    username = request.cookies.get('username')
+    username = session.get('username')
     if not username:
         return redirect(url_for('login'))
     account = request.form.get('account', '').strip()
@@ -42,15 +40,19 @@ def pay():
     message = request.form.get('message', '').strip()
     complaint = None
     if request.method == 'POST':
+        if request.form.get('csrf_token') != session['csrf_token']:
+            abort(403)
         if account and dollars and dollars.isdigit() and message:
             db = bank.open_database()
             bank.add_payment(db, username, account, dollars, message)
             db.commit()
-            return redirect(url_for('index', flash='Payment successful'))
+            flash('Payment successful')
+            return redirect(url_for('index'))
         complaint = ('Dollars must be an integer' if not dollars.isdigit()
                      else 'Please fill in all three fields')
-    return get('pay.html').render(complaint=complaint, account=account,
-                                  dollars=dollars, message=message)
+    return render_template('pay2.html', complaint=complaint, account=account,
+                           dollars=dollars, message=message,
+                           csrf_token=session['csrf_token'])
 
 if __name__ == '__main__':
     app.debug = True

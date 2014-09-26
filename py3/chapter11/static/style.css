@@ -4,13 +4,13 @@ html {
 body {
     display: inline-block;
 }
-.message {
+.flash_message {
     position: relative;
     padding: 1em;
     color: white;
     background: green;
 }
-.message a {
+.flash_message a {
     position: absolute;
     top: 0px;
     right: 0px;
