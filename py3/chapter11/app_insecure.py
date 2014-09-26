@@ -11,7 +11,7 @@ def login():
     username = request.form.get('username', '')
     password = request.form.get('password', '')
     if request.method == 'POST':
-        if username == 'brandon' and password == 'atigdng':
+        if (username, password) in [('brandon', 'atigdng'), ('sam', 'xyzzy')]:
             response = redirect(url_for('index'))
             response.set_cookie('username', username)
             return response
@@ -40,6 +40,7 @@ def pay():
     account = request.form.get('account', '').strip()
     dollars = request.form.get('dollars', '').strip()
     message = request.form.get('message', '').strip()
+    complaint = None
     if request.method == 'POST':
         if account and dollars and dollars.isdigit() and message:
             db = bank.open_database()
@@ -48,8 +49,6 @@ def pay():
             return redirect(url_for('index', message='Payment successful'))
         complaint = ('Dollars must be an integer' if not dollars.isdigit()
                      else 'Please fill in all three fields')
-    else:
-        complaint = None
     return get('pay.html').render(complaint=complaint, account=account,
                                   dollars=dollars, message=message)
 
