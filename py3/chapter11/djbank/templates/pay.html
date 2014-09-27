@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block title %}{% block title2 %}Make a Payment{% endblock %}{% endblock %}
+{% block content %}
+<form method="post" action="/pay/">
+  {{ form.as_p }}
+  {% csrf_token %}
+  <button type="submit">Send money</button> | <a href="/">Cancel</a>
+</form>
+{% endblock %}

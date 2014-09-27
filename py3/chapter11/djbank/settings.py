@@ -1,5 +1,5 @@
 """
-Django settings for django_bank project.
+Django settings for djbank project.
 
 For more information on this file, see
 https://docs.djangoproject.com/en/1.7/topics/settings/
@@ -36,6 +36,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'djbank',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -48,9 +49,9 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
-ROOT_URLCONF = 'django_bank.urls'
+ROOT_URLCONF = 'djbank.urls'
 
-WSGI_APPLICATION = 'django_bank.wsgi.application'
+WSGI_APPLICATION = 'djbank.wsgi.application'
 
 
 # Database
@@ -81,3 +82,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# ----------------------------------------------------------------------
+# All of the above are the pristine settings as written by the
+# "startapp" command.  Here are the additions necessary for the app as
+# published in Foundations of Python Network Programming:
+
+STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)

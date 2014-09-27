@@ -1,0 +1,20 @@
+[
+    {
+        "model": "djbank.payment", "pk": 1, "fields": {
+            "debit": "brandon", "credit": "psf", "dollars": 125,
+            "memo": "Registration for PyCon"
+        }
+    },
+    {
+        "model": "djbank.payment", "pk": 2, "fields": {
+            "debit": "brandon", "credit": "liz", "dollars": 200,
+            "memo": "Payment for writing that code"
+        }
+    },
+    {
+        "model": "djbank.payment", "pk": 3, "fields": {
+            "debit": "sam", "credit": "brandon", "dollars": 25,
+            "memo": "Gas money-thanks for the ride!"
+        }
+    }
+]
