@@ -4,7 +4,8 @@
 # A payments application with basic security improvements added.
 
 import bank, uuid
-from flask import Flask, abort, flash, render_template, redirect, request, session, url_for, get_flashed_messages
+from flask import (Flask, abort, flash, get_flashed_messages,
+                   redirect, render_template, request, session, url_for)
 
 app = Flask(__name__)
 app.secret_key = 'saiGeij8AiS2ahleahMo5dahveixuV3J'
