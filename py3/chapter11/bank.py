@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/bank.py
+# A small library of database routines to power a payments application.
 
 import os, pprint, sqlite3
 from collections import namedtuple

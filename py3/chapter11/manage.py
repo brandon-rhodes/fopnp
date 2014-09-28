@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/manage.py
+# The "manage.py" file produced by Django for the "djbank" application:
+# ----------------------------------------------------------------------
 #!/usr/bin/env python
 import os
 import sys

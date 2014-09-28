@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/djbank/views.py
+# A function for each view in our Django application.
+
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db.models import Q

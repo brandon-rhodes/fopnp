@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/app_improved.py
+# A payments application with basic security improvements added.
 
 import bank, uuid
 from flask import Flask, abort, flash, render_template, redirect, request, session, url_for

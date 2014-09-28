@@ -1,3 +1,8 @@
+#!/usr/bin/env python3
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/djbank/settings.py
+# Settings file for our Django application (see addition at bottom).
+# ----------------------------------------------------------------------
 """
 Django settings for djbank project.
 
