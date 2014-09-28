@@ -2,6 +2,7 @@
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/app_insecure.py
 # A poorly-written and profoundly insecure payments application.
+# (Not the fault of Flask, but of how we are choosing to use it!)
 
 import bank
 from flask import Flask, redirect, request, url_for

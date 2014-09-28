@@ -20,16 +20,15 @@ def open_database(path='bank.db'):
     return db
 
 def add_payment(db, debit, credit, dollars, memo):
-    db.cursor().execute(
-        'INSERT INTO payment (debit, credit, dollars, memo)'
-        ' VALUES (?, ?, ?, ?)', (debit, credit, dollars, memo))
+    db.cursor().execute('INSERT INTO payment (debit, credit, dollars, memo)'
+                        ' VALUES (?, ?, ?, ?)', (debit, credit, dollars, memo))
 
 def get_payments_of(db, account):
     c = db.cursor()
     c.execute('SELECT * FROM payment WHERE credit = ? or debit = ?'
               ' ORDER BY id', (account, account))
-    RowTuple = namedtuple('Row', [tup[0] for tup in c.description])
-    return [RowTuple(*row) for row in c.fetchall()]
+    Row = namedtuple('Row', [tup[0] for tup in c.description])
+    return [Row(*row) for row in c.fetchall()]
 
 if __name__ == '__main__':
     db = open_database()
