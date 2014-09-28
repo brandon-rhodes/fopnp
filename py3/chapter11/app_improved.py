@@ -41,21 +41,21 @@ def pay():
         return redirect(url_for('login'))
     account = request.form.get('account', '').strip()
     dollars = request.form.get('dollars', '').strip()
-    message = request.form.get('message', '').strip()
+    memo = request.form.get('memo', '').strip()
     complaint = None
     if request.method == 'POST':
         if request.form.get('csrf_token') != session['csrf_token']:
             abort(403)
-        if account and dollars and dollars.isdigit() and message:
+        if account and dollars and dollars.isdigit() and memo:
             db = bank.open_database()
-            bank.add_payment(db, username, account, dollars, message)
+            bank.add_payment(db, username, account, dollars, memo)
             db.commit()
             flash('Payment successful')
             return redirect(url_for('index'))
         complaint = ('Dollars must be an integer' if not dollars.isdigit()
                      else 'Please fill in all three fields')
     return render_template('pay2.html', complaint=complaint, account=account,
-                           dollars=dollars, message=message,
+                           dollars=dollars, memo=memo,
                            csrf_token=session['csrf_token'])
 
 if __name__ == '__main__':

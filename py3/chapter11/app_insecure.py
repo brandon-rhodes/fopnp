@@ -43,18 +43,18 @@ def pay():
         return redirect(url_for('login'))
     account = request.form.get('account', '').strip()
     dollars = request.form.get('dollars', '').strip()
-    message = request.form.get('message', '').strip()
+    memo = request.form.get('memo', '').strip()
     complaint = None
     if request.method == 'POST':
-        if account and dollars and dollars.isdigit() and message:
+        if account and dollars and dollars.isdigit() and memo:
             db = bank.open_database()
-            bank.add_payment(db, username, account, dollars, message)
+            bank.add_payment(db, username, account, dollars, memo)
             db.commit()
             return redirect(url_for('index', flash='Payment successful'))
         complaint = ('Dollars must be an integer' if not dollars.isdigit()
                      else 'Please fill in all three fields')
     return get('pay.html').render(complaint=complaint, account=account,
-                                  dollars=dollars, message=message)
+                                  dollars=dollars, memo=memo)
 
 if __name__ == '__main__':
     app.debug = True
