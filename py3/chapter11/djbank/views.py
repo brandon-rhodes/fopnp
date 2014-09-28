@@ -3,6 +3,7 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/djbank/views.py
 # A function for each view in our Django application.
 
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.db.models import Q
@@ -32,6 +33,7 @@ def pay_view(request):
         payment = form.save(commit=False)
         payment.debit = request.user.username
         payment.save()
+        messages.add_message(request, messages.INFO, 'Payment successful.')
         return redirect('/')
     return render(request, 'pay.html', {'form': form})
 

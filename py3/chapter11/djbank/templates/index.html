@@ -2,13 +2,9 @@
 {% block title %}{% block title2 %}Welcome, {{ user.username }}
 {% endblock %}{% endblock %}
 {% block content %}
-{% with messages=get_flashed_messages %}
-  {% if messages %}
-    <div class="flash_message">
-      {% for message in messages %}{{ message }}<br>{% endfor %}
-    <a href="/">&times;</a></div>
-  {% endif %}
-{% endwith %}
+{% for message in messages %}
+  <div class="flash_message">{{ message }}<a href="/">&times;</a></div>
+{% endfor %}
 <p>Your Payments</p>
 <ul>
   {% for p in payments %}
