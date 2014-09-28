@@ -4,7 +4,7 @@
 # A payments application with basic security improvements added.
 
 import bank, uuid
-from flask import Flask, abort, flash, render_template, redirect, request, session, url_for
+from flask import Flask, abort, flash, render_template, redirect, request, session, url_for, get_flashed_messages
 
 app = Flask(__name__)
 app.secret_key = 'saiGeij8AiS2ahleahMo5dahveixuV3J'
@@ -31,8 +31,8 @@ def index():
     if not username:
         return redirect(url_for('login'))
     payments = bank.get_payments_of(bank.open_database(), username)
-    return render_template('index2.html', payments=payments, username=username,
-                           message=request.args.get('message'))
+    return render_template('index.html', payments=payments, username=username,
+                           flash_messages=get_flashed_messages())
 
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():

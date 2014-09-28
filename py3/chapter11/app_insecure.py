@@ -34,7 +34,7 @@ def index():
         return redirect(url_for('login'))
     payments = bank.get_payments_of(bank.open_database(), username)
     return get('index.html').render(payments=payments, username=username,
-                                    flash=request.args.get('flash'))
+        flash_messages=request.args.getlist('flash'))
 
 @app.route('/pay', methods=['GET', 'POST'])
 def pay():
