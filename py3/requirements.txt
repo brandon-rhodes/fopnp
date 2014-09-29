@@ -1,3 +1,4 @@
+beautifulsoup4
 cssselect
 dnspython3
 ghost.py
