@@ -1,4 +1,7 @@
-
+#!/usr/bin/env python3
+# Foundations of Python Network Programming, Third Edition
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter11/mscrape.py
+# Manual scraping, that navigates to a particular page and grabs data.
 
 import argparse, bs4, lxml.html, requests
 from selenium import webdriver
