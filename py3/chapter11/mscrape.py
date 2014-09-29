@@ -7,7 +7,7 @@ import argparse, bs4, lxml.html, requests
 from selenium import webdriver
 from urllib.parse import urljoin
 
-ROW = '{:12}  {}'
+ROW = '{:>12}  {}'
 
 def download_page_with_requests(base):
     session = requests.Session()
@@ -23,7 +23,7 @@ def download_page_with_selenium(base):
     css = browser.find_element_by_css_selector
     css('input[name="username"]').send_keys('brandon')
     css('input[name="password"]').send_keys('atigdng')
-    css('form').submit()
+    css('input[name="password"]').submit()
     assert browser.current_url == urljoin(base, '/')
     return browser.page_source
 
@@ -32,21 +32,21 @@ def scrape_with_soup(text):
     total = 0
     for li in soup.find_all('li', 'to'):
         dollars = int(li.get_text().split()[0].lstrip('$'))
-        memo = li.find('i').text
+        memo = li.find('i').get_text()
         total += dollars
         print(ROW.format(dollars, memo))
-    print()
+    print(ROW.format('-' * 8, '-' * 30))
     print(ROW.format(total, 'Total payments made'))
 
 def scrape_with_lxml(text):
     root = lxml.html.document_fromstring(text)
     total = 0
     for li in root.cssselect('li.to'):
-        dollars = int(li.text.split()[0].lstrip('$'))
-        memo = li.cssselect('i')[0].text
+        dollars = int(li.text_content().split()[0].lstrip('$'))
+        memo = li.cssselect('i')[0].text_content()
         total += dollars
         print(ROW.format(dollars, memo))
-    print()
+    print(ROW.format('-' * 8, '-' * 30))
     print(ROW.format(total, 'Total payments made'))
 
 def main():
