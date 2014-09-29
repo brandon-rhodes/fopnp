@@ -4,10 +4,10 @@
 # Recursive scraper built using the Selenium Webdriver.
 
 from urllib.parse import urljoin
-from scraper1 import main
+from rscrape1 import main
 from selenium import webdriver
 
-class GhostVisitor:
+class WebdriverVisitor:
     def __init__(self):
         self.browser = webdriver.Firefox()
 
@@ -30,4 +30,4 @@ class GhostVisitor:
         yield from self.parse()
 
 if __name__ == '__main__':
-    main(GhostVisitor().GET)
+    main(WebdriverVisitor().GET)
