@@ -1,0 +1,46 @@
+<html>
+  <meta charset="utf-8">
+  <head>
+    <title>The Index</title>
+  </head>
+  <style>form {display: inline}</style>
+  <h1>The Index</h1>
+  <p>This page includes several different kinds of link.</p>
+  <h2>Pages whose links appear in the HTML</h2>
+  <p>
+    This paragraph element includes a literal inline link to
+    <a href="/page1">page 1</a> and another link to
+    <a href="/page2">page 2</a>.
+  </p>
+  <h2>Pages that are only accessible through forms</h2>
+  <p>
+    There are two searches that this site can return, named
+    <form action="/search">
+      <input name="q" type="hidden" value="page3">
+      <button type="submit">page 3</button>
+    </form>
+    and
+    <form action="/search">
+      <input name="q" type="hidden" value="page4">
+      <button type="submit">page 4</button>
+    </form>
+    whose names are part of the query string.
+  </p>
+  <h2>Pages whose elements are loaded through JavaScript</h2>
+  <p>
+    The following div element is populated through a callback.
+  </p>
+  <div id="later"></div>
+  <script>
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState !== 4)
+        return;
+      var text = xhr.responseText;
+      console.log(text);
+      document.getElementById('later').innerHTML = text;
+    };
+    xhr.open('GET', '/further.html');
+    xhr.send('');
+  </script>
+</html>
