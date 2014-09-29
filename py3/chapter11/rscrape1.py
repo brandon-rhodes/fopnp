@@ -8,28 +8,34 @@ from urllib.parse import urljoin, urlsplit
 from lxml import etree
 
 def GET(url):
-    text = requests.get(url).text
-    html = etree.HTML(text)
+    response = requests.get(url)
+    if response.headers.get('Content-Type', '').split(';')[0] != 'text/html':
+        return
+    text = response.text
+    try:
+        html = etree.HTML(text)
+    except Exception as e:
+        print('    {}: {}'.format(e.__class__.__name__, e))
+        return
     links = html.findall('.//a[@href]')
     for link in links:
         yield GET, urljoin(url, link.attrib['href'])
 
 def scrape(start, url_filter):
-    calls_to_make = [start]
-    calls_already_made = set()
-    while calls_to_make:
-        call_info = calls_to_make.pop()
-        function, url, *etc = call_info
+    further_work = {start}
+    already_seen = {start}
+    while further_work:
+        call_tuple = further_work.pop()
+        function, url, *etc = call_tuple
         print(function.__name__, url, *etc)
-        more_calls_to_make = function(url, *etc)
-        calls_already_made.add(call_info)
-        for call_info in more_calls_to_make:
-            if call_info in calls_already_made:
+        for call_tuple in function(url, *etc):
+            if call_tuple in already_seen:
                 continue
-            function, url, *etc = call_info
+            already_seen.add(call_tuple)
+            function, url, *etc = call_tuple
             if not url_filter(url):
                 continue
-            calls_to_make.append(call_info)
+            further_work.add(call_tuple)
 
 def main(GET):
     parser = argparse.ArgumentParser(description='Scrape a simple site.')
