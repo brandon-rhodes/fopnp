@@ -1,8 +1,10 @@
 cssselect
 dnspython3
+ghost.py
 imapclient
 jsonrpclib-pelix
 lxml
+selenium
 paramiko
 pygeocoder
 python3-memcached
