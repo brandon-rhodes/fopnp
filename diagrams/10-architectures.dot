@@ -1,0 +1,33 @@
+digraph Network {
+    graph [rankdir=LR]
+
+    client1 [label="client"]
+    client2 [label="client"]
+    client3 [label="client"]
+    client4 [label="client"]
+
+    node [shape=rectangle]
+    edge [fontsize=9]
+
+    gunicorn1 [label=<<table border="0" cellborder="0"><tr><td>Gunicorn</td></tr><tr><td bgcolor="#eeeeee"><font point-size="9">your code</font></td></tr></table>>];
+    gunicorn2 [label=<<table border="0" cellborder="0"><tr><td>Gunicorn</td></tr><tr><td bgcolor="#eeeeee"><font point-size="9">your code</font></td></tr></table>>];
+    gunicorn3 [label=<<table border="0" cellborder="0"><tr><td>Gunicorn</td></tr><tr><td bgcolor="#eeeeee"><font point-size="9">your code</font></td></tr></table>>];
+
+    apache1 [label=<<table border="0" cellborder="0"><tr><td>Apache</td></tr><tr><td bgcolor="#eeeeee"><font point-size="9">mod_wsgi</font></td></tr></table>>]
+    apache2 [label="Apache\nor nginx"]
+    apache3 [label="Apache\nor nginx"]
+
+    daemon [label=<<table border="0" cellborder="0"><tr><td>mod_wsgi<br/>daemon</td></tr><tr><td bgcolor="#eeeeee"><font point-size="9">your code</font></td></tr></table>>]
+
+    client1 -> gunicorn1 [label="HTTP"]
+    client2 -> apache1 [label="HTTP"]
+    apache1 -> daemon [style=dashed]
+    client3 -> apache2 -> gunicorn2 [label="HTTP"]
+    client4 -> "Varnish\nproxy" -> apache3 -> gunicorn3 [label="HTTP"]
+
+    {
+        rank = same;
+        rankdir = TB;
+        client1 -> client2 -> client3 -> client4 [color=white];
+    }
+}
