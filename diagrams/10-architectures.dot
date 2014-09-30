@@ -17,17 +17,19 @@ digraph Network {
     apache2 [label="Apache\nor nginx"]
     apache3 [label="Apache\nor nginx"]
 
-    daemon [label=<<table border="0" cellborder="0"><tr><td>mod_wsgi<br/>daemon</td></tr><tr><td bgcolor="#eeeeee"><font point-size="9">your code</font></td></tr></table>>]
+    daemon [label=<<table border="0" cellborder="0"><tr><td>daemon</td></tr><tr><td bgcolor="#eeeeee"><font point-size="9">your code</font></td></tr></table>>]
+    daemon2 [shape=none; label=<<i>(mod_wsgi launches<br/>the daemon process)</i>>]
 
     client1 -> gunicorn1 [label="HTTP"]
     client2 -> apache1 [label="HTTP"]
     apache1 -> daemon [style=dashed]
+    daemon -> daemon2 [style=invis]
     client3 -> apache2 -> gunicorn2 [label="HTTP"]
     client4 -> "Varnish\nproxy" -> apache3 -> gunicorn3 [label="HTTP"]
 
     {
         rank = same;
         rankdir = TB;
-        client1 -> client2 -> client3 -> client4 [color=white];
+        client1 -> client2 -> client3 -> client4 [style=invis];
     }
 }
