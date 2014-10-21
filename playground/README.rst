@@ -1,20 +1,21 @@
 
-============
- Playground
-============
+========================
+ The Network Playground
+========================
 
-The ``network.py`` script in this directory uses the Mininet library to
+The ``network.sh`` script in this directory uses the Mininet library to
 build an example “playground” network which can be used to run the code
 examples in the book against many different kinds of server.  Installing
 the network’s dependencies and then building the network should require
 only two commands under Ubuntu::
 
     $ sudo ./install.sh
-    $ sudo ./network.py -i
+    $ sudo ./network.sh -i
 
-The ``h1`` and ``h2`` machines for which the Mininet will launch xterms
-are located on the same LAN, behind a firewall ``modemA`` that does NAT
-before releasing their packets out into the wild:
+The ``h1`` and ``h2`` machines for which ``network.sh`` will launch
+xterms when it is given the ``-i`` option are both located on the same
+LAN in the playground — the one behind the firewall ``modemA`` that does
+NAT before releasing their packets out into the wild:
 
 .. image:: https://raw.githubusercontent.com/brandon-rhodes/fopnp/m/diagrams/playground.png
 
