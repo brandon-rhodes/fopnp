@@ -15,3 +15,13 @@ by Brandon Rhodes and John Goerzen
 You can learn more about the book by visiting the
 [root of this GitHub source code repository](https://github.com/brandon-rhodes/fopnp#readme).
 
+```
+$ python search1.py
+(41.521954, -84.306691)
+```
+
+```
+$ python search2.py
+{'lat': 41.521954, 'lng': -84.306691}
+```
+
