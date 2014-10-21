@@ -71,3 +71,17 @@ del os
 import getpass
 getpass.getpass = input
 del getpass
+
+# Replace print() with pretty-print when scripts print raw data
+# structures, so that dictionary keys come out in a stable order.
+
+from pprint import pprint
+builtin_print = print
+
+def print(value, *args, **kw):
+    if isinstance(value, str):
+        return builtin_print(value, *args, **kw)
+    return pprint(value)
+
+__builtins__['print'] = print
+del print
