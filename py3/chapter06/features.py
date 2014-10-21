@@ -1,5 +1,13 @@
-"""Introspect Python's SSL library and list its features and options."""
+"""Introspect Python's SSL library and list its features and options.
 
+This script was not included in the text of the book itself, but was a
+useful enough tool to me while I was writing the book that I thought I
+should leave it sitting around in the source code repository.
+
+- Brandon Rhodes, for Foundations of Python Network Programming,
+                      Third Edition
+
+"""
 try:
     import ssl
 except ImportError:
