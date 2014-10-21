@@ -1,4 +1,4 @@
-[Return to the Table of Contents](https://github.com/brandon-rhodes/fopnp)
+[Return to the Table of Contents](https://github.com/brandon-rhodes/fopnp#readme)
 
 # Chapter 1<br>Introduction to Client-Server Networking
 
@@ -13,5 +13,5 @@ by Brandon Rhodes and John Goerzen
 </dl>
 
 You can learn more about the book by visiting the
-[root of this GitHub source code repository](https://github.com/brandon-rhodes/fopnp).
+[root of this GitHub source code repository](https://github.com/brandon-rhodes/fopnp#readme).
 
