@@ -15,6 +15,11 @@ by Brandon Rhodes and John Goerzen
 You can learn more about the book by visiting the
 [root of this GitHub source code repository](https://github.com/brandon-rhodes/fopnp#readme).
 
+The four scripts in this chapter with “search” in their name perform
+exactly the same Google geocoding query, but at four different levels of
+abstraction in the network protocol hierarchy. This lets the chapter
+launch an introduction of each level that the book will be discussing.
+
 ```
 $ python search1.py
 (41.521954, -84.306691)
@@ -34,8 +39,8 @@ $ python search3.py
 $ python search4.py
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=UTF-8
-Date: Tue, 21 Oct 2014 22:23:09 GMT
-Expires: Wed, 22 Oct 2014 22:23:09 GMT
+Date: Tue, 21 Oct 2014 22:50:21 GMT
+Expires: Wed, 22 Oct 2014 22:50:21 GMT
 Cache-Control: public, max-age=86400
 Vary: Accept-Language
 Access-Control-Allow-Origin: *
@@ -116,3 +121,18 @@ Connection: close
 
 ```
 
+The remaining two scripts are quite tiny. The first shows how a
+hostname is turned into an IP address, and the second illustrates the
+basic string decoding and encoding maneuvers that Python 3 is careful to
+require of network programmers.
+
+```
+$ python getname.py
+The IP address of maps.google.com is 74.125.228.105
+```
+
+```
+$ python stringcodes.py && cat eagle.txt
+'413 is in.'
+We copy you down, Eagle.
+```
