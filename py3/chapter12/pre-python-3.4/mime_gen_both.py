@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/mime_gen_both.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/pre-python-3.4/mime_gen_both.py
 
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart

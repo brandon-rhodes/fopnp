@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/trad_gen_newhdrs.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/pre-python-3.4/trad_gen_newhdrs.py
 # Traditional Message Generation with Date and Message-ID
 
 import email.utils

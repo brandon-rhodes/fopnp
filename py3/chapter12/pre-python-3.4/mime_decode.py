@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # Foundations of Python Network Programming, Third Edition
-# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/mime_decode.py
+# https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter12/pre-python-3.4/mime_decode.py
 
-import email, fileinput, sys
+import email, fileinput
 
 def save_parts(message, level=0, counter=1):
     l = "|  " * level
