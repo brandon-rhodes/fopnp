@@ -18,7 +18,7 @@ start2 = """#!/usr/bin/env python3
 base = 'https://github.com/brandon-rhodes/fopnp/blob/m/py3/'
 
 def main():
-    os.chdir(os.path.dirname(__file__))
+    os.chdir(os.path.dirname(os.path.abspath(__file__)))
     for dirpath, dirnames, filenames in os.walk('.'):
         dirnames.sort()
         if dirpath == '.':
