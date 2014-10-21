@@ -1,6 +1,11 @@
 FROM ubuntu:14.04
 RUN apt-get update
-RUN apt-get install -y bind9-host curl dnsutils mtr ncftp nmap openssh-server python3-pip strace telnet tcpdump
+RUN apt-get install -y bind9-host cython3 curl dnsutils libxml2-dev libxslt-dev mtr ncftp nmap openssh-server python3-pip python3-zmq strace telnet traceroute tcpdump zlib1g-dev
+
+# Install all third-party Python 3 packages used in the book
+
+ADD requirements.txt /root/requirements.txt
+RUN pip3 install -r /root/requirements.txt
 
 # Prevent SSH from complaining about unknown hosts
 
@@ -25,11 +30,6 @@ RUN update-ca-certificates
 # Give user "brandon" the password "abc123" on all hosts
 
 RUN useradd -d /home/brandon -m -p '$6$sHTmsDVi$Spmhni61IjBGDsQBS/rYj1k4Do3u2HlI5qtCrPGn4mvqzogdagSjq0KqfeMXFpI2bqkg9OVOuZHEJOxtN.byy0' brandon
-
-# Install all third-party Python 3 packages used in the book
-
-ADD requirements.txt /root/requirements.txt
-RUN pip3 install -r /root/requirements.txt
 
 # Run SSH by default
 
