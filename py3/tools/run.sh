@@ -1,7 +1,7 @@
 #!/bin/bash
 #
-# Run sample shell code inside a README and rewrite the README with the
-# new output.
+# Run sample shell commands found inside of a chapter README.md, and
+# rewrite the README.md with their real output.
 
 if [ -z "$1" ]
 then
