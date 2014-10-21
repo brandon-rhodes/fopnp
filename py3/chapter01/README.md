@@ -15,6 +15,10 @@ by Brandon Rhodes and John Goerzen
 You can learn more about the book by visiting the
 [root of this GitHub source code repository](https://github.com/brandon-rhodes/fopnp#readme).
 
+All the scripts in this chapter have been tested successfully under
+Python 2.  Simply use [3to2](https://pypi.python.org/pypi/3to2) to
+convert them to the older syntax.
+
 The four scripts in this chapter with “search” in their name perform
 exactly the same Google geocoding query, but at four different levels of
 abstraction in the network protocol hierarchy. This lets the chapter
