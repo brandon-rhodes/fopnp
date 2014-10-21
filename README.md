@@ -1,7 +1,8 @@
-This is a test of whether an iframe works with GitHub Markdown:
+<h1 style="text-align:center">Welcome</h1>
 
-<iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//ws-na.amazon-adsystem.com/widgets/q?ServiceVersion=20070822&OneJS=1&Operation=GetAdHtml&MarketPlace=US&source=ss&ref=ss_til&ad_type=product_link&tracking_id=letsdisthemat-20&marketplace=amazon&region=US&placement=1430258543&asins=1430258543&linkId=6PT2U7Z5T3AS76VX&show_border=true&link_opens_in_new_window=false">
-</iframe>
+This is a test of whether a floated image works with GitHub Markdown:
+
+<a style="float:right" href="http://www.amazon.com/gp/product/1430258543/ref=as_li_tl?ie=UTF8&camp=1789&creative=390957&creativeASIN=1430258543&linkCode=as2&tag=letsdisthemat-20&linkId=QLZVTAMAR4QVX32Q"><img border="0" src="http://ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1430258543&Format=_SL110_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=letsdisthemat-20" ></a><img src="http://ir-na.amazon-adsystem.com/e/ir?t=letsdisthemat-20&l=as2&o=1&a=1430258543" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 
 This archive contains the example programs for the Apress book:
 
