@@ -5,12 +5,12 @@ ghost.py
 imapclient
 jsonrpclib-pelix
 lxml
-selenium
 paramiko
 pygeocoder
 python3-memcached
 pyzmq
 requests
 rpyc
+selenium
 webob
 werkzeug
