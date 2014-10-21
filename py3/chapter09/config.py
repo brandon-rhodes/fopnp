@@ -1,16 +1,24 @@
-# To use this Gunicorn configuration, which prints HTTP requests and
-# responses to the screen, with the httpbin application, run the
-# following command in this directory after pip installing both
-# "gunicorn" and "httpbin" under Python 3:
-#
-#     gunicorn -c config.py httpbin:app
+# A Gunicorn configuration file that I used during the writing of
+# Foundations of Python Network Programming, Third Edition, to print out
+# various HTTP requests and responses.
+#   - Brandon Rhodes
 
+"""Gunicorn configuration that prints HTTP to the screen.
+
+To use this Gunicorn configuration, which prints HTTP requests and
+responses to the screen, with the httpbin application, run the
+following command in this directory after pip installing both
+"gunicorn" and "httpbin" under Python 3:
+
+    gunicorn -c config.py httpbin:app
+
+"""
 workers = 1
 worker_class = 'sync'
 
 def printout(data):
     """Print and then return the given data."""
-    print(data.decode('ascii'))
+    print(data.decode('utf-8'))
     return data
 
 class Noisy:
