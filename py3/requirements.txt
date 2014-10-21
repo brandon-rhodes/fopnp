@@ -1,7 +1,8 @@
 beautifulsoup4
 cssselect
 dnspython3
-ghost.py
+ghost.py==0.1b3
+httpbin
 imapclient
 jsonrpclib-pelix
 lxml
