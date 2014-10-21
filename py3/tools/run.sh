@@ -11,8 +11,9 @@ fi
 
 original_directory=$(pwd)
 
+export LANG=C.UTF-8
 export PYTHONPATH=$(readlink -f $(dirname $0))/monkeys
-echo $PYTHONPATH
+export PYTHONDONTWRITEBYTECODE=PLEASE
 
 for readme in "$@"
 do
