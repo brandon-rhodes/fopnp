@@ -1,3 +1,8 @@
+# If you scroll down you will see that this is not merely a cut and
+# paste of the usual contents of the _bootlocale.py file, but a way to
+# set up the state of Python so that the code examples in each chapter
+# README always run the same way.
+
 """A minimal subset of the locale module used at interpreter startup
 (imported by the _io module), in order to reduce startup time.
 
