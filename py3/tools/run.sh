@@ -20,18 +20,18 @@ do
     cd $(dirname $readme)
     while read line
     do
-        echo $line
+        echo "$line"
         if [ "$line" = '```' ]
         then
             read command_line
-            echo $command_line
+            echo "$command_line"
             command=${command_line:2}
             eval $command
             read line
             while [ "$line" != '```' ]
             do read line
             done
-            echo $line
+            echo "$line"
         fi
     done <$(basename $readme) >$(basename $readme).new 2>&1
     cd $original_directory
