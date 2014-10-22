@@ -171,4 +171,4 @@ $ curl -s http://127.0.0.1:8003/ && echo
 Wed Oct 22 15:55:56 2014
 ```
 
-The sample network service simply prints the current time.
+The sample network service simply returns the current time.
