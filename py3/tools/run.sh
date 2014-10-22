@@ -28,6 +28,7 @@ do
             command=${command_line:2}
             command=$(echo "$command" | sed 's/python\([23]\) /python\1 -u /')
             eval $command
+            sleep 0.1
             read line
             while [ "$line" != '```' ]
             do read line
