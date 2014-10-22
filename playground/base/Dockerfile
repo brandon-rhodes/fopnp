@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 RUN apt-get update
-RUN apt-get install -y bind9-host cython3 curl dnsutils libxml2-dev libxslt-dev mtr ncftp nmap openssh-server python3-lxml python3-pip python3-zmq strace telnet traceroute tcpdump zlib1g-dev
+RUN apt-get install -y bind9-host cython3 curl dnsutils libxml2-dev libxslt-dev lsof mtr ncftp nmap openssh-server python3-lxml python3-pip python3-zmq strace telnet traceroute tcpdump zlib1g-dev
 
 # Install all third-party Python 3 packages used in the book
 
