@@ -27,7 +27,7 @@ message queues — network services which are fundamental to how modern
 services scale out to very large numbers of clients.
 
 The `squares.py` script requires you to install `memcached` on your
-system, along with a Python library for communicating with it (which
+system, along with a Python library for communicating with it — which
 should already be available if you have installed everything in this
 repository’s [`requirements.txt`](https://github.com/brandon-rhodes/fopnp/blob/m/py3/requirements.txt).
 
