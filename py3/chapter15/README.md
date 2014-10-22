@@ -24,9 +24,9 @@ The scripts in this chapter are best exercised inside the network
 already set up and configured for POP.  Once the playground is running,
 ask for a prompt on the `h1` host and visit this chapter’s directory:
 
-$ ./play.sh h1
+    $ ./play.sh h1
 
-# cd py3/chapter14
+    # cd py3/chapter14
 
 The scripts will all need the password of the `brandon` user, which is
 `abc123` and in the following examples will be piped in with the `echo`
