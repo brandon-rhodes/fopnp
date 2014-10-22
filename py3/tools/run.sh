@@ -45,6 +45,7 @@ do
     rm -f $readme.new
 
     # Kill any server jobs that were started with "&" in the readme.
-    kill $(jobs -p)
-    #jobs -x kill
+    if [ -n "$(jobs -p)" ]
+    then kill $(jobs -p)
+    fi
 done
