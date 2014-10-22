@@ -36,7 +36,8 @@ $ sleep 3 && curl -s http://127.0.0.1:5000/
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <title>Redirecting...</title>
 <h1>Redirecting...</h1>
-<p>You should be redirected automatically to target URL: <a href="/login">/login</a>.  If not click the link.```
+<p>You should be redirected automatically to target URL: <a href="/login">/login</a>.  If not click the link.
+```
 
 The answer is that the Python program must write a custom web scraping
 program that knows exactly how login to this particular site works.  The
