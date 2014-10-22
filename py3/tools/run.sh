@@ -26,7 +26,7 @@ do
             read command_line
             echo "$command_line"
             command=${command_line:2}
-            command=$(echo "$command" | sed 's/python /python -u /')
+            command=$(echo "$command" | sed 's/python\([23]\) /python\1 -u /')
             eval $command
             read line
             while [ "$line" != '```' ]
