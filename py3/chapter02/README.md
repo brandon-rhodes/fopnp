@@ -19,12 +19,12 @@ These scripts were written for Python 3, but can also run successfully
 under Python 2.  Simply use [3to2](https://pypi.python.org/pypi/3to2) to
 convert them to the older syntax.
 
-One of the scripts is quite simple.  It tries to send a very large UDP
-datagram, and reports back the length of the largest packet that could
-actually cross the network between its own host and the host named on
-the command line.  Running it in the [Playground](../../playground)
-should report a maximum packet size of 1,500 bytes, the typical maximum
-length on an Ethernet network:
+One of the scripts is quite simple.  It tries to send a large UDP
+datagram to learn the length of the largest packet that could actually
+cross the network between its own host and the host named on the command
+line.  Running it in the [Playground](../../playground#readme) should
+report a maximum packet size of 1,500 bytes, the typical maximum length
+on an Ethernet network:
 
 ```
 $ python big_sender.py www.example.com
