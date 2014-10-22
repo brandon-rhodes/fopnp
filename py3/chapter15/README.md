@@ -15,6 +15,10 @@ by Brandon Rhodes and John Goerzen
 You can learn more about the book by visiting the
 [root of this GitHub source code repository](https://github.com/brandon-rhodes/fopnp#readme).
 
+These scripts were written for Python 3, but can also run successfully
+under Python 2.  Simply use [3to2](https://pypi.python.org/pypi/3to2) to
+convert them to the older syntax.
+
 The scripts in this chapter are best exercised inside the network
 [Playground](../../playground#readme) where `mail.example.com` is
 already set up and configured for POP.  Once the playground is running,
