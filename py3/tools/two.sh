@@ -7,10 +7,10 @@ set -e
 
 cd $(dirname ${BASH_SOURCE[0]})
 cd ..
-for chapter in chapter*
+for chapter in "$@"
 do
     two=$(echo $chapter | sed 's/chapter/two/')
-    rm -r $two
+    rm -rf $two
     cp -r $chapter $two
     3to2 -w $two/*.py
     tools/run.sh $two/README.md
