@@ -23,6 +23,15 @@ You should probably never use the scripts in this chapter, as the POP
 protocol is unreliable, poorly designed and implemented on servers, and
 should be abandoned in favor of IMAP.  See the chapter for details.
 
+The scripts in this chapter are best exercised inside the network
+[Playground](../../playground#readme) where `mail.example.com` is
+already set up and configured for POP.  Once the playground is running,
+ask for a prompt on the `h1` host and visit this chapter’s directory:
+
+    $ ./play.sh h1
+
+    # cd py3/chapter14
+
 All of the scripts in this chapter are careful to use the `POP3_SSL`
 class and therefore guarantee the use of TLS to protect the user’s
 password and prevent other people in the same coffee shop from seeing
