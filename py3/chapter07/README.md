@@ -15,15 +15,22 @@ by Brandon Rhodes and John Goerzen
 You can learn more about the book by visiting the
 [root of this GitHub source code repository](https://github.com/brandon-rhodes/fopnp#readme).
 
+Although the scripts in this chapter were written for Python 3, nearly
+all of them can also be run successfully under Python 2.  Simply use
+[3to2](https://pypi.python.org/pypi/3to2) to convert them to the older
+syntax.  The two that can run only under Python 3 are the two `asyncio`
+scripts, because the `asyncio` framework depends upon the `yield from`
+syntax that was not introduced until Python 3.
+
 This chapter implements the same network service seven different ways.
 The seven different servers look pretty much the same when run from the
 command line, which is more or less the point.  What is interesting
 about them is how differently they are written while yet providing
 exactly the same network service.
 
-Any of the server scripts, when run at the command line, let the single
-client script — the appropriately named `client.py` — connect and ask a
-series of questions to which the server replies with answers.
+Any of the server scripts, when run at the command line, will let the
+single client script — the appropriately named `client.py` — connect and
+ask a series of questions to which the server replies with answers.
 
 ```
 $ python3 srv_single.py '' &>server.log &
@@ -75,9 +82,9 @@ you can run `ps` to verify that `inetd` is indeed running.
        36 ?        Ss     0:00 /usr/sbin/inetd
     ...
 
-You can add the Zen-of-Python service to its existing list of services,
-and get the Python scripts marked publicly readable so that they can be
-run as the `brandon` user, by typing:
+Next, add the Zen-of-Python service to the existing list of `inetd`
+services, and mark the Python scripts as publicly readable so that they
+can be run as the `brandon` user:
 
     # cat inetd.conf >> /etc/inetd.conf
     # /etc/init.d/openbsd-inetd reload
@@ -103,5 +110,8 @@ If you later log back in to the `ftp` host, you can view the logs of
 both servers.
 
     # cat /tmp/zen.log
+
     Accepted connection from ('10.25.1.65', 49327)
     Client socket to ('10.25.1.65', 49327) has closed
+    Accepted connection from ('10.25.1.65', 49328)
+    Client socket to ('10.25.1.65', 49328) has closed
