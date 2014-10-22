@@ -38,5 +38,5 @@ if __name__ == '__main__':
     parser.add_argument('hostname', help='Remote host to telnet to')
     parser.add_argument('username', help='Remote username')
     args = parser.parse_args()
-    password = getpass.getpass('Password: ')
+    password = getpass.getpass()
     main(args.hostname, args.username, password)
