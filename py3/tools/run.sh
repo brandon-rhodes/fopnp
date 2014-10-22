@@ -26,6 +26,7 @@ do
             read command_line
             echo "$command_line"
             command=${command_line:2}
+            command=$(echo "$command" | sed 's/python /python -u /')
             eval $command
             read line
             while [ "$line" != '```' ]
@@ -34,7 +35,16 @@ do
             echo "$line"
         fi
     done <$(basename $readme) >$(basename $readme).new 2>&1
+
+    # Remove any temporary log file that might have been created.
+    rm -f server.log
+
+    # We "cat" instead of "mv" so the readme retains its original uid.
     cd $original_directory
     cat $readme.new > $readme
     rm -f $readme.new
+
+    # Kill any server jobs that were started with "&" in the readme.
+    kill $(jobs -p)
+    #jobs -x kill
 done
