@@ -78,10 +78,10 @@ del getpass
 from pprint import pprint
 builtin_print = print
 
-def print(value, *args, **kw):
-    if isinstance(value, str):
-        return builtin_print(value, *args, **kw)
-    return pprint(value)
+def print(*args, **kw):
+    if len(args) == 1 and not isinstance(args[0], str):
+        return pprint(args[0])
+    return builtin_print(*args, **kw)
 
 __builtins__['print'] = print
 del print
