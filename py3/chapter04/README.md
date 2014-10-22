@@ -23,9 +23,9 @@ to `getaddrinfo()` or you will get a socket error.
 
 The chapter gives a tour of DNS and how it provides worldwide name
 resolution.  The three scripts involved are conceptually quite simple.
-The first simply asks the operating system to do its usual name
-resolution, and is the normal pattern that programs should undertake
-before opening a socket.
+The first asks the operating system to do its usual name resolution, and
+presents the normal pattern by which Python programs should resolve a
+name before opening a socket.
 
 ```
 $ python3 www_ping.py www.google.com
