@@ -18,8 +18,9 @@ Assuming that httpbin is running on port 8000:
   "headers": {
     "Accept": "*/*",
     "Accept-Encoding": "gzip, deflate",
+    "Connection": "keep-alive",
     "Host": "localhost:8000",
-    "User-Agent": "python-requests/2.3.0 CPython/3.4.1 Linux/3.13.0-34-generic"
+    "User-Agent": "python-requests/2.4.1 CPython/3.4.1 Linux/3.13.0-37-generic"
   }
 }
 
