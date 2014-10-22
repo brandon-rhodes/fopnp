@@ -27,7 +27,7 @@ report a maximum packet size of 1,500 bytes, the typical maximum length
 on an Ethernet network:
 
 ```
-$ python big_sender.py www.example.com
+$ python3 big_sender.py www.example.com
 Alas, the datagram did not make it
 Actual MTU: 1500
 ```
@@ -37,19 +37,19 @@ be started in one terminal window and the client run in another.  The
 `udp_local.py` server and client must be run on the same machine:
 
 ```
-$ python udp_local.py server &>server.log &
+$ python3 udp_local.py server &>server.log &
 ```
 
 ```
-$ python udp_local.py client
-The OS assigned me the address ('0.0.0.0', 33859)
-The server ('127.0.0.1', 1060) replied u'Your data was 38 bytes long'
+$ python3 udp_local.py client
+The OS assigned me the address ('0.0.0.0', 60442)
+The server ('127.0.0.1', 1060) replied 'Your data was 38 bytes long'
 ```
 
 ```
 $ cat server.log
 Listening at ('127.0.0.1', 1060)
-The client at ('127.0.0.1', 33859) says u'The time is 2014-10-22 14:34:04.809214'
+The client at ('127.0.0.1', 60442) says 'The time is 2014-10-22 14:52:25.936376'
 ```
 
 The other two scripts can communicate between machines, and need
