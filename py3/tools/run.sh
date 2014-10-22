@@ -30,10 +30,10 @@ do
             eval $command
             sleep 0.5
             read line
-            while [ "$line" != '```' ]
+            while ! echo "$line" | grep -q '```'
             do read line
             done
-            echo "$line"
+            echo '```'
         fi
     done <$(basename $readme) >$(basename $readme).new 2>&1
 
