@@ -29,6 +29,12 @@ these example scripts, if you want to learn what TLS is designed to
 accomplish and what is at stake in all of the decisions that the
 protocol offers to its users.
 
+The scripts in this chapter can operate between hosts, either in the
+[Playground](../../playground#readme) or on real machines.  The scripts
+should also work just fine on one machine if you connect to `localhost`,
+in which case you can use the simple `ca.crt` and `localhost.pem` that
+are sitting in this directory.
+
 The `safe_tls.py` script illustrates how to set up a TLS connection in
 Python 3.4 and later using the secure defaults it provides.
 
@@ -45,7 +51,7 @@ b'Simple is better than complex.'
 ```
 $ cat server.log
 Listening at interface '' and port 1060
-Connection from host '127.0.0.1' and port 40993
+Connection from host '127.0.0.1' and port 41252
 ```
 
 If you want more information about how TLS settings relate to the
@@ -80,7 +86,7 @@ Compression algorithm in use........ none
 $ cat server.log
 
 Interface where we are listening.... ('localhost', 1060)
-Client has connected from address... ('127.0.0.1', 40994)
+Client has connected from address... ('127.0.0.1', 41254)
 Peer certificate.................... none
 Protocol version negotiated......... TLSv1.2
 Cipher chosen for this connection... ECDHE-RSA-AES256-GCM-SHA384
