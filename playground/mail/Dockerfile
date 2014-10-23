@@ -12,4 +12,3 @@ RUN cp /var/mail/brandon /root/var.mail.brandon.backup
 RUN echo 'echo example.com > /etc/mailname' >> /startup.sh
 RUN echo '/etc/init.d/postfix start' >> /startup.sh
 RUN echo 'dovecot -F' >> /startup.sh
-CMD ["/startup.sh"]

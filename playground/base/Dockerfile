@@ -42,4 +42,4 @@ RUN useradd -d /home/brandon -m -p '$6$sHTmsDVi$Spmhni61IjBGDsQBS/rYj1k4Do3u2HlI
 # Run SSH by default
 
 ADD startup.sh /startup.sh
-CMD ["/etc/init.d/ssh", "start", "-D"]
+CMD ["/startup.sh"]

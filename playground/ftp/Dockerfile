@@ -8,4 +8,3 @@ RUN sed -i /^rsa_priv/s:=.*:=/root/ftp.key: /etc/vsftpd.conf
 RUN echo 'write_enable=YES' >> /etc/vsftpd.conf
 RUN echo '/etc/init.d/openbsd-inetd start' >> /startup.sh
 RUN echo '/usr/sbin/vsftpd' >> /startup.sh
-CMD ["/startup.sh"]
