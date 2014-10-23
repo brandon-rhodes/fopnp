@@ -1,10 +1,10 @@
 # Foundations of Python Network Programming
-# "requirements.txt" for Python 3
-# Makes it possible to run every script in the book
+# "requirements.txt" for Python 2
+# For running as many Third Edition scripts as possible
 
-beautifulsoup4
+beautifulsoup
 cssselect
-dnspython3
+dnspython
 ghost.py==0.1b3
 httpbin
 imapclient
@@ -12,7 +12,7 @@ jsonrpclib-pelix
 lxml
 paramiko
 pygeocoder
-python3-memcached
+python-memcached
 pyzmq
 requests
 rpyc
