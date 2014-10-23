@@ -1,13 +1,21 @@
 FROM ubuntu:14.04
 RUN apt-get update
-RUN apt-get install -y bind9-host cython3 curl dnsutils libxml2-dev libxslt-dev lsof mtr ncftp nmap openssh-server python3-lxml python3-pip python3-zmq strace telnet traceroute tcpdump zlib1g-dev
+RUN apt-get install -y lsof mtr nmap openssh-server strace traceroute
+RUN apt-get install -y bind9-host curl dnsutils ftp telnet tcpdump zlib1g-dev
+RUN apt-get install -y python-dev python3-dev python-pip python3-pip
+RUN apt-get install -y python-crypto python-cssselect python-lxml python-zmq
+RUN apt-get install -y python3-crypto python3-lxml python3-zmq
 
-# Install all third-party Python 3 packages used in the book
+# Install all third-party Python packages used in the book
+
+ADD requirements2.txt /root/requirements2.txt
+RUN pip install -r /root/requirements2.txt
 
 ADD requirements.txt /root/requirements.txt
 RUN pip3 install -r /root/requirements.txt
 
-# Prevent SSH from complaining about unknown hosts
+# Support SSH between hosts without a password,
+# and prevent SSH from prompting about unknown hosts
 
 ADD id_rsa     /root/.ssh/id_rsa
 ADD id_rsa.pub /root/.ssh/id_rsa.pub
