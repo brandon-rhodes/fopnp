@@ -25,30 +25,38 @@ start_container () {
     fi
 
     docker run --name=$container --hostname=$hostname --net=none \
-        --dns=10.1.1.1 --dns-search=example.com -d $image
+        --dns=10.1.1.1 --dns-search=example.com -d $image  >/dev/null
 
     pid=$(docker inspect -f '{{.State.Pid}}' $container)
     sudo rm -f /var/run/netns/$container
     sudo ln -s /proc/$pid/ns/net /var/run/netns/$container
+
+    echo Container started: $container
 }
 
 # These commands are each a no-op if the command has already run.
 
 start_bridge () {
-    sudo brctl addbr $1 &>/dev/null
+    sudo brctl addbr $1 &>/dev/null || return
+    sudo ip link set $1 up
+    echo Created bridge: $1
 }
 create_interface () {
     interface=$1
     container=${interface%%-*}
     short_name=${interface##*-}
-    sudo ip link add $interface type veth peer name P &>/dev/null || exit
+    sudo ip link add $interface type veth peer name P &>/dev/null || return
     sudo ip link set P netns $container
     sudo ip netns exec $container ip link set dev P name $short_name
     sudo ip netns exec $container ip link set $short_name up
+    echo Created interface: $interface
 }
 bridge_add_interface () {
-    sudo brctl addif $1 $2 &>/dev/null
-    sudo ip link set dev $2 up
+    bridge=$1
+    interface=$2
+    sudo brctl addif $bridge $interface &>/dev/null || return
+    sudo ip link set dev $interface up
+    echo Bridged interface: $interface
 }
 
 # Build the playground.
@@ -65,11 +73,15 @@ start_bridge homeB
 start_bridge exampleCOM
 
 create_interface example-eth1
+create_interface www-eth0
 
 #create_interface_pair example-eth1 example-peer
 # create_interface_pair www-eth0 www-peer
 
-# bridge_add_interface example-com example-eth1
-# bridge_add_interface example-com www-eth0
+bridge_add_interface exampleCOM example-eth1
+bridge_add_interface exampleCOM www-eth0
 
-# give_interface_to_its_container example-eth1
+sudo ip netns exec example ip addr add 10.130.1.1/24 dev eth1
+
+sudo ip netns exec www ip addr add 10.130.1.4/24 dev eth0
+sudo ip netns exec www ip route add default via 10.130.1.1
