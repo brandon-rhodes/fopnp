@@ -33,3 +33,70 @@ Each chapter’s source code lives in its own directory:
 *   [Chapter 16: Telnet and SSH](py3/chapter16#readme)
 *   [Chapter 17: FTP](py3/chapter17#readme)
 *   [Chapter 18: RPC](py3/chapter18#readme)
+
+## Most of this works under Python 2
+
+If you are still using Python 2, you will still benefit from studying
+these examples as they are more carefully designed than the scripts in
+the previous edition and also use more modern third-party libraries.
+
+The `README.md` inside each chapter directory — which GitHub will
+display automatically when you click a chapter title in the Table of
+Contents above — has a paragraph near the top stating whether the
+scripts work with Python 2 or not.  Typically each script needs only a
+quick run through the [3to2](https://pypi.python.org/pypi/3to2) tool in
+order to operate flawlessly under the old version of the language.
+
+The exceptions are:
+
+ *  The TLS/SSL examples in Chapter 6 are specific to Python 3.4 and
+    later because only with that version of the language did the `ssl`
+    module gain safe enough defaults to be recommended for use with
+    secure services.  (An effort to backport these features to
+    Python 2.7, however, does seem to be underway.)
+
+ *  Two of the scripts in Chapter 8 run into a snag if translated to
+    Python 2 because of modules that have switched whether they want to
+    operate on bytes or on Unicode strings.
+
+ *  The `email` scripts in Chapter 12 use a new an more convenient API
+    that was added to the language in Python 3.4.
+
+Aside from these exceptions, the only difference for most network
+programs between Python 2 and Python 3 are minor syntactical issues like
+the new `print()` function, the fact that plain `b'byte strings'` must
+now have a leading `b` character, and the fact that many Standard
+Library modules were renamed during the transition.
+
+## The Network Playground
+
+Many novice network programmers do not have interesting networks to
+explore — many homes have only a laptop plus a broadband modem to which
+the homeowner does not have access.
+
+To remedy this situation, I have developed an entire network
+[Playground](../../playground#readme) consisting of more than a half
+dozen hosts providing services from SSH and Telnet to a web server
+and FTP.  The “hosts” are built using Docker, and I hope soon to package
+the whole thing up as a virtual machine that users can download.
+
+The result will be that the user can get a prompt from which they can
+connect out to the `example.com` server farm and talk to all kinds of
+network services.  And just as in a real network, they will find that
+these machines are several hops away — hops that can be inspected by
+normal networking tools like `traceroute`:
+
+```
+$ ./play.sh h1
+
+# traceroute www.example.com
+traceroute to www.example.com (10.130.1.4), 30 hops max, 60 byte packets
+ 1  192.168.1.1 (192.168.1.1)  0.513 ms  0.208 ms  0.265 ms
+ 2  isp (10.25.1.1)  0.544 ms  0.220 ms  0.115 ms
+ 3  backbone (10.1.1.1)  0.364 ms  0.227 ms  0.252 ms
+ 4  example.com (10.130.1.1)  0.617 ms  0.355 ms  0.407 ms
+ 5  www.example.com (10.130.1.4)  1.301 ms  0.415 ms  0.522 ms
+```
+
+Follow this repository if you want to watch my progress towards making
+the install of the playground fully automated!
