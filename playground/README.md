@@ -51,7 +51,7 @@ machine in the network — against one of the other hosts.
 
 ## Launching the Playground
 
-?
+(TODO: decide what kind of image to distribute — VirtualBox? Vagrant?)
 
     $ ./play.sh h1
 
@@ -67,23 +67,26 @@ machine in the network — against one of the other hosts.
 ## Building the Playground
 
 If you want to build the playground yourself instead of using the
-pre-packaged virtual machine image, there are three basic steps.
+pre-packaged virtual machine image:
 
-  * Either install Docker on a 64-bit Linux machine if your own or boot
-    a virtual machine that has Docker installed and running.  I myself
-    often use [boot2docker](https://github.com/boot2docker/boot2docker).
-    You will also need `git` on the machine.
+  * Either install Docker on a 64-bit Linux machine of your own, or boot
+    a virtual machine that offers Docker.  I myself have enjoyed using
+    with [boot2docker](https://github.com/boot2docker/boot2docker).
+    Make sure that the machine also offers the `git` command line tool.
 
   * Check out this source code repository.
 
         $ git clone https://github.com/brandon-rhodes/fopnp.git
         $ cd fopnp/playground
 
-  * Build the five Docker images.
+  * Build the five Docker images.  You will need `sudo` access to the
+    root account to perform this step as well as the following step.
 
         $ ./build.sh
 
   * Start the images and configure the network fabric between them.
+    This script is currently designed for use on boot2docker, and might
+    require adjustment before it will run under another distribution.
 
         $ ./launch.sh
 
