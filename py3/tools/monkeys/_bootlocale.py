@@ -69,8 +69,12 @@ del os
 # controlling terminal.
 
 import getpass
-getpass.getpass = input
+def fake_getpass(prompt='Password: '):
+    print(prompt, 'abc123')
+    return 'abc123'
+getpass.getpass = fake_getpass
 del getpass
+del fake_getpass
 
 # Replace print() with pretty-print when scripts print raw data
 # structures, so that dictionary keys come out in a stable order.
