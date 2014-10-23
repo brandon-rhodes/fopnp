@@ -1,23 +1,23 @@
-#!/bin/bash
+#!/bin/sh
 
 set -e
-cd "$(dirname ${BASH_SOURCE[0]})"
+cd $(dirname "$0")
 
 # Generate an SSH identity pubic/private keypair that can be installed
 # on all of the playground hosts, so users can SSH between them without
 # needing a password.
 
-if ! [ -f base/id_rsa ]
+if [ ! -f base/id_rsa ]
 then
     ssh-keygen -f base/id_rsa -N ''
 fi
 
 # Copy our requirements.txt file into the "base" image directory.
+# Preserve ("-p") attributes so that it does not look like we have
+# modified the file every time, lest we trigger a Docker rebuild.
 
-if ! diff ../py3/requirements.txt ./base/requirements.txt >/dev/null
-then
-    cp ../py3/requirements.txt ./base/requirements.txt
-fi
+cp -p ../py2/requirements.txt ./base/requirements2.txt
+cp -p ../py3/requirements.txt ./base/requirements.txt
 
 # Rebuild all of our Docker images.
 
