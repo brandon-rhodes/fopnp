@@ -1,4 +1,4 @@
-:[Return to the Table of Contents](https://github.com/brandon-rhodes/fopnp#readme)
+[Return to the Table of Contents](https://github.com/brandon-rhodes/fopnp#readme)
 
 # The Network Playground
 
@@ -8,42 +8,42 @@ complete control and can capture packets wherever they wish, I have
 created 5 Docker images together with a script that configures them as a
 12-machine network that roughly resembles the Internet in miniature.
 
-  * Four machines `h1`, `h2`, `h3`, and `h4` represent the kind of
-    network clients that you might use at home or in a coffee shop.
+  * Four hosts `h1`, `h2`, `h3`, and `h4` represent the machines you
+    might use at home or in a coffee shop.
 
-  * Those machines live behind “broadband modems” `modemA` and `modemB`
-    that do network address translation (NAT) so that outbound, but not
-    inbound, connections can be made to the rest of the network.
+  * The hosts live behind `modemA` and `modemB` that do network address
+    translation (NAT) so that only outbound connections can be made to
+    the rest of the network.
 
-  * The modems are connected to the rest of the world through a pair of
-    routers `isp` and `backbone`.
+  * The modems connect to the rest of the world through routers `isp`
+    and `backbone`.
 
-  * At the other end of the world is the `example.com` machine room
-    whose gateway, named `example`, routes packets to three machines
-    `ftp`, `mail`, and `www`.  Each machine can each be addressed either
-    using a short hostname like `ftp` or else a fully qualified name
-    like `ftp.example.com`.
+  * On the other side of the world is the `example.com` machine room
+    whose gateway named `example` serves three machines `ftp`, `mail`,
+    and `www`.  These servers can be reached either using the short
+    version of their name like `ftp` or a fully qualified name like
+    `ftp.example.com`.
 
-.. image:: https://raw.githubusercontent.com/brandon-rhodes/fopnp/m/diagrams/playground.png
+<img src="https://raw.githubusercontent.com/brandon-rhodes/fopnp/m/diagrams/playground.png">
 
 The network services running on the machines are:
 
-  * All hosts
-    * SSH on port 22
+  * (On all hosts)
+    * SSH — port 22
   * `backbone`
-    * DNS on port 53
+    * DNS — port 53
   * `ftp.example.com`
-    * FTP on port 21
-    * Telnet on port 23
+    * FTP — port 21
+    * Telnet — port 23
   * `mail.example.com`
-    * SMTP on port 25
-    * POP3 on port 110
-    * POP3S on port 995
-    * IMAP on port 143
-    * IMAPS on port 993
+    * SMTP — port 25
+    * POP3 — port 110
+    * POP3S — port 995
+    * IMAP — port 143
+    * IMAPS — port 993
   * `www.example.com`
-    * HTTP on port 80
-    * HTTPS on port 443
+    * HTTP — port 80
+    * HTTPS — port 443
 
 You can verify that these ports are open by connecting to them
 individually or else by running `nmap` — which is available on every
