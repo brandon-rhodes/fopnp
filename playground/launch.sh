@@ -163,9 +163,11 @@ sudo ip netns exec example ip route add default via 10.1.1.1
 
 # Configure the LAN behind each broadband modem.
 
+sudo ip netns exec modemA ip addr add 10.25.1.65/16 dev eth0
+sudo ip netns exec modemB ip addr add 10.25.1.66/16 dev eth0
+
 for modem in modemA modemB
 do
-    sudo ip netns exec $modem ip addr add 10.25.1.65/16 dev eth0
     sudo ip netns exec $modem ip addr add 192.168.1.1/24 dev eth1
     sudo ip netns exec $modem ip route add default via 10.25.1.1
     sudo ip netns exec $modem iptables --table nat \
