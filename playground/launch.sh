@@ -66,6 +66,8 @@ start_container h1 fopnp/base
 # start h3 fopnp/base
 # start h4 fopnp/base
 start_container example.com fopnp/base
+start_container ftp.example.com fopnp/ftp
+start_container mail.example.com fopnp/mail
 start_container www.example.com fopnp/www
 
 start_bridge homeA
@@ -73,15 +75,24 @@ start_bridge homeB
 start_bridge exampleCOM
 
 create_interface example-eth1
+create_interface ftp-eth0
+create_interface mail-eth0
 create_interface www-eth0
 
 #create_interface_pair example-eth1 example-peer
 # create_interface_pair www-eth0 www-peer
 
 bridge_add_interface exampleCOM example-eth1
+bridge_add_interface exampleCOM ftp-eth0
+bridge_add_interface exampleCOM mail-eth0
 bridge_add_interface exampleCOM www-eth0
 
-sudo ip netns exec example ip addr add 10.130.1.1/24 dev eth1
+# Configure the 10.130.1.* network that the example.com machines share.
 
+sudo ip netns exec example ip addr add 10.130.1.1/24 dev eth1
+sudo ip netns exec ftp ip addr add 10.130.1.2/24 dev eth0
+sudo ip netns exec mail ip addr add 10.130.1.3/24 dev eth0
 sudo ip netns exec www ip addr add 10.130.1.4/24 dev eth0
-sudo ip netns exec www ip route add default via 10.130.1.1
+for name in ftp mail www
+do sudo ip netns exec $name ip route add default via 10.130.1.1
+done
