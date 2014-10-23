@@ -1,7 +1,7 @@
 
-# Chapter 1
+# Chapter 8
 
-This is a directory of program listings from Chapter 1 of the book:
+This is a directory of program listings from Chapter 8 of the book:
 
 <dl>
 <dt><i>Foundations of Python Network Programming</i></dt>
@@ -22,5 +22,5 @@ will also work under Python 2 if processed with the
 To compare the scripts here with the equivalent scripts
 in the Third Edition, visit:
 
-https://github.com/brandon-rhodes/fopnp/tree/m/py3/chapter01#readme
+https://github.com/brandon-rhodes/fopnp/tree/m/py3/chapter08#readme
 
