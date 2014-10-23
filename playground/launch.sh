@@ -3,6 +3,7 @@
 # Start up the network playground on a boot2docker instance.
 
 sudo mkdir -p /var/run/netns
+sudo modprobe ip_nat_ftp nf_conntrack_ftp
 
 # Make sure the bridge-control tools are installed.
 
@@ -42,6 +43,11 @@ start_bridge () {
     echo Created bridge: $1
 }
 create_interface () {
+    #
+    # Given an interface name "www-eth0", create both an interface with
+    # that name and also a peer that is connected to it.  Place the peer
+    # in the container "www" and give it the name "eth0" there.
+    #
     interface=$1
     container=${interface%%-*}
     short_name=${interface##*-}
@@ -50,6 +56,22 @@ create_interface () {
     sudo ip netns exec $container ip link set dev P name $short_name
     sudo ip netns exec $container ip link set $short_name up
     echo Created interface: $interface
+}
+create_point_to_point () {
+    #
+    # Given arguments "backbone eth0 isp eth1", create a pair of peer
+    # interfaces and put one inside the container "backbone" and name it
+    # "eth0" and the other inside of "isp" with the name "eth1".
+    #
+    sudo ip netns exec $1 ip link set $2 up &>/dev/null && return
+    sudo ip link add P type veth peer name Q
+    sudo ip link set P netns $1
+    sudo ip netns exec $1 ip link set dev P name $2
+    sudo ip netns exec $1 ip link set $2 up
+    sudo ip link set Q netns $3
+    sudo ip netns exec $3 ip link set dev Q name $4
+    sudo ip netns exec $3 ip link set $4 up
+    echo Created link between: $1 $3
 }
 bridge_add_interface () {
     bridge=$1
@@ -107,15 +129,47 @@ bridge_add_interface exampleCOM ftp-eth0
 bridge_add_interface exampleCOM mail-eth0
 bridge_add_interface exampleCOM www-eth0
 
+# The other network connections are simple point-to-point links.
+
+create_point_to_point backbone eth0 isp eth0
+create_point_to_point backbone eth1 example eth0
+create_point_to_point isp eth1 modemA eth0
+create_point_to_point isp eth2 modemB eth0
+
+# Configure manual IP addresses and routes on the point-to-points.
+# First, down in the direction of the broadband modems.
+
+sudo ip netns exec backbone ip addr add 10.1.1.1/32 dev eth0
+sudo ip netns exec backbone ip route add 10.25.1.1/32 dev eth0
+sudo ip netns exec backbone ip route add 10.25.0.0/16 via 10.25.1.1
+
+sudo ip netns exec isp ip addr add 10.25.1.1/32 dev eth0
+sudo ip netns exec isp ip addr add 10.25.1.1/32 dev eth1
+sudo ip netns exec isp ip addr add 10.25.1.1/32 dev eth2
+sudo ip netns exec isp ip route add 10.1.1.1/32 dev eth0
+sudo ip netns exec isp ip route add 10.25.1.65/32 dev eth1
+sudo ip netns exec isp ip route add 10.25.1.66/32 dev eth2
+sudo ip netns exec isp ip route add default via 10.1.1.1
+
+# Second, down in the direction of the example.com machine room.
+
+sudo ip netns exec backbone ip addr add 10.1.1.1/32 dev eth1
+sudo ip netns exec backbone ip route add 10.130.1.1/32 dev eth1
+sudo ip netns exec backbone ip route add 10.130.1.0/24 via 10.130.1.1
+
+sudo ip netns exec example ip addr add 10.130.1.1/32 dev eth0
+sudo ip netns exec example ip route add 10.1.1.1/32 dev eth0
+sudo ip netns exec example ip route add default via 10.1.1.1
+
 # Configure the LAN behind each broadband modem.
 
 for modem in modemA modemB
 do
-    # sudo ip netns exec $modem ip addr add 10.25.1.65/16 dev eth0
+    sudo ip netns exec $modem ip addr add 10.25.1.65/16 dev eth0
     sudo ip netns exec $modem ip addr add 192.168.1.1/24 dev eth1
-    # sudo ip netns exec $modem ip route add default via 10.25.1.1
-    # sudo ip netns exec $modem iptables --table nat \
-    #     --append POSTROUTING --out-interface eth0 -j MASQUERADE
+    sudo ip netns exec $modem ip route add default via 10.25.1.1
+    sudo ip netns exec $modem iptables --table nat \
+        --append POSTROUTING --out-interface eth0 -j MASQUERADE
 done
 
 for host in h1 h2 h3 h4
