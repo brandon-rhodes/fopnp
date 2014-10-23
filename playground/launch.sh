@@ -37,10 +37,15 @@ start_container () {
 
 # These commands are each a no-op if the command has already run.
 
-start_bridge () {
+start_bridge () {               # args: BRIDGE_NAME
     sudo brctl addbr $1 &>/dev/null || return
     sudo ip link set $1 up
     echo Created bridge: $1
+}
+give_interface_to_container () { # args: OLD_NAME CONTAINER NEW_NAME
+    sudo ip link set $1 netns $2
+    sudo ip netns exec $2 ip link set dev $1 name $3
+    sudo ip netns exec $2 ip link set $3 up
 }
 create_interface () {
     #
@@ -52,9 +57,7 @@ create_interface () {
     container=${interface%%-*}
     short_name=${interface##*-}
     sudo ip link add $interface type veth peer name P &>/dev/null || return
-    sudo ip link set P netns $container
-    sudo ip netns exec $container ip link set dev P name $short_name
-    sudo ip netns exec $container ip link set $short_name up
+    give_interface_to_container P $container $short_name
     echo Created interface: $interface
 }
 create_point_to_point () {
@@ -65,12 +68,8 @@ create_point_to_point () {
     #
     sudo ip netns exec $1 ip link set $2 up &>/dev/null && return
     sudo ip link add P type veth peer name Q
-    sudo ip link set P netns $1
-    sudo ip netns exec $1 ip link set dev P name $2
-    sudo ip netns exec $1 ip link set $2 up
-    sudo ip link set Q netns $3
-    sudo ip netns exec $3 ip link set dev Q name $4
-    sudo ip netns exec $3 ip link set $4 up
+    give_interface_to_container P $1 $2
+    give_interface_to_container Q $3 $4
     echo Created link between: $1 $3
 }
 bridge_add_interface () {
