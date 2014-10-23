@@ -5,4 +5,5 @@ diagrams/*.svg
 *.sqlite3
 playground/base/id_rsa
 playground/base/id_rsa.pub
+playground/base/requirements2.txt
 playground/base/requirements.txt
