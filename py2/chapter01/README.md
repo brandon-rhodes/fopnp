@@ -11,16 +11,13 @@ by Brandon Rhodes and John Goerzen
 </dd>
 </dl>
 
-The book **has now been superseded** by a Third Edition.
+The scripts in this directory **no longer work.**
 
-The new edition uses both better techniques
-and takes advantage of more modern third party libraries.
-Even though its focus is on Python 3, most of its scripts
-will also work under Python 2 if processed with the
-[3to2](https://pypi.python.org/pypi/3to2) tool.
+Google has disabled the network service to which these scripts
+connected.  You will only get errors if you try to run them.
 
-To compare the scripts here with the equivalent scripts
-in the Third Edition, visit:
+But there are now working replacements!  Try out the scripts from the
+first chapter of the new Third Edition of the book.  They should be easy
+to translate into Python 2 using an automated tool, as explained at:
 
 https://github.com/brandon-rhodes/fopnp/tree/m/py3/chapter01#readme
-
