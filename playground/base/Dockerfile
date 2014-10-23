@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 RUN apt-get update
-RUN apt-get install -y lsof mtr nmap openssh-server strace traceroute
+RUN apt-get install -y lsof man-db mtr nmap openssh-server strace traceroute
 RUN apt-get install -y bind9-host curl dnsutils ftp telnet tcpdump zlib1g-dev
 RUN apt-get install -y python-dev python3-dev python-pip python3-pip
 RUN apt-get install -y python-crypto python-cssselect python-lxml python-zmq
