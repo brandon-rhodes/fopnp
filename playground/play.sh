@@ -25,4 +25,4 @@ EOF
     exit
 fi
 
-exec docker exec -it $1 /bin/bash
+exec docker exec -it $1 /usr/bin/env TERM=$TERM /bin/bash
