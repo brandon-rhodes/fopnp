@@ -1,6 +1,10 @@
 #!/bin/sh
 #
-# Start up the network playground on a boot2docker instance.
+# Start up the network playground on a boot2docker instance, assuming
+# that "build.sh" has already been run in this directory to build the
+# Docker images..
+
+cd $(dirname "$0")
 
 sudo mkdir -p /var/run/netns
 sudo modprobe ip_nat_ftp nf_conntrack_ftp
@@ -21,12 +25,19 @@ start_container () {
     image=$2
     container=${hostname%%.*}
 
-    if docker inspect -f '{{.State.Pid}}' $container &>/dev/null
-    then return
-    fi
+    pid=$(docker inspect -f '{{.State.Pid}}' $container 2>/dev/null)
 
-    docker run --name=$container --hostname=$hostname --net=none \
-        --dns=10.1.1.1 --dns-search=example.com -d $image  >/dev/null
+    if [ "$?" = "1" ]
+    then
+        docker run --name=$container --hostname=$hostname --net=none \
+            --dns=10.1.1.1 --dns-search=example.com \
+            --volume=$(readlink -f ..):/fopnp -d $image
+    elif [ "$pid" = "0" ]
+    then
+        docker start $container  >/dev/null
+    else
+        return
+    fi
 
     pid=$(docker inspect -f '{{.State.Pid}}' $container)
     sudo rm -f /var/run/netns/$container

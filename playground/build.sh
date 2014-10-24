@@ -1,4 +1,7 @@
 #!/bin/sh
+#
+# Run "docker build" for each of the images that need to be created
+# before the network playground can then be launched with "launch.sh".
 
 set -e
 cd $(dirname "$0")

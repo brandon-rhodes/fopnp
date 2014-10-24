@@ -69,12 +69,15 @@ machine in the network — against one of the other hosts.
 If you want to build the playground yourself instead of using the
 pre-packaged virtual machine image:
 
-  * Either install Docker on a 64-bit Linux machine of your own, or boot
-    a virtual machine that offers Docker.  I myself have enjoyed using
-    with [boot2docker](https://github.com/boot2docker/boot2docker).
-    Make sure that the machine also offers the `git` command line tool.
+  * Log in to an existing 64-bit Linux machine, or else install one
+    inside of a vitalization tool like VirtualBox.  Install both
+    [Docker](https://www.docker.com/) and the `git` version control
+    command.  If instead of a general-purpose Linux like Ubuntu Server
+    you use [boot2docker](https://github.com/boot2docker/boot2docker),
+    then Docker will already be up and running once you boot and `git`
+    will already be installed.
 
-  * Check out this source code repository.
+  * Use `git` to check out the `fopnp` repository from GitHub:
 
         $ git clone https://github.com/brandon-rhodes/fopnp.git
         $ cd fopnp/playground
