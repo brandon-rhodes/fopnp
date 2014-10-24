@@ -23,14 +23,19 @@ fi
 start_container () {
     hostname=$1
     image=$2
+    port=$3
     container=${hostname%%.*}
 
     pid=$(docker inspect -f '{{.State.Pid}}' $container 2>/dev/null)
 
     if [ "$?" = "1" ]
     then
-        docker run --name=$container --hostname=$hostname --net=none \
-            --dns=10.1.1.1 --dns-search=example.com \
+        if [ -n "$port" ]
+        then netopts="--publish=$port:22"
+        else netopts="--net=none"
+        fi
+        docker run --name=$container --hostname=$hostname \
+            --dns=10.1.1.1 --dns-search=example.com "$netopts" \
             --volume=$(readlink -f ..):/fopnp -d $image
     elif [ "$pid" = "0" ]
     then
@@ -93,10 +98,10 @@ bridge_add_interface () {
 
 # Build the playground.
 
-start_container h1 fopnp/base
-start_container h2 fopnp/base
-start_container h3 fopnp/base
-start_container h4 fopnp/base
+start_container h1 fopnp/base 2201
+start_container h2 fopnp/base 2202
+start_container h3 fopnp/base 2203
+start_container h4 fopnp/base 2204
 start_container modemA fopnp/base
 start_container modemB fopnp/base
 start_container isp fopnp/base
@@ -108,24 +113,24 @@ start_container www.example.com fopnp/www
 
 # For each LAN, create an ethernet bridge and corresponding interfaces.
 
-create_interface h1-eth0
-create_interface h2-eth0
-create_interface h3-eth0
-create_interface h4-eth0
+create_interface h1-eth1
+create_interface h2-eth1
+create_interface h3-eth1
+create_interface h4-eth1
 create_interface modemA-eth1
 create_interface modemB-eth1
 
 start_bridge homeA
 
 bridge_add_interface homeA modemA-eth1
-bridge_add_interface homeA h1-eth0
-bridge_add_interface homeA h2-eth0
-bridge_add_interface homeA h3-eth0
+bridge_add_interface homeA h1-eth1
+bridge_add_interface homeA h2-eth1
+bridge_add_interface homeA h3-eth1
 
 start_bridge homeB
 
 bridge_add_interface homeB modemB-eth1
-bridge_add_interface homeB h1-eth0
+bridge_add_interface homeB h4-eth1
 
 create_interface example-eth1
 create_interface ftp-eth0
@@ -187,7 +192,8 @@ done
 for host in h1 h2 h3 h4
 do
     n=${host#?}
-    sudo ip netns exec $host ip addr add 192.168.1.1$n/24 dev eth0
+    sudo ip netns exec $host ip route del default
+    sudo ip netns exec $host ip addr add 192.168.1.1$n/24 dev eth1
     sudo ip netns exec $host ip route add default via 192.168.1.1
 done
 

@@ -45,6 +45,13 @@ sudo -u docker tce-load -i bridge-utils.tcz
 cd fopnp/playground
 sh -v ./launch.sh
 
+# Masquerade incoming connections that then pass across our "docker0"
+# bridge and into one of the virtual hosts, so that "h1" through "h4"
+# can accept SSH connections from the outside world without needing
+# default routes pointing toward the real outside world.
+
+iptables --table nat --append POSTROUTING --out-interface docker0 -j MASQUERADE
+
 # Give the user a convenient symlink to the "fopnp" repository.  We do
 # this last, as a signal to the user that the playground has finished
 # being set up.
