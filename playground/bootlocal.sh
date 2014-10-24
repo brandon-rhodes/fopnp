@@ -13,21 +13,6 @@
 # executable inside of a "boot2docker" virtual machine, this script will
 # start up the playground whenever the machine is booted.
 
-# To get a "boot2docker" image ready with this script installed, "ssh"
-# to it and run:
-#
-#     $ cd /var/lib/boot2docker
-#     $ sudo wget ftp://ftp.nl.netbsd.org/vol/2/metalab/distributions/tinycorelinux/4.x/x86/tcz/bridge-utils.tcz
-#     $ git clone https://github.com/brandon-rhodes/fopnp.git
-#     $ sudo mkdir fopnp
-#     $ sudo chown docker.staff fopnp
-#     $ sudo cp fopnp/playground/bootlocal.sh .
-#     $ fopnp/playground/build.sh
-#
-# You can then reboot the image and the playground should be available
-# every time it starts, perhaps with a minute delay while the launch
-# script finishes running.
-
 exec &> /var/lib/boot2docker/bootlocal.log
 rm -f /home/docker/'boot2docker, please format-me'
 touch /home/docker/playground-is-starting-up
