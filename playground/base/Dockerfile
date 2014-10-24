@@ -21,6 +21,7 @@ ADD id_rsa     /root/.ssh/id_rsa
 ADD id_rsa.pub /root/.ssh/id_rsa.pub
 ADD id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod 600 /root/.ssh/*
+RUN echo 'UseDNS no' >> /etc/ssh/ssh_config
 RUN echo 'UserKnownHostsFile /dev/null' >> /etc/ssh/ssh_config
 RUN echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
 
