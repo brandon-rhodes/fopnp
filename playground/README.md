@@ -93,10 +93,15 @@ should be able to SSH to any of the rest without a password.
      5  www.example.com (10.130.1.4)  0.722 ms  0.662 ms  0.475 ms
 
     h1$ ping -c1 www.example.com
+    64 bytes from www.example.com (10.130.1.4): icmp_seq=1 ttl=60 time=1.17 ms
 
     h1$ ssh root@www
 
-    www# ip a eth0
+    www# route -n
+    Kernel IP routing table
+    Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+    0.0.0.0         10.130.1.1      0.0.0.0         UG    0      0        0 eth0
+    10.130.1.0      0.0.0.0         255.255.255.0   U     0      0        0 eth0
 
 All of the hosts in the playground should have the *Foundations of
 Python Network Programming* repository mounted under “/fopnp” and should
@@ -119,6 +124,9 @@ these Docker images, connect to port 2022 instead with the username
 
     $ ssh -p 2022 docker@localhost
     Password: tcuser
+
+Once logged in as `tcuser` you should be able to run `docker ps` to see
+all of the running containers that make up the playground.
 
 ## Building the Playground
 
