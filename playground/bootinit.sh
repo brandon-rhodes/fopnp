@@ -28,5 +28,5 @@ boot2docker-cli ssh /bin/sh <<'EOF'
 
 EOF
 
-boot2docker-cli stop
+boot2docker-cli stop || sleep 1
 VBoxManage modifyvm boot2docker-vm --name playground-vm
