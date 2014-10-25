@@ -51,18 +51,57 @@ machine in the network — against one of the other hosts.
 
 ## Launching the Playground
 
-(TODO: decide what kind of image to distribute — VirtualBox? Vagrant?)
+The network playground is available as a virtual machine image, that you
+can launch using a virtualization engine like the open-source and freely
+available [VirtualBox](https://www.virtualbox.org/) tool.  (If you want
+to build the playground manually with Docker, see the next section.)
 
-    $ ./play.sh h1
+You can download the latest `playground-X.Y.ova` image at:
 
-    root@h1:/# pwd
-    /
+https://github.com/brandon-rhodes/fopnp/releases
 
-    root@h1:/# traceroute backbone
+Once you have downloaded the image, you can import and launch it either
+from the VirtualBox window or from its command-line client:
+
+    $ VBoxManage import ~/playground-X.Y.ova
+    $ VBoxManage startvm playground-vm
+
+Once the image is launched and has finished booting, you should be able
+to log into it through your normal SSH client.  The ports 2201 through
+2204 should connect you through to the hosts `h1` through `h4` in the
+diagram above.  Connect as the user `brandon` and password `abc123`.
+The first thing you will probably want to do is use `ssh-copy-id` so
+that further connections will not prompt you for a password:
+
+    $ ssh-copy-id -p 2201 brandon@localhost
+    Password: abc123
+
+Once you have reached a prompt on a machine in the playground, you
+should be able to SSH to any of the rest without a password.
+
+    $ ssh -p 2201 brandon@localhost
+
+    h1:/# traceroute backbone
     traceroute to backbone (10.1.1.1), 30 hops max, 60 byte packets
      1  192.168.1.1 (192.168.1.1)  0.193 ms  0.117 ms  0.120 ms
      2  isp (10.25.1.1)  0.572 ms  0.176 ms  0.186 ms
      3  backbone (10.1.1.1)  0.250 ms  0.210 ms  0.302 ms
+
+    h1:/# ping -c1 www.example.com
+
+    h1:/# ssh www
+
+    www# ip a eth0
+
+All of the hosts in the playground should have the *Foundations of
+Python Network Programming* repository mounted under “/fopnp”.
+
+If you want to log into the outer virtual machine that is hosting all of
+these Docker images, connect to port 2022 instead with the username
+`docker` and the password `tcuser`:
+
+    $ ssh -p 2022 docker@localhost
+    Password: tcuser
 
 ## Building the Playground
 
