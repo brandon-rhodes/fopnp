@@ -40,13 +40,18 @@ RUN useradd -d /home/brandon -G sudo -m -p '$6$sHTmsDVi$Spmhni61IjBGDsQBS/rYj1k4
 
 RUN sed -i /PermitRootLogin/s/without-password/yes/ /etc/ssh/sshd_config
 
-# Support SSH between hosts without a password.
+# Support SSH between hosts without a password.  (Note that without
+# these "mkdir" commands the directory gets auto-created by the ADD but
+# in such a way that it cannot ever be accessed by normal users once the
+# Docker container is up and running later!  See Docker issue 1295.)
 
+RUN mkdir -p /root/.ssh
 ADD id_rsa     /root/.ssh/id_rsa
 ADD id_rsa.pub /root/.ssh/id_rsa.pub
 ADD id_rsa.pub /root/.ssh/authorized_keys
 RUN chmod -R og-rwx /root/.ssh
 
+RUN mkdir -p /home/brandon/.ssh
 ADD id_rsa     /home/brandon/.ssh/id_rsa
 ADD id_rsa.pub /home/brandon/.ssh/id_rsa.pub
 ADD id_rsa.pub /home/brandon/.ssh/authorized_keys
@@ -56,6 +61,11 @@ RUN chown -R brandon.brandon /home/brandon/.ssh
 # Allow "brandon" to "sudo" without a password.
 
 RUN sed -i '/sudo/s/ALL$/NOPASSWD: ALL/' /etc/sudoers
+
+# Prevent a minor error message from filling /var/log/auth.log from SSH:
+# "Unable to open env file: /etc/default/locale: No such file or directory"
+
+RUN update-locale
 
 # Run SSH by default
 

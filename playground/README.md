@@ -67,11 +67,14 @@ from the VirtualBox window or from its command-line client:
     $ VBoxManage startvm --type headless playground-vm
 
 Once the image is launched and has finished booting, you should be able
-to log into it through your normal SSH client.  The ports 2201 through
-2204 should connect you through to the hosts `h1` through `h4` in the
-diagram above.  Connect as the user `brandon` and password `abc123`.
-The first thing you will probably want to do is use `ssh-copy-id` so
-that further connections will not prompt you for a password:
+to log in to the network playground clients with your normal SSH client.
+The ports 2201 through 2204 should connect you to the hosts `h1` through
+`h4` in the diagram above.  Connect as the user `brandon` or `root` and
+the password `abc123`.  The first thing you will probably want to do is
+use `ssh-copy-id` so that further connections will not prompt you for a
+password:
+
+    # (This only works for me if I first run "ssh-add" locally)
 
     $ ssh-copy-id -p 2201 brandon@localhost
     Password: abc123
