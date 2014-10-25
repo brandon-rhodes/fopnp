@@ -79,22 +79,36 @@ that further connections will not prompt you for a password:
 Once you have reached a prompt on a machine in the playground, you
 should be able to SSH to any of the rest without a password.
 
-    $ ssh -p 2201 root@localhost
+    $ ssh -p 2201 brandon@localhost
 
-    h1:/# traceroute backbone
-    traceroute to backbone (10.1.1.1), 30 hops max, 60 byte packets
-     1  192.168.1.1 (192.168.1.1)  0.193 ms  0.117 ms  0.120 ms
-     2  isp (10.25.1.1)  0.572 ms  0.176 ms  0.186 ms
-     3  backbone (10.1.1.1)  0.250 ms  0.210 ms  0.302 ms
+    h1$ traceroute www.example.com
+    traceroute to www.example.com (10.130.1.4), 30 hops max, 60 byte packets
+     1  192.168.1.1 (192.168.1.1)  0.294 ms  0.167 ms  0.183 ms
+     2  isp (10.25.1.1)  1.002 ms  0.220 ms  0.218 ms
+     3  backbone (10.1.1.1)  0.358 ms  0.259 ms  0.256 ms
+     4  example.com (10.130.1.1)  0.500 ms  0.286 ms  0.355 ms
+     5  www.example.com (10.130.1.4)  0.722 ms  0.662 ms  0.475 ms
 
-    h1:/# ping -c1 www.example.com
+    h1$ ping -c1 www.example.com
 
-    h1:/# ssh www
+    h1$ ssh root@www
 
     www# ip a eth0
 
 All of the hosts in the playground should have the *Foundations of
-Python Network Programming* repository mounted under “/fopnp”.
+Python Network Programming* repository mounted under “/fopnp” and should
+allow you to login as either the user `brandon` or `root`.  If you get
+tired of typing the options `-p 2201 brandon@localhost` when connecting,
+you can append the following stanza to your own `~/.ssh/config` file:
+
+    Host h1
+      Hostname localhost
+      User brandon
+      Port 2201
+
+Now you can connect to playground machine `h1` with a simple:
+
+    $ ssh h1
 
 If you want to log into the outer virtual machine that is hosting all of
 these Docker images, connect to port 2022 instead with the username
