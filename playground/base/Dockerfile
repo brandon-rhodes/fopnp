@@ -14,19 +14,7 @@ RUN pip install -r /root/requirements2.txt
 ADD requirements.txt /root/requirements.txt
 RUN pip3 install -r /root/requirements.txt
 
-# Support SSH between hosts without a password,
-# and prevent SSH from prompting about unknown hosts
-
-ADD id_rsa     /root/.ssh/id_rsa
-ADD id_rsa.pub /root/.ssh/id_rsa.pub
-ADD id_rsa.pub /root/.ssh/authorized_keys
-RUN chmod -R og-rwx /root/.ssh
-
-ADD id_rsa     /home/brandon/.ssh/id_rsa
-ADD id_rsa.pub /home/brandon/.ssh/id_rsa.pub
-ADD id_rsa.pub /home/brandon/.ssh/authorized_keys
-RUN chmod -R og-rwx /home/brandon/.ssh
-RUN chown -R brandon.brandon /home/brandon/.ssh
+# Prevent SSH from prompting about unknown hosts.
 
 RUN echo 'UseDNS no' >> /etc/ssh/sshd_config
 RUN echo 'UserKnownHostsFile /dev/null' >> /etc/ssh/ssh_config
@@ -51,6 +39,19 @@ RUN useradd -d /home/brandon -G sudo -m -p '$6$sHTmsDVi$Spmhni61IjBGDsQBS/rYj1k4
 # Allow SSH login as root with a password.
 
 RUN sed -i /PermitRootLogin/s/without-password/yes/ /etc/ssh/sshd_config
+
+# Support SSH between hosts without a password.
+
+ADD id_rsa     /root/.ssh/id_rsa
+ADD id_rsa.pub /root/.ssh/id_rsa.pub
+ADD id_rsa.pub /root/.ssh/authorized_keys
+RUN chmod -R og-rwx /root/.ssh
+
+ADD id_rsa     /home/brandon/.ssh/id_rsa
+ADD id_rsa.pub /home/brandon/.ssh/id_rsa.pub
+ADD id_rsa.pub /home/brandon/.ssh/authorized_keys
+RUN chmod -R og-rwx /home/brandon/.ssh
+RUN chown -R brandon.brandon /home/brandon/.ssh
 
 # Allow "brandon" to "sudo" without a password.
 
