@@ -41,6 +41,10 @@ RUN update-ca-certificates
 RUN usermod -p '$6$sHTmsDVi$Spmhni61IjBGDsQBS/rYj1k4Do3u2HlI5qtCrPGn4mvqzogdagSjq0KqfeMXFpI2bqkg9OVOuZHEJOxtN.byy0' root
 RUN useradd -d /home/brandon -G sudo -m -p '$6$sHTmsDVi$Spmhni61IjBGDsQBS/rYj1k4Do3u2HlI5qtCrPGn4mvqzogdagSjq0KqfeMXFpI2bqkg9OVOuZHEJOxtN.byy0' -s /bin/bash brandon
 
+# Allow SSH login as root with a password.
+
+RUN sed -i /PermitRootLogin/s/without-password/yes/ /etc/ssh/sshd_config
+
 # Allow "brandon" to "sudo" without a password.
 
 RUN sed -i '/sudo/s/ALL$/NOPASSWD: ALL/' /etc/sudoers

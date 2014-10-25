@@ -64,7 +64,7 @@ Once you have downloaded the image, you can import and launch it either
 from the VirtualBox window or from its command-line client:
 
     $ VBoxManage import ~/playground-X.Y.ova
-    $ VBoxManage startvm playground-vm
+    $ VBoxManage startvm --type headless playground-vm
 
 Once the image is launched and has finished booting, you should be able
 to log into it through your normal SSH client.  The ports 2201 through
@@ -79,7 +79,7 @@ that further connections will not prompt you for a password:
 Once you have reached a prompt on a machine in the playground, you
 should be able to SSH to any of the rest without a password.
 
-    $ ssh -p 2201 brandon@localhost
+    $ ssh -p 2201 root@localhost
 
     h1:/# traceroute backbone
     traceroute to backbone (10.1.1.1), 30 hops max, 60 byte packets
