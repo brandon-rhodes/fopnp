@@ -20,7 +20,14 @@ RUN pip3 install -r /root/requirements.txt
 ADD id_rsa     /root/.ssh/id_rsa
 ADD id_rsa.pub /root/.ssh/id_rsa.pub
 ADD id_rsa.pub /root/.ssh/authorized_keys
-RUN chmod 600 /root/.ssh/*
+RUN chmod -R og-rwx /root/.ssh
+
+ADD id_rsa     /home/brandon/.ssh/id_rsa
+ADD id_rsa.pub /home/brandon/.ssh/id_rsa.pub
+ADD id_rsa.pub /home/brandon/.ssh/authorized_keys
+RUN chmod -R og-rwx /home/brandon/.ssh
+RUN chown -R brandon.brandon /home/brandon/.ssh
+
 RUN echo 'UseDNS no' >> /etc/ssh/sshd_config
 RUN echo 'UserKnownHostsFile /dev/null' >> /etc/ssh/ssh_config
 RUN echo 'StrictHostKeyChecking no' >> /etc/ssh/ssh_config
