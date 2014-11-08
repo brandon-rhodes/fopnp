@@ -11,7 +11,7 @@ sudo modprobe ip_nat_ftp nf_conntrack_ftp
 
 # Make sure the bridge-control tools are installed.
 
-if [ ! -x /usr/local/sbin/brctl ]
+if [ ! -x /usr/local/sbin/brctl ] && (where tce-load > /dev/null 2>&1)
 then
     wget ftp://ftp.nl.netbsd.org/vol/2/metalab/distributions/tinycorelinux/4.x/x86/tcz/bridge-utils.tcz
     tce-load -i bridge-utils.tcz
