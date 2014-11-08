@@ -54,7 +54,7 @@ start_container () {
 # These commands are each a no-op if the command has already run.
 
 start_bridge () {               # args: BRIDGE_NAME
-    sudo brctl addbr $1 &>/dev/null || return
+    sudo brctl addbr $1 > /dev/null 2>&1 || return
     sudo ip link set $1 up
     echo Created bridge: $1
 }
@@ -72,7 +72,7 @@ create_interface () {
     interface=$1
     container=${interface%%-*}
     short_name=${interface##*-}
-    sudo ip link add $interface type veth peer name P &>/dev/null || return
+    sudo ip link add $interface type veth peer name P > /dev/null 2>&1 || return
     give_interface_to_container P $container $short_name
     echo Created interface: $interface
 }
@@ -82,7 +82,7 @@ create_point_to_point () {
     # interfaces and put one inside the container "backbone" and name it
     # "eth0" and the other inside of "isp" with the name "eth1".
     #
-    sudo ip netns exec $1 ip link set $2 up &>/dev/null && return
+    sudo ip netns exec $1 ip link set $2 up > /dev/null 2>&1 && return
     sudo ip link add P type veth peer name Q
     give_interface_to_container P $1 $2
     give_interface_to_container Q $3 $4
@@ -91,7 +91,7 @@ create_point_to_point () {
 bridge_add_interface () {
     bridge=$1
     interface=$2
-    sudo brctl addif $bridge $interface &>/dev/null || return
+    sudo brctl addif $bridge $interface > /dev/null 2>&1 || return
     sudo ip link set dev $interface up
     echo Bridged interface: $interface
 }
