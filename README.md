@@ -59,14 +59,13 @@ The exceptions are:
     Python 2 because of modules that have switched whether they want to
     operate on bytes or on Unicode strings.
 
- *  The `email` scripts in Chapter 12 use a new an more convenient API
+ *  The `email` scripts in Chapter 12 use a new and more convenient API
     that was added to the language in Python 3.4.
 
-Aside from these exceptions, the only difference for most network
-programs between Python 2 and Python 3 are minor syntactical issues like
-the new `print()` function, the fact that plain `b'byte strings'` must
-now have a leading `b` character, and the fact that many Standard
-Library modules were renamed during the transition.
+The other changes between Python 2 and 3 will be handled automatically
+by 3to2: `print()` is now a function, plain `b'byte strings'` now take a
+leading `b`, and many Standard Library modules were renamed during the
+transition.
 
 ## The Network Playground
 
