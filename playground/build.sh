@@ -24,7 +24,7 @@ cp -p ../py3/requirements.txt ./base/requirements.txt
 
 # Rebuild all of our Docker images.
 
-docker build -t fopnp/base base
+docker build --no-cache=true -t fopnp/base base
 docker build -t fopnp/dns dns
 docker build -t fopnp/ftp ftp
 docker build -t fopnp/mail mail
