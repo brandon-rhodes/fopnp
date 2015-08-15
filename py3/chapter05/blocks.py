@@ -13,7 +13,7 @@ def recvall(sock, length):
     while length:
         block = sock.recv(length)
         if not block:
-            raise EOFError('socket closed with %d bytes left'
+            raise EOFError('socket closed with {} bytes left'
                            ' in this block'.format(length))
         length -= len(block)
         blocks.append(block)
