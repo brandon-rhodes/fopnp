@@ -1,0 +1,40 @@
+IdentityFile ~/fopnp/playground/base/id_rsa
+StrictHostKeyChecking no
+User root
+
+Host h1
+  Hostname 127.0.0.1
+  Port 2201
+Host h2
+  Hostname 127.0.0.1
+  Port 2202
+Host h3
+  Hostname 127.0.0.1
+  Port 2203
+Host h4
+  Hostname 127.0.0.1
+  Port 2204
+Host modemA
+  Hostname 127.0.0.1
+  Port 2205
+Host modemB
+  Hostname 127.0.0.1
+  Port 2206
+Host isp
+  Hostname 127.0.0.1
+  Port 2207
+Host backbone
+  Hostname 127.0.0.1
+  Port 2208
+Host example.com example
+  Hostname 127.0.0.1
+  Port 2209
+Host ftp.example.com ftp
+  Hostname 127.0.0.1
+  Port 2210
+Host mail.example.com mail
+  Hostname 127.0.0.1
+  Port 2211
+Host www.example.com www
+  Hostname 127.0.0.1
+  Port 2212
