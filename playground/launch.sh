@@ -108,14 +108,14 @@ start_container h1 fopnp/base 2201
 start_container h2 fopnp/base 2202
 start_container h3 fopnp/base 2203
 start_container h4 fopnp/base 2204
-start_container modemA fopnp/base 2205
-start_container modemB fopnp/base 2206
-start_container isp fopnp/base 2207
-start_container backbone fopnp/dns 2208
-start_container example.com fopnp/base 2209
-start_container ftp.example.com fopnp/ftp 2210
-start_container mail.example.com fopnp/mail 2211
-start_container www.example.com fopnp/www 2212
+start_container modemA fopnp/base
+start_container modemB fopnp/base
+start_container isp fopnp/base
+start_container backbone fopnp/dns
+start_container example.com fopnp/base
+start_container ftp.example.com fopnp/ftp
+start_container mail.example.com fopnp/mail
+start_container www.example.com fopnp/www
 
 # For each LAN, create an ethernet bridge and corresponding interfaces.
 
