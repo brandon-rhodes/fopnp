@@ -3,8 +3,28 @@
 # Run "docker build" for each of the images that need to be created
 # before the network playground can then be launched with "launch.sh".
 
-set -e
+set -e -x
 cd $(dirname "$0")
+
+# Make sure Docker is installed.
+
+if [ ! -x /usr/bin/docker ]
+then
+    sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 \
+                     --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+    echo deb https://apt.dockerproject.org/repo ubuntu-trusty main \
+         | sudo dd of=/etc/apt/sources.list.d/docker.list
+    sudo apt-get update
+    sudo apt-get -y install docker-engine
+fi
+
+# Our user must have rights to the "docker" group.
+
+if ! echo "$(groups)" | grep -q docker
+then
+    sudo adduser vagrant docker
+    exec newgrp docker < ./build.sh
+fi
 
 # Generate an SSH identity pubic/private keypair that can be installed
 # on all of the playground hosts, so users can SSH between them without

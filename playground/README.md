@@ -28,7 +28,7 @@ created 5 Docker images together with a script that configures them as a
 
 The network services running on the machines are:
 
-  * (On all hosts)
+  * On every host
     * SSH — port 22
   * `backbone`
     * DNS — port 53
@@ -51,38 +51,31 @@ machine in the network — against one of the other hosts.
 
 ## Launching the Playground
 
-The network playground is available as a virtual machine image, that you
-can launch using a virtualization engine like the open-source and freely
-available [VirtualBox](https://www.virtualbox.org/) tool.  (If you want
-to build the playground manually with Docker, see the next section.)
+The network playground is a [Vagrant](https://www.vagrantup.com/) box
+that you can download by typing::
 
-You can download the latest `playground-X.Y.ova` image at:
+    vagrant box add brandon-rhodes/playground
 
-https://github.com/brandon-rhodes/fopnp/releases
+Next, create a new directory and add a text file called a `Vagrantfile`
+with the following three lines of text::
 
-Once you have downloaded the image, you can import and launch it either
-from the VirtualBox window or from its command-line client:
+    Vagrant.configure("2") do |config|
+      config.vm.box = "brandon-rhodes/playground"
+    end
 
-    $ VBoxManage import ~/playground-X.Y.ova
-    $ VBoxManage startvm --type headless playground-vm
+Finally, from inside of this directory run the following pair of
+commands to launch the machine image and then to connect and receive a
+shell prompt::
 
-Once the image is launched and has finished booting, you should be able
-to log in to the network playground clients with your normal SSH client.
-The ports 2201 through 2204 should connect you to the hosts `h1` through
-`h4` in the diagram above.  Connect as the user `brandon` or `root` and
-the password `abc123`.  The first thing you will probably want to do is
-use `ssh-copy-id` so that further connections will not prompt you for a
-password:
+    vagrant up
+    vagrant ssh
 
-    # (This only works for me if I first run "ssh-add" locally)
+Once you are inside of the Vagrant image (which is a quite standard
+Ubuntu 14.04 LTS system that has Docker installed),
 
-    $ ssh-copy-id -p 2201 brandon@localhost
-    Password: abc123
+    DO they need to start the images manually after an "up"?
 
-Once you have reached a prompt on a machine in the playground, you
-should be able to SSH to any of the rest without a password.
-
-    $ ssh -p 2201 brandon@localhost
+    $ ./play.sh h1
 
     h1$ traceroute www.example.com
     traceroute to www.example.com (10.130.1.4), 30 hops max, 60 byte packets
@@ -105,28 +98,7 @@ should be able to SSH to any of the rest without a password.
 
 All of the hosts in the playground should have the *Foundations of
 Python Network Programming* repository mounted under “/fopnp” and should
-allow you to login as either the user `brandon` or `root`.  If you get
-tired of typing the options `-p 2201 brandon@localhost` when connecting,
-you can append the following stanza to your own `~/.ssh/config` file:
-
-    Host h1
-      Hostname localhost
-      User brandon
-      Port 2201
-
-Now you can connect to playground machine `h1` with a simple:
-
-    $ ssh h1
-
-If you want to log into the outer virtual machine that is hosting all of
-these Docker images, connect to port 2022 instead with the username
-`docker` and the password `tcuser`:
-
-    $ ssh -p 2022 docker@localhost
-    Password: tcuser
-
-Once logged in as `tcuser` you should be able to run `docker ps` to see
-all of the running containers that make up the playground.
+allow you to login as either the user `brandon` or `root`.
 
 ## Building the Playground
 

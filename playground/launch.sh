@@ -4,19 +4,17 @@
 # that "build.sh" has already been run in this directory to build the
 # Docker images..
 
+set -e -x
 cd $(dirname "$0")
 
+# Make sure network tools are ready to run.
+
+if [ ! -x /sbin/brctl ]
+then
+    sudo apt-get -y install bridge-utils
+fi
 sudo mkdir -p /var/run/netns
 sudo modprobe ip_nat_ftp nf_conntrack_ftp
-
-# Make sure the bridge-control tools are installed.
-
-if [ ! -x /usr/local/sbin/brctl ]
-then
-    wget ftp://ftp.nl.netbsd.org/vol/2/metalab/distributions/tinycorelinux/4.x/x86/tcz/bridge-utils.tcz
-    tce-load -i bridge-utils.tcz
-    rm bridge-utils.tcz
-fi
 
 # Tool to start a container.
 
@@ -26,9 +24,9 @@ start_container () {
     port=$3
     container=${hostname%%.*}
 
-    pid=$(docker inspect -f '{{.State.Pid}}' $container 2>/dev/null)
+    pid=$(docker inspect -f '{{.State.Pid}}' $container 2>/dev/null || true)
 
-    if [ "$?" = "1" ]
+    if [ "$pid" = "" ]
     then
         if [ -n "$port" ]
         then netopts="--publish=$port:22"
