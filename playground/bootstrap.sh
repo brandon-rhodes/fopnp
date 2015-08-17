@@ -6,11 +6,11 @@ cd /home/vagrant
 
 if [ ! -d fopnp ]
 then
-    git clone https://github.com/brandon-rhodes/fopnp.git
+    sudo -u vagrant git clone https://github.com/brandon-rhodes/fopnp.git
 fi
 
-ln -fs ../fopnp/playground/ssh-config .ssh/config
-ln -fs fopnp/playground/launch.sh .
+sudo -u vagrant ln -fs ../fopnp/playground/ssh-config .ssh/config
+sudo -u vagrant ln -fs fopnp/playground/launch.sh .
 
-./fopnp/playground/build.sh
-./fopnp/playground/launch.sh
+sudo -u vagrant ./fopnp/playground/build.sh
+sudo -u vagrant ./fopnp/playground/launch.sh
