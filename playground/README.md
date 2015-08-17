@@ -52,32 +52,23 @@ machine in the network — against one of the other hosts.
 ## Launching the Playground
 
 The network playground is a [Vagrant](https://www.vagrantup.com/) box
-that you can download by typing::
+that, after you have Vagrant installed and running on your platform, you
+can download and run by typing::
 
-    vagrant box add brandon-rhodes/playground
-
-Next, create a new directory and add a text file called a `Vagrantfile`
-with the following three lines of text::
-
-    Vagrant.configure("2") do |config|
-      config.vm.box = "brandon-rhodes/playground"
-    end
-
-Finally, from inside of this directory run the following pair of
-commands to launch the machine image and then to connect and receive a
-shell prompt::
-
-    vagrant up
+    vagrant init brandon-rhodes/playground
+    vagrant up --provider virtualbox
     vagrant ssh
 
-Once you are inside of the Vagrant image (which is a quite standard
-Ubuntu 14.04 LTS system that has Docker installed),
+Once you are inside of the Vagrant image, which is an Ubuntu 14.04 LTS
+system with Docker installed, you can start up the playground and
+connect to any of the four machines `h1` through `h4` to start
+exploring:
 
-    DO they need to start the images manually after an "up"?
+    vagrant@vagrant-ubuntu-vivid-64:~$ ./launch.sh
+    vagrant@vagrant-ubuntu-vivid-64:~$ ssh h1
 
-    $ ./play.sh h1
+    root@h1:~# traceroute www.example.com
 
-    h1$ traceroute www.example.com
     traceroute to www.example.com (10.130.1.4), 30 hops max, 60 byte packets
      1  192.168.1.1 (192.168.1.1)  0.294 ms  0.167 ms  0.183 ms
      2  isp (10.25.1.1)  1.002 ms  0.220 ms  0.218 ms
@@ -85,12 +76,31 @@ Ubuntu 14.04 LTS system that has Docker installed),
      4  example.com (10.130.1.1)  0.500 ms  0.286 ms  0.355 ms
      5  www.example.com (10.130.1.4)  0.722 ms  0.662 ms  0.475 ms
 
-    h1$ ping -c1 www.example.com
+    root@h1:~# ping -c1 www.example.com
+
     64 bytes from www.example.com (10.130.1.4): icmp_seq=1 ttl=60 time=1.17 ms
 
-    h1$ ssh root@www
+    root@h1:~# nmap mail.example.com
 
-    www# route -n
+    Nmap scan report for mail.example.com (10.130.1.3)
+    Host is up (0.000027s latency).
+    Not shown: 994 closed ports
+    PORT    STATE SERVICE
+    22/tcp  open  ssh
+    25/tcp  open  smtp
+    110/tcp open  pop3
+    143/tcp open  imap
+    993/tcp open  imaps
+    995/tcp open  pop3s
+
+    Nmap done: 1 IP address (1 host up) scanned in 1.72 seconds
+
+    root@h1:~# ssh www
+
+    Welcome to Ubuntu 14.04 LTS (GNU/Linux 3.19.0-25-generic x86_64)
+
+    root@www:~# route -n
+
     Kernel IP routing table
     Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
     0.0.0.0         10.130.1.1      0.0.0.0         UG    0      0        0 eth0
@@ -98,7 +108,8 @@ Ubuntu 14.04 LTS system that has Docker installed),
 
 All of the hosts in the playground should have the *Foundations of
 Python Network Programming* repository mounted under “/fopnp” and should
-allow you to login as either the user `brandon` or `root`.
+allow you to login as either the user `brandon` or `root` with either
+SSH keys or the password `abc123`.
 
 ## Building the Playground
 
@@ -113,13 +124,19 @@ pre-packaged virtual machine image:
     then Docker will already be up and running once you boot and `git`
     will already be installed.
 
+  * Add your user to the `docker` group so you have permission to create
+    and configure Docker containers.
+
+        $ sudo adduser your_own_username docker
+
   * Use `git` to check out the `fopnp` repository from GitHub:
 
         $ git clone https://github.com/brandon-rhodes/fopnp.git
         $ cd fopnp/playground
 
   * Build the five Docker images.  You will need `sudo` access to the
-    root account to perform this step as well as the following step.
+    root account to perform this step as well as the following step,
+    because they involve creating and configuring network interfaces.
 
         $ ./build.sh
 
