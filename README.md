@@ -74,10 +74,10 @@ explore — many homes have only a laptop plus a broadband modem to which
 the homeowner does not have access.
 
 To remedy this situation, I have developed an entire network
-[Playground](../../playground#readme) consisting of more than a half
-dozen hosts providing services from SSH and Telnet to a web server
-and FTP.  The “hosts” are built using Docker, and I hope soon to package
-the whole thing up as a virtual machine that users can download.
+[Playground](playground) consisting of more than a half dozen hosts
+providing services from SSH and Telnet to a web server and FTP.  The
+“hosts” are built using Docker, and I hope soon to package the whole
+thing up as a virtual machine that users can download.
 
 The result will be that the user can get a prompt from which they can
 connect out to the `example.com` server farm and talk to all kinds of
