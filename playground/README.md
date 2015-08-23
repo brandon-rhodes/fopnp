@@ -51,13 +51,19 @@ machine in the network — against one of the other hosts.
 
 ## Launching the Playground
 
-The network playground is a [Vagrant](https://www.vagrantup.com/) box
-that, after you have Vagrant installed and running on your platform, you
-can download and run by typing::
+The network playground is a Vagrant box that, after you have Vagrant
+installed and running on your platform, you can download and run by
+typing::
 
     vagrant init brandon-rhodes/playground
     vagrant up --provider virtualbox
     vagrant ssh
+
+Note that you will need both [Vagrant](https://www.vagrantup.com/) and
+[VirtualBox](https://www.virtualbox.org/wiki/Downloads) installed, and
+that only versions of Vagrant 1.7.3 or later can support the new 5.x
+version of VirtualBox — so if your Vagrant version is a bit behind, then
+be sure to install a 4.x VirtualBox instead of the latest version.
 
 Once you are inside of the Vagrant image, which is an Ubuntu 14.04 LTS
 system with Docker installed, you can start up the playground and
