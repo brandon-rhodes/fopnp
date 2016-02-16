@@ -25,22 +25,22 @@ abstraction in the network protocol hierarchy. This lets the chapter
 launch an introduction of each level that the book will be discussing.
 
 ```
-$ python search1.py
+$ python3 search1.py
 (41.521954, -84.306691)
 ```
 
 ```
-$ python search2.py
+$ python3 search2.py
 {'lat': 41.521954, 'lng': -84.306691}
 ```
 
 ```
-$ python search3.py
+$ python3 search3.py
 {'lat': 41.521954, 'lng': -84.306691}
 ```
 
 ```
-$ python search4.py
+$ python3 search4.py
 HTTP/1.1 200 OK
 Content-Type: application/json; charset=UTF-8
 Date: Tue, 21 Oct 2014 22:50:21 GMT
@@ -131,12 +131,12 @@ basic string decoding and encoding maneuvers that Python 3 is careful to
 require of network programmers.
 
 ```
-$ python getname.py
+$ python3 getname.py
 The IP address of maps.google.com is 74.125.228.105
 ```
 
 ```
-$ python stringcodes.py && cat eagle.txt
+$ python3 stringcodes.py && cat eagle.txt
 '413 is in.'
 We copy you down, Eagle.
 ```

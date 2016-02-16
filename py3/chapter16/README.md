@@ -33,13 +33,13 @@ protocol.  They can be exercised in the Playground against the
 running as well.
 
 ```
-$ python telnet_login.py ftp.example.com brandon
+$ python3 telnet_login.py ftp.example.com brandon
 exec uptime
 21:18:15 up  5:40,  1 user,  load average: 0.00, 0.02, 0.05
 ```
 
 ```
-$ python telnet_codes.py ftp.example.com brandon
+$ python3 telnet_codes.py ftp.example.com brandon
 Sending terminal type "mypython"
 ('Will not', 32)
 ('Will not', 35)

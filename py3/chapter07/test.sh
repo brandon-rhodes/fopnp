@@ -7,7 +7,7 @@ function runtest () {
     echo '===========' "$@" '==========='
     python3 "$@" &
     sleep 1
-    python client.py localhost
+    python3 client.py localhost
     kill %1
     wait %1 2>/dev/null || true
     #kill $(lsof | grep 'TCP.*1060' | awk '{print$2}')

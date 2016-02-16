@@ -39,7 +39,7 @@ the user’s email.  The `popconn.py` script simply connects and reports
 the number of messages waiting:
 
 ```
-$ python popconn.py mail.example.com brandon
+$ python3 popconn.py mail.example.com brandon
 Password: abc123
 You have 6 messages totaling 3441 bytes
 ```
@@ -50,7 +50,7 @@ asks the server for a list of the messages that are waiting, and prints
 a brief summary about each one.
 
 ```
-$ python mailbox.py mail.example.com brandon
+$ python3 mailbox.py mail.example.com brandon
 Password: abc123
 Message 1 has 354 bytes
 Message 2 has 442 bytes
