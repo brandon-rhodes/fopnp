@@ -73,8 +73,8 @@ Many novice network programmers do not have interesting networks to
 explore — many homes have only a laptop plus a broadband modem to which
 the homeowner does not have access.
 
-To remedy this situation, I have developed an entire network
-[Playground](playground) consisting of more than a half dozen hosts
+To remedy this situation, I have developed an entire [Network
+Playground](playground) consisting of more than a half dozen hosts
 providing services from SSH and Telnet to a web server and FTP.  The
 “hosts” are built using Docker, and I hope soon to package the whole
 thing up as a virtual machine that users can download.
@@ -97,5 +97,4 @@ traceroute to www.example.com (10.130.1.4), 30 hops max, 60 byte packets
  5  www.example.com (10.130.1.4)  1.301 ms  0.415 ms  0.522 ms
 ```
 
-Follow this repository if you want to watch my progress towards making
-the install of the playground fully automated!
+You can find the instructions here: [The Network Playground](playground).
