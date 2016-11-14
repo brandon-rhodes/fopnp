@@ -65,6 +65,10 @@ that only versions of Vagrant 1.7.3 or later can support the new 5.x
 version of VirtualBox — so if your Vagrant version is a bit behind, then
 be sure to install a 4.x VirtualBox instead of the latest version.
 
+If you want a bit of explanation about to what is happening during each
+of the above commands, a user has written up some notes here:
+https://github.com/brandon-rhodes/fopnp/issues/16#issue-156133599
+
 Once you are inside of the Vagrant image, which is an Ubuntu 14.04 LTS
 system with Docker installed, you can start up the playground and
 connect to any of the four machines `h1` through `h4` to start
