@@ -5,7 +5,7 @@
 
 import argparse, socket, sys
 
-def server(host, port, bytecount):
+def server(host, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((host, port))
@@ -62,9 +62,9 @@ def client(host, port, bytecount):
     sock.close()
 
 if __name__ == '__main__':
-    choices = {'client': client, 'server': server}
+    roles = ('client', 'server')
     parser = argparse.ArgumentParser(description='Get deadlocked over TCP')
-    parser.add_argument('role', choices=choices, help='which role to play')
+    parser.add_argument('role', choices=roles, help='which role to play')
     parser.add_argument('host', help='interface the server listens at;'
                         ' host the client sends to')
     parser.add_argument('bytecount', type=int, nargs='?', default=16,
@@ -72,5 +72,7 @@ if __name__ == '__main__':
     parser.add_argument('-p', metavar='PORT', type=int, default=1060,
                         help='TCP port (default 1060)')
     args = parser.parse_args()
-    function = choices[args.role]
-    function(args.host, args.p, args.bytecount)
+    if args.role == 'client':
+        client(args.host, args.p, args.bytecount)
+    else:
+        server(args.host, args.p)
