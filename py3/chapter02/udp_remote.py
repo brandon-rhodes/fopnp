@@ -23,7 +23,6 @@ def server(interface, port):
 
 def client(hostname, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    hostname = sys.argv[2]
     sock.connect((hostname, port))
     print('Client socket name is {}'.format(sock.getsockname()))
 
