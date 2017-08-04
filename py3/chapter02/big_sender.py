@@ -3,11 +3,16 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter02/big_sender.py
 # Send a big UDP datagram to learn the MTU of the network path.
 
-import IN, argparse, socket
+import argparse, socket, sys
+try:
+    import IN
+except ImportError:
+    IN = None
 
 if not hasattr(IN, 'IP_MTU'):
-    raise RuntimeError('cannot perform MTU discovery on this combination'
-                       ' of operating system and Python distribution')
+    print('Unsupported: Cannot perform MTU discovery on this combination of\n'
+          '             operating system and Python version', file=sys.stderr)
+    sys.exit(1)
 
 def send_big_datagram(host, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
