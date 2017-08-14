@@ -4,14 +4,17 @@
 # Send a big UDP datagram to learn the MTU of the network path.
 
 import argparse, socket, sys
-try:
-    import IN
-except ImportError:
-    IN = None
 
-if not hasattr(IN, 'IP_MTU'):
-    print('Unsupported: Cannot perform MTU discovery on this combination of\n'
-          '             operating system and Python version', file=sys.stderr)
+# Inlined constants, because Python 3.6 has dropped the IN module.
+
+class IN:
+    IP_MTU = 14
+    IP_MTU_DISCOVER = 10
+    IP_PMTUDISC_DO = 2
+
+if sys.platform != 'linux':
+    print('Unsupported: Can only perform MTU discovery on Linux',
+          file=sys.stderr)
     sys.exit(1)
 
 def send_big_datagram(host, port):
