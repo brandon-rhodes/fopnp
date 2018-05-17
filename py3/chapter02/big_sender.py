@@ -3,11 +3,19 @@
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter02/big_sender.py
 # Send a big UDP datagram to learn the MTU of the network path.
 
-import IN, argparse, socket
+import argparse, socket, sys
 
-if not hasattr(IN, 'IP_MTU'):
-    raise RuntimeError('cannot perform MTU discovery on this combination'
-                       ' of operating system and Python distribution')
+# Inlined constants, because Python 3.6 has dropped the IN module.
+
+class IN:
+    IP_MTU = 14
+    IP_MTU_DISCOVER = 10
+    IP_PMTUDISC_DO = 2
+
+if sys.platform != 'linux':
+    print('Unsupported: Can only perform MTU discovery on Linux',
+          file=sys.stderr)
+    sys.exit(1)
 
 def send_big_datagram(host, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
