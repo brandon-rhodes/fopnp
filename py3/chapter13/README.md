@@ -25,9 +25,9 @@ already set up and configured to receive incoming email.  Once the
 playground is running, ask for a prompt on the `h1` host and visit the
 `chapter13` directory:
 
-    $ ./play.sh h1
+    $ ssh h1
 
-    # cd py3/chapter13
+    # cd /fopnp/py3/chapter13
 
 At the `h1` machine’s prompt you can then experiment with sending
 messages across the network.  The `simple.py` script and the slightly

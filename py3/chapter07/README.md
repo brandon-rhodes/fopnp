@@ -61,14 +61,14 @@ on the `ftp.example.com` host, where `inetd` happens to already be
 running to provide a Telnet service for the scripts in Chapter 16.  Once
 you have the playground running, create a client host like `h1`:
 
-    $ ./play.sh h1
+    $ ssh h1
 
 Because each client host auto-mounts the `py3` directory, you will have
 access to the scripts and configuration file that need to be copied over
 to `ftp.example.com` for the two services to run.  You can perform the
 copy using the following commands on host `h1`:
 
-    # cd /py3/chapter07
+    # cd /fopnp/py3/chapter07
     # scp in_zen1.py in_zen2.py zen_utils.py ftp.example.com:/
     # scp inetd.conf ftp.example.com:
     # ssh ftp.example.com

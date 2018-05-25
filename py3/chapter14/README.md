@@ -28,9 +28,9 @@ The scripts in this chapter are best exercised inside the network
 already set up and configured for POP.  Once the playground is running,
 ask for a prompt on the `h1` host and visit this chapter’s directory:
 
-    $ ./play.sh h1
+    $ ssh h1
 
-    # cd py3/chapter14
+    # cd /fopnp/py3/chapter14
 
 All of the scripts in this chapter are careful to use the `POP3_SSL`
 class and therefore guarantee the use of TLS to protect the user’s

@@ -212,3 +212,11 @@ sudo ip netns exec www ip addr add 10.130.1.4/24 dev eth0
 for name in ftp mail www
 do sudo ip netns exec $name ip route add default via 10.130.1.1
 done
+
+cat <<'EOT'
+
+Playground set up successfully! To enter, now run the command:
+
+    ssh h1
+
+EOT

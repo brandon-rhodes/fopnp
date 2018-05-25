@@ -102,7 +102,7 @@ directory:
 
     $ ./play h1
 
-    # cd py3/chapter17
+    # cd /fopnp/py3/chapter17
 
 The username `brandon` and the password `abc123` should let you upload
 binary files to the user’s home directory:

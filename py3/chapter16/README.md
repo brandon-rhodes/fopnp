@@ -65,7 +65,7 @@ Docker does not launch your initial shell on a host with everything set
 up as though you had logged in, this will only work if you `su` to the
 `root` user first:
 
-    $ ./play.sh h1
+    $ ssh h1
 
     # su root
 

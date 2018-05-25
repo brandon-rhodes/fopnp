@@ -157,9 +157,10 @@ pre-packaged virtual machine image:
         $ ./launch.sh
 
 Once the above steps are completed, you should be able to get a root
-prompt on any of the machines by using the `play.sh` script.
+prompt on any of the machines by making an SSH connection to any of the
+machines `h1`, `h2`, `h3`, or `h4`:
 
-    $ ./play.sh h1
+    $ ssh h1
 
     root@h1:/# pwd
     /

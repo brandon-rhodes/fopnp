@@ -86,7 +86,7 @@ these machines are several hops away — hops that can be inspected by
 normal networking tools like `traceroute`:
 
 ```
-$ ./play.sh h1
+$ ssh h1
 
 # traceroute www.example.com
 traceroute to www.example.com (10.130.1.4), 30 hops max, 60 byte packets
