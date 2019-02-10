@@ -2,20 +2,25 @@
 # Foundations of Python Network Programming, Third Edition
 # https://github.com/brandon-rhodes/fopnp/blob/m/py3/chapter01/search4.py
 
+# (The Google API originally used in this example now requires API keys,
+#  so here's an alternative that calls openstreetmap.org.)
+
 import socket
+import ssl
 from urllib.parse import quote_plus
 
 request_text = """\
-GET /maps/api/geocode/json?address={}&sensor=false HTTP/1.1\r\n\
-Host: maps.google.com:80\r\n\
-User-Agent: search4.py (Foundations of Python Network Programming)\r\n\
+GET /search?q={}&format=json HTTP/1.1\r\n\
+Host: nominatim.openstreetmap.org\r\n\
+User-Agent: Foundations of Python Network Programming example search4.py\r\n\
 Connection: close\r\n\
 \r\n\
 """
 
 def geocode(address):
-    sock = socket.socket()
-    sock.connect(('maps.google.com', 80))
+    unencrypted_sock = socket.socket()
+    unencrypted_sock.connect(('nominatim.openstreetmap.org', 443))
+    sock = ssl.wrap_socket(unencrypted_sock)
     request = request_text.format(quote_plus(address))
     sock.sendall(request.encode('ascii'))
     raw_reply = b''
