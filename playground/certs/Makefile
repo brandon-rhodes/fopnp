@@ -47,3 +47,8 @@ ca.crt: ca.cnf ca.key
 
 ca.key client.key ftp.key localhost.key mail.key www.key:
 	openssl genrsa -out $@ $(BITS)
+
+clean:
+	rm *.crt *.csr *.pem ca_certificates.* ca_serial.*
+	touch ca_certificates.db
+	echo 01 > ca_serial.txt
