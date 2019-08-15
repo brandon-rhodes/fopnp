@@ -4,8 +4,10 @@
 
 BITS=3072
 
-all: ../base/ca.crt ca.pem client.pem ../ftp/ftp.crt ../ftp/ftp.key \
-     localhost.pem ../mail/service.pem ../www/service.pem
+all: ca.pem client.pem localhost.pem \
+     ../base/ca.crt ../ftp/ftp.crt ../ftp/ftp.key \
+     ../mail/service.pem ../www/service.pem \
+     ../../py3/chapter06/ca.crt ../../py3/chapter06/localhost.pem
 
 ../base/ca.crt: ca.crt
 	cp $^ $@
@@ -20,6 +22,12 @@ all: ../base/ca.crt ca.pem client.pem ../ftp/ftp.crt ../ftp/ftp.key \
 	cp $^ $@
 
 ../www/service.pem: www.pem
+	cp $^ $@
+
+../../py3/chapter06/ca.crt: ca.crt
+	cp $^ $@
+
+../../py3/chapter06/localhost.pem: localhost.pem
 	cp $^ $@
 
 ca.pem client.pem localhost.pem mail.pem www.pem: %.pem: %.crt %.key
