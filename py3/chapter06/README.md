@@ -16,13 +16,11 @@ You can learn more about the book by visiting the
 [root of this GitHub source code repository](https://github.com/brandon-rhodes/fopnp#readme).
 
 The scripts in this chapter are a rare example of code from this book
-that simply **will not work** under Python 2 — and, in fact, that will
-not work under Python 3.3 or earlier — because the `ssl` module of those
-Python versions lack the `create_default_context()` call that these
-Python 3.4 scripts use to configure TLS settings that are both safe and
-secure.  See [PEP-466](http://legacy.python.org/dev/peps/pep-0466/) for
-the ongoing effort to bring these features to the next release of
-Python 2.7, because of how crucial they are for network security.
+that **will not work** under older versions of Python.  You will need at
+least Python 2.7.9 or Python 3.4 for their `create_default_context()`
+call that configures TLS settings that are both safe and secure.  See
+[PEP-466](http://legacy.python.org/dev/peps/pep-0466/) for background on
+why the new features are crucial for network security.
 
 I strongly recommend that you read the chapter, and not simply read
 these example scripts, if you want to learn what TLS is designed to
@@ -35,8 +33,7 @@ should also work just fine on one machine if you connect to `localhost`,
 in which case you can use the simple `ca.crt` and `localhost.pem` that
 are sitting in this directory.
 
-The `safe_tls.py` script illustrates how to set up a TLS connection in
-Python 3.4 and later using the secure defaults it provides.
+The `safe_tls.py` script illustrates how to set up a TLS connection.
 
 ```
 $ python3 safe_tls.py -s localhost.pem '' 1060 &>server.log &
