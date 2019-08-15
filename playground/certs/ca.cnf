@@ -30,5 +30,6 @@ commonName                      = ca
 emailAddress                    = ca@example.com
 
 [ v3_ca ]
+basicConstraints=CA:TRUE
 subjectKeyIdentifier=hash
 authorityKeyIdentifier=keyid:always,issuer
