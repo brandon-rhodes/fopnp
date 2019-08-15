@@ -74,6 +74,9 @@ class PySSLSocket(ctypes.Structure):
 def SSL_get_version(ssl_sock):
     """Reach behind the scenes for a socket's TLS protocol version."""
 
+    if sys.version_info >= (3, 5):
+        return ssl_sock.version()
+
     lib = ctypes.CDLL(ssl._ssl.__file__)
     lib.SSL_get_version.restype = ctypes.c_char_p
     address = id(ssl_sock._sslobj)
