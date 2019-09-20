@@ -217,9 +217,9 @@ done
 # (whether from Linux, or Ubuntu, or Docker?), explicitly allow traffic
 # across our bridges.
 
-iptables -I FORWARD 1 -i homeA -j ACCEPT
-iptables -I FORWARD 1 -i homeB -j ACCEPT
-iptables -I FORWARD 1 -i exampleCOM -j ACCEPT
+sudo iptables -I FORWARD 1 -i homeA -j ACCEPT
+sudo iptables -I FORWARD 1 -i homeB -j ACCEPT
+sudo iptables -I FORWARD 1 -i exampleCOM -j ACCEPT
 
 # Announce the happy news.
 
@@ -227,6 +227,6 @@ cat <<'EOT'
 
 Playground set up successfully! To enter, now run the command:
 
-    ssh h1
+    ssh -F ssh-config h1
 
 EOT
