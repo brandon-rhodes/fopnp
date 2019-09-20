@@ -213,6 +213,16 @@ for name in ftp mail www
 do sudo ip netns exec $name ip route add default via 10.130.1.1
 done
 
+# 2019-09 addition: in response to more cautious iptables defaults
+# (whether from Linux, or Ubuntu, or Docker?), explicitly allow traffic
+# across our bridges.
+
+iptables -I FORWARD 1 -i homeA -j ACCEPT
+iptables -I FORWARD 1 -i homeB -j ACCEPT
+iptables -I FORWARD 1 -i exampleCOM -j ACCEPT
+
+# Announce the happy news.
+
 cat <<'EOT'
 
 Playground set up successfully! To enter, now run the command:
