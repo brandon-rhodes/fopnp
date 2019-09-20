@@ -158,9 +158,11 @@ pre-packaged virtual machine image:
 
 Once the above steps are completed, you should be able to get a root
 prompt on any of the machines by making an SSH connection to any of the
-machines `h1`, `h2`, `h3`, or `h4`:
+machines `h1`, `h2`, `h3`, or `h4`.  Be sure to use the provided SSH
+configuration file, that defines those four hostnames and authenticates
+the login using the correct private key:
 
-    $ ssh h1
+    $ ssh -F ssh-config h1
 
     root@h1:/# pwd
     /
@@ -172,3 +174,8 @@ machines `h1`, `h2`, `h3`, or `h4`:
      3  backbone (10.1.1.1)  0.358 ms  0.259 ms  0.256 ms
      4  example.com (10.130.1.1)  0.500 ms  0.286 ms  0.355 ms
      5  www.example.com (10.130.1.4)  0.722 ms  0.662 ms  0.475 ms
+
+If you get an error `no such identity` that complains `No such file or
+directory`, then edit the `ssh-config` file to make the `IdentityFile`
+path reflect the exactly location of the `playground/base/id_rsa` file
+on your particular system.
