@@ -53,7 +53,7 @@ machine in the network — against one of the other hosts.
 
 The network playground is a Vagrant box that, after you have Vagrant
 installed and running on your platform, you can download and run by
-typing::
+typing:
 
     vagrant init brandon-rhodes/playground
     vagrant up --provider virtualbox
