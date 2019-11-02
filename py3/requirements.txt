@@ -14,7 +14,7 @@ paramiko==1.15.2
 pygeocoder==1.2.5
 python3-memcached==1.51
 pyzmq==14.0.1
-requests==2.2.1
+requests==2.20.0
 rpyc==3.3.0
 selenium==2.47.1
 webob
