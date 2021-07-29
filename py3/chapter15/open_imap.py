@@ -22,10 +22,7 @@ def main():
         print('Listing mailboxes:')
         data = c.list_folders()
         for flags, delimiter, folder_name in data:
-            print('  %-30s%s %s' %
-                    ( ( b' '.join(flags) ).decode() ,
-                      delimiter.decode() ,
-                      folder_name ) )
+            print('  %-30s%s %s' % ( b' '.join(flags), delimiter, folder_name ) )
     finally:
         c.logout()
 
