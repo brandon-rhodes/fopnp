@@ -12,3 +12,10 @@ if __name__ == '__main__':
     user_agent = 'Foundations of Python Network Programming example search1.py'
     location = Nominatim(user_agent=user_agent).geocode(address)
     print(location.latitude, location.longitude)
+
+    # location of soongsil univerity
+    address2 = "Soongsil University"
+    user_agent2 = "David"
+    location2 = Nominatim(user_agent=user_agent2).geocode(address2)
+    print(location2.latitude, location2.longitude)
+

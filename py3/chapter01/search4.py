@@ -29,7 +29,10 @@ def geocode(address):
         if not more:
             break
         raw_reply += more
+        print(request)
     print(raw_reply.decode('utf-8'))
+    print(raw_reply)
 
 if __name__ == '__main__':
     geocode('207 N. Defiance St, Archbold, OH')
+    geocode("Soongsil University")
