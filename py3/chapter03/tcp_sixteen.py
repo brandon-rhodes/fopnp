@@ -39,7 +39,7 @@ def client(host, port):
     sock.connect((host, port))
     print('Client has been assigned socket name', sock.getsockname())
     sock.sendall(b'Hi there, server')
-    reply = recvall(sock, 16)
+    reply = recvall(sock, 16)  # 16bytes
     print('The server said', repr(reply))
     sock.close()
 

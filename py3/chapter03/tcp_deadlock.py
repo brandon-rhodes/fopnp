@@ -9,6 +9,9 @@ def server(host, port):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.bind((host, port))
+    # 앞서 bind가 서버소켓에서 필수로 사용된다고 말했듯이, 이 listen도 서버소켓에서밖에 쓰일 일이 없습니다.
+    # listen()안에 인자로 숫자 1이 입력되어 있는데, 이는 해당 소켓이 총 몇개의 동시접속까지를 허용할 것이냐는 이야기입니다.
+    # 1을 입력하면 단 한 개의 접속만을 허용할 것이고, 인자를 입력하지 않으면 파이썬이 자의적으로 판단해서 임의의 숫자로 listen한다고 합니다.
     sock.listen(1)
     print('Listening at', sock.getsockname())
     while True:
@@ -17,6 +20,7 @@ def server(host, port):
         n = 0
         while True:
             data = sc.recv(1024)
+            # 더 이상 보낼 데이터가 없다면 루프에서 나온다.
             if not data:
                 break
             output = data.decode('ascii').upper().encode('ascii')
@@ -25,6 +29,7 @@ def server(host, port):
             print('\r  %d bytes processed so far' % (n,), end=' ')
             sys.stdout.flush()
         print()
+        # 데이터 전송이 끝났으면 끝낸다.
         sc.close()
         print('  Socket closed')
 
