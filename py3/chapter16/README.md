@@ -105,7 +105,7 @@ b' 21:38:33 up  6:00,  0 users,  load average: 0.16, 0.05, 0.06\n'
 ```
 
 The ability of SSH to support several channels even allows multiple
-Python threads to have remove commands running at the same time.
+Python threads to have remote commands running at the same time.
 
 ```
 $ python3 ssh_threads.py www.example.com brandon
